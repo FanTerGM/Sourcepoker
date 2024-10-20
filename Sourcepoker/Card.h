@@ -1,57 +1,29 @@
 #pragma once
-#include <iostream> 
-#include <string>
-#include <stack>
-#include <vector>
+#include "gameObject.h"
 
 using namespace std;
-
 
 class Card {
 public:
     enum Suit { HEARTS, DIAMONDS, CLUBS, SPADES };
     enum Rank { TWO = 2, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE };
-
+ 
+    Card();
     Card(Suit s, Rank r);
 
-    Suit getSuit() const;
-    Rank getRank() const;
+    //get suit and rank as value;
+    Suit getSuitEnum() const;
+    Rank getRankEnum() const;
+
+    //Fuction to get suit & rank as string
+    string getSuit() const;
+    string getRank() const;
+
+    // Function to return the card as a string (e.g., "Ace of Spades")
+    string toString() const;
 
 private:
     Suit suit;
     Rank rank;
-};
-
-class Hand {
-public:
-    Card hand[5];
-    void organize();            
-};
-
-class Player {
-private:
-    int id;
-    string userNam;
-    enum Blind {S, B, D, None};
-    float winrate;
-    int rank;
-    string favoriteHand;
-};
-
-class Deck {
-public:
-    Deck();
-    void shuffle();
-    void deal();
-};
-
-class Table {
-public:
-    int playerCount;
-    int gameMode;
-    int BBID;
-    int SBID;
 
 };
-
-vector<Player> createTable();
