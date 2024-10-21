@@ -4,20 +4,22 @@
 
 class Player {
 public:
-    static int currentId;
-    Player();
+    Player(string);
     int getID();
     string getPlayerUsername();
     int getPlayerRank();
+    void cardToHand(Deck&, int); 
     float getPlayertWinrate();
-    string getPlayerfavoriteHand();
+    vector<Card> getPlayerfavoriteHand();
     vector<Card> getPlayerHand();
 
 private:
     int id;
     string username;
-    float winrate;
+    double winrate;
     int rank;
-    string favoriteHand;
+    vector<Card> favoriteHand;
     Hand hand;
+    static int currentId;
 };
+    
