@@ -5,11 +5,9 @@ int Player::currentId = 0;
 
 Player::Player(string name) : id(currentId++), username(name), rank(0),  winrate(-1){}
 
-void Player::cardToHand(Deck& deck, int count) {
-	for (int i = 0; i < count; i++) {
-		const Card& dealtCard = deck.deal();
-		hand.addCard(dealtCard);
-	}
+void Player::cardToHand(Deck& deck) {
+	const Card& dealtCard = deck.deal();
+	hand.addCard(dealtCard);
 }
 
 int Player::getPlayerRank() { return rank; }

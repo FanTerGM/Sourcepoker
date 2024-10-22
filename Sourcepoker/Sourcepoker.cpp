@@ -2,12 +2,12 @@
 #include "gameObject.h"
 
 int main() {
-    Deck deck;
+    Table table(TEXAS);
     deck.shuffle();
     Player player("Alice");
 
     // Deal 5 cards to the player's hand
-    player.cardToHand(deck, 5);
+    for (int i = 0; i < 5; i ++) player.cardToHand(deck);
 
     // Display the player's hand
     std::vector<Card> playerHand = player.getPlayerHand();

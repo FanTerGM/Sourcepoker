@@ -8,7 +8,7 @@ public:
     int getID();
     string getPlayerUsername();
     int getPlayerRank();
-    void cardToHand(Deck&, int); 
+    void cardToHand(Deck&); 
     float getPlayertWinrate();
     vector<Card> getPlayerfavoriteHand();
     vector<Card> getPlayerHand();

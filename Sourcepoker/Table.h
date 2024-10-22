@@ -1,13 +1,23 @@
 #pragma once
 #include "gameObject.h"
-#include "Player.h"
+#include "CommunityCard.h"
+
 
 class Table {
 public:
-    Table();
-    int playerCount;
-    int gameMode;
+    enum gameMode { TEXAS, DRAW, STUD, SUPER };
+    Table(gameMode g, int countPlayer, int countNPC);  
+    int pot;
     int BBID;
     int SBID;
-    vector<Player> createTable();
+    void populateTable();
+    void dealCardtoPlayers();
+private:
+    int countPlayer;
+    int countNPC;
+    Deck deck;
+    gameMode mode; 
+    communityCard com;
+    vector<Player> players;
+
 };
