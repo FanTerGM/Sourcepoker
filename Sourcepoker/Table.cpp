@@ -24,7 +24,7 @@ void Table::populateTable() {
 
 void Table::dealCardtoPlayers() {
 	for (Player& player : players) {
-		player.cardToHand(deck);
+		player.cardToHandMulti(deck, 1);
 	}
 }
 
