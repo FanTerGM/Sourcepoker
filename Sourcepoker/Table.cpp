@@ -23,13 +23,8 @@ void Table::populateTable() {
 
 
 void Table::dealCardtoPlayers() {
-	int numberOfCards;
-	if (mode == TEXAS) numberOfCards = 2;
-	if (mode == DRAW) numberOfCards = 5;
-	if (mode == STUD) numberOfCards = 7;
-	if (mode == SUPER) numberOfCards = 2;
 	for (Player& player : players) {
-		player.cardToHandMulti(deck, numberOfCards);
+		player.cardToHand(deck);
 	}
 }
 
