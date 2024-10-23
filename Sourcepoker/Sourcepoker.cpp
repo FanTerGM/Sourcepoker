@@ -1,19 +1,19 @@
 
 #include "gameObject.h"
 
+
+
 int main() {
-    Table table(TEXAS);
-    deck.shuffle();
-    Player player("Alice");
+    Table table;
 
-    // Deal 5 cards to the player's hand
-    for (int i = 0; i < 5; i ++) player.cardToHand(deck);
-
-    // Display the player's hand
-    std::vector<Card> playerHand = player.getPlayerHand();
-    for (const auto& card : playerHand) {
-        std::cout << "Card: " << card.getRank() << " of " << card.getSuit() << std::endl;
-    }
-
+    // Deal cards to the player's hand and table.
+    table.dealCardtoPlayers();
+    table.dealFlop();
+    // Display the player's hand and the community card.
+    cout << "Community cards:" << endl;
+    table.showCards();
+    cout << "Player hand:" << endl;
+    table.showPlayersHand();
+    
     return 0;
 }

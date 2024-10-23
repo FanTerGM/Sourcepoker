@@ -2,24 +2,23 @@
 #include "gameObject.h"
 #include "Hand.h"
 
-class Player {
+class Player : public Hand{
 public:
+    Player();
     Player(string);
+
     int getID();
     string getPlayerUsername();
     int getPlayerRank();
-    void cardToHand(Deck&); 
-    float getPlayertWinrate();
+    double getPlayertWinrate();
     vector<Card> getPlayerfavoriteHand();
-    vector<Card> getPlayerHand();
-
+    
 private:
     int id;
     string username;
     double winrate;
     int rank;
     vector<Card> favoriteHand;
-    Hand hand;
     static int currentId;
 };
     

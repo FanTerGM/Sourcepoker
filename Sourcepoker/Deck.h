@@ -5,7 +5,6 @@
 class Deck {
 public:
     Deck();
-    void shuffle();
     Card deal();
     int size();
 

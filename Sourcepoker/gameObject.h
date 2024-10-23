@@ -10,6 +10,4 @@
 #include "Card.h"
 #include "Deck.h"
 #include "Player.h"
-#include "Hand.h"
 #include "Table.h"
-#include "communityCard.h"

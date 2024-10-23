@@ -9,11 +9,8 @@ Deck::Deck(): topCardIndex(0){
 			cards[index++] = Card(static_cast<Card::Suit>(s), static_cast<Card::Rank>(r));
 		}
 	}
-}
-
-void Deck::shuffle() {
-	srand(unsigned(std::time(0))); // Seed for randomness
-	random_shuffle(&cards[0], &cards[52]); // Shuffle the fixed array
+	srand(unsigned(std::time(0)));
+	random_shuffle(&cards[0], &cards[52]);
 }
 
 Card Deck::deal() {

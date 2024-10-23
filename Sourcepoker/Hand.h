@@ -10,7 +10,11 @@ public:
     void evaluate();
     int getHandSize();
     void clearHand();
-    void addCard(const Card& card);
+
+    void cardToHand(Deck& deck);
+    void cardToHandMulti(Deck& deck, int count);
+
+    void showCards();
     vector<Card> getHand();
 
 private:
