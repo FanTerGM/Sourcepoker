@@ -11,8 +11,7 @@ public:
     int getHandSize();
     void clearHand();
 
-    void cardToHand(Deck& deck);
-    void cardToHandMulti(Deck& deck, int count);
+    void cardToHand(Deck& deck, int count, bool Shown);
 
     void showCards();
     vector<Card> getHand();

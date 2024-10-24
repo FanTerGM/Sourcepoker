@@ -1,6 +1,4 @@
 #pragma once
-
-
 #include <iostream>
 #include <string>
 #include <ctime>
@@ -11,3 +9,5 @@
 #include "Deck.h"
 #include "Player.h"
 #include "Table.h"
+#include "House.h"
+#include "Hand.h"

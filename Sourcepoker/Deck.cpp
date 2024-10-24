@@ -13,8 +13,11 @@ Deck::Deck(): topCardIndex(0){
 	random_shuffle(&cards[0], &cards[52]);
 }
 
-Card Deck::deal() {
-	if (topCardIndex < 52) return cards[topCardIndex++];
+Card Deck::deal(bool Shown = true) {
+	if (topCardIndex < 52) {
+		cards[topCardIndex].setShown(Shown);
+		return cards[topCardIndex++];
+	}
 	throw out_of_range("Card not found, Deck out of bound");
 }
 

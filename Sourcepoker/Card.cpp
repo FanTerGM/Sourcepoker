@@ -8,6 +8,13 @@ Card::Card(Suit s, Rank r) : suit(s), rank(r) {}
 Card::Suit Card::getSuitEnum() const { return suit; }
 Card::Rank Card::getRankEnum() const { return rank; }
 
+
+void Card::setShown(bool set) {
+    isShown = set;
+}
+
+bool Card::getShowState() const { return isShown; }
+
 string Card::getSuit() const {
     switch (suit) {
     case HEARTS: return "Hearts";

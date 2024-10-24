@@ -4,28 +4,8 @@
 
 
 class Table: public Hand{
-public:
 
-    
-    
-    Table();
-    
-    Table(int numberOfPlayer, int numberOfNPC);
-
-    int pot;
-    int call;
-
- 
-    void populateTable();
-    void dealCardtoPlayers();
-    void showPlayersHand();
-    void showNPCsHand();
-
-
-    void raiseBet();
-    void dealFlop();
-
-private:
+protected:
     int numberOfPlayer;
     int numberOfNPC;
 
@@ -33,4 +13,22 @@ private:
     vector<Player> players;
     vector<Player> NPCs;
 
+public:
+    
+    Table();
+    Table(int numberOfPlayer, int numberOfNPC);
+
+    int pot;
+    int call;
+
+    void raiseBet();
+    void populateTable();
+    void showPlayersHand();
+    void showNPCsHand();
+
+    virtual void dealFlop();
+    virtual void StartGame();
+    virtual void checkWinner();
+    virtual void dealCardtoPlayers();
+    virtual ~Table() {}
 };

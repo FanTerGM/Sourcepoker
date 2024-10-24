@@ -11,6 +11,11 @@ public:
     Card();
     Card(Suit s, Rank r);
 
+    //set the card to hidden when using showCards
+    void setShown(bool set);
+    bool getShowState() const;
+
+
     //get suit and rank as value;
     Suit getSuitEnum() const;
     Rank getRankEnum() const;
@@ -21,8 +26,10 @@ public:
 
     // Function to return the card as a string (e.g., "Ace of Spades")
     string toString() const;
+    
 
 private:
+    bool isShown = true;
     Suit suit;
     Rank rank;
 

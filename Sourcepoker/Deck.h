@@ -5,7 +5,7 @@
 class Deck {
 public:
     Deck();
-    Card deal();
+    Card deal(bool Shown);
     int size();
 
 private:

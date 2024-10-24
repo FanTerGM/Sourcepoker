@@ -1,8 +1,8 @@
 #include "gameObject.h"
 
 
-Table::Table() : mode(TEXAS), numberOfPlayer(1), numberOfNPC(1) { populateTable(); }
-Table::Table(gameMode g, int numberOfPlayer, int numberOfNPC) : mode(g), numberOfPlayer(numberOfPlayer), numberOfNPC(numberOfNPC) { populateTable();}
+Table::Table() : numberOfPlayer(1), numberOfNPC(1) { populateTable(); }
+Table::Table(int numberOfPlayer, int numberOfNPC) : numberOfPlayer(numberOfPlayer), numberOfNPC(numberOfNPC) { populateTable();}
 
 
 void Table::populateTable() {
@@ -20,16 +20,14 @@ void Table::populateTable() {
 	}
 }
 
-
-
 void Table::dealCardtoPlayers() {
 	for (Player& player : players) {
-		player.cardToHand(deck);
+		player.cardToHand(deck, 2, true);
 	}
 }
 
 void Table::dealFlop() {
-	cardToHandMulti(deck, 3); 
+	cardToHand(deck, 3, true); 
 }
 
 void Table::showPlayersHand() {
@@ -44,4 +42,16 @@ void Table::showNPCsHand() {
 		cout << player.getPlayerUsername() << endl;
 		player.showCards();
 	}
+}
+
+void Table::raiseBet() {
+	cout << "unavalable" << endl;
+}
+
+void Table::checkWinner() {
+	cout << "unavalable" << endl;
+}
+
+void Table::StartGame() {
+	cout << "unavalable" << endl;
 }

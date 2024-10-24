@@ -129,18 +129,29 @@
   <ItemGroup>
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Deck.cpp" />
+    <ClCompile Include="drawTable.cpp" />
     <ClCompile Include="Hand.cpp" />
+    <ClCompile Include="House.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Sourcepoker.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="studTable.cpp" />
+    <ClCompile Include="superTable.cpp" />
     <ClCompile Include="Table.cpp" />
+    <ClCompile Include="texasTable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.h" />
     <ClInclude Include="Deck.h" />
+    <ClInclude Include="drawTable.h" />
+    <ClInclude Include="gameModes.h" />
     <ClInclude Include="gameObject.h" />
     <ClInclude Include="Hand.h" />
+    <ClInclude Include="House.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="studTable.h" />
+    <ClInclude Include="superTable.h" />
     <ClInclude Include="Table.h" />
+    <ClInclude Include="texasTable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Sourcepoker.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Card.cpp">
@@ -31,6 +31,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Hand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="texasTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="House.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="drawTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="superTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="studTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -51,6 +66,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Hand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="House.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="texasTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="studTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="drawTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameModes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="superTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

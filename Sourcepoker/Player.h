@@ -6,7 +6,8 @@ class Player : public Hand{
 public:
     Player();
     Player(string);
-
+    
+    int money;
     int getID();
     string getPlayerUsername();
     int getPlayerRank();
