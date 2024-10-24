@@ -11,7 +11,6 @@ protected:
 
     Deck deck;
     vector<Player> players;
-    vector<Player> NPCs;
 
 public:
     
@@ -24,7 +23,6 @@ public:
     void raiseBet();
     void populateTable();
     void showPlayersHand();
-    void showNPCsHand();
 
     virtual void dealFlop();
     virtual void StartGame();

@@ -11,7 +11,6 @@ void House::setTable(Table* table) {
 void House::raiseBet() { currentTable->raiseBet(); }
 void House::populateTable() { currentTable->populateTable(); }
 void House::showPlayersHand() { currentTable->showPlayersHand(); }
-void House::showNPCsHand() { currentTable->showNPCsHand(); }
 void House::showCards() { currentTable -> showCards(); }
 
 void House::dealFlop() { currentTable->dealFlop(); }
