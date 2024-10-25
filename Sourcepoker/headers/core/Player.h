@@ -1,6 +1,5 @@
 #pragma once
-#include "gameObject.h"
-#include "Hand.h"
+#include "../../headers/config/gameObject.h"
 
 class Player : public Hand{
 public:

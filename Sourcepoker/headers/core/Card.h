@@ -1,5 +1,4 @@
 #pragma once
-#include "../../headers/config/gameObject.h"
 
 using namespace std;
 
