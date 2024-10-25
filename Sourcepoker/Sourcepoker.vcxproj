@@ -127,31 +127,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Card.cpp" />
-    <ClCompile Include="Deck.cpp" />
-    <ClCompile Include="drawTable.cpp" />
-    <ClCompile Include="Hand.cpp" />
-    <ClCompile Include="House.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="src\core\Card.cpp" />
+    <ClCompile Include="src\core\Deck.cpp" />
+    <ClCompile Include="src\modes\drawTable.cpp" />
+    <ClCompile Include="src\core\Hand.cpp" />
+    <ClCompile Include="src\game\House.cpp" />
+    <ClCompile Include="src\core\Player.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="studTable.cpp" />
-    <ClCompile Include="superTable.cpp" />
-    <ClCompile Include="Table.cpp" />
-    <ClCompile Include="texasTable.cpp" />
+    <ClCompile Include="src\modes\studTable.cpp" />
+    <ClCompile Include="src\modes\superTable.cpp" />
+    <ClCompile Include="src\core\Table.cpp" />
+    <ClCompile Include="src\modes\texasTable.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Card.h" />
-    <ClInclude Include="Deck.h" />
-    <ClInclude Include="drawTable.h" />
-    <ClInclude Include="gameModes.h" />
-    <ClInclude Include="gameObject.h" />
-    <ClInclude Include="Hand.h" />
-    <ClInclude Include="House.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="studTable.h" />
-    <ClInclude Include="superTable.h" />
-    <ClInclude Include="Table.h" />
-    <ClInclude Include="texasTable.h" />
+    <ClInclude Include="headers\core\Card.h" />
+    <ClInclude Include="headers\core\Deck.h" />
+    <ClInclude Include="headers\modes\drawTable.h" />
+    <ClInclude Include="headers\config\gameModes.h" />
+    <ClInclude Include="headers\config\gameObject.h" />
+    <ClInclude Include="headers\core\Hand.h" />
+    <ClInclude Include="headers\game\House.h" />
+    <ClInclude Include="headers\core\Player.h" />
+    <ClInclude Include="headers\modes\studTable.h" />
+    <ClInclude Include="headers\modes\superTable.h" />
+    <ClInclude Include="headers\core\Table.h" />
+    <ClInclude Include="headers\modes\texasTable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

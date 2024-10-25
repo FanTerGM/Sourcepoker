@@ -1,5 +1,4 @@
-#include "gameObject.h"
-#include "Deck.h"
+#include "../../headers/config/gameObject.h"
 
 //Create a deck (unshuffled)
 Deck::Deck(): topCardIndex(0){

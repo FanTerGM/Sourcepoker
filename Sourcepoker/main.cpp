@@ -1,6 +1,5 @@
-
-#include "gameObject.h"
-#include "gameModes.h"
+#include "headers/config/gameObject.h"
+#include "headers/config/gameModes.h"
 
 int main() {
     cout << "Welcome to poker!" << endl;
@@ -12,7 +11,7 @@ int main() {
     int choice; cout <<"Enter a number to choose your mode: ";  cin >> choice;
 
     int numberOfPlayers, numberOfNPCs;
-    cout << "Enter the number of players: "; cin >> numberOfPlayers;
+    cout << "Enter the totabl number of players (Humans & AIs): "; cin >> numberOfPlayers;
     cout << "Enter the amount of NPC: "; cin >> numberOfNPCs;
 
     House house(new Table(numberOfPlayers, numberOfNPCs));

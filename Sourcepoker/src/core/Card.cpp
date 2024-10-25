@@ -1,4 +1,4 @@
-#include "gameObject.h"
+#include "../../headers/config/gameObject.h"
 
 
 Card::Card() : suit(HEARTS), rank(TWO) {}

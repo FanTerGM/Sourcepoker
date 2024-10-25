@@ -18,72 +18,72 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Card.cpp">
+    <ClCompile Include="src\core\Card.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Deck.cpp">
+    <ClCompile Include="src\core\Deck.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="src\core\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Table.cpp">
+    <ClCompile Include="src\core\Table.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Hand.cpp">
+    <ClCompile Include="src\core\Hand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="texasTable.cpp">
+    <ClCompile Include="src\modes\texasTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="House.cpp">
+    <ClCompile Include="src\game\House.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="drawTable.cpp">
+    <ClCompile Include="src\modes\drawTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="superTable.cpp">
+    <ClCompile Include="src\modes\superTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="studTable.cpp">
+    <ClCompile Include="src\modes\studTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Card.h">
+    <ClInclude Include="headers\core\Card.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gameObject.h">
+    <ClInclude Include="headers\config\gameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="headers\core\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Table.h">
+    <ClInclude Include="headers\core\Table.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Deck.h">
+    <ClInclude Include="headers\core\Deck.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Hand.h">
+    <ClInclude Include="headers\core\Hand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="House.h">
+    <ClInclude Include="headers\game\House.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="texasTable.h">
+    <ClInclude Include="headers\modes\texasTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="studTable.h">
+    <ClInclude Include="headers\modes\studTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="drawTable.h">
+    <ClInclude Include="headers\modes\drawTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gameModes.h">
+    <ClInclude Include="headers\config\gameModes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="superTable.h">
+    <ClInclude Include="headers\modes\superTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,5 @@
 #pragma once
-#include "gameObject.h"
+#include "../../headers/config/gameObject.h"
 
 class Table;
 
@@ -12,7 +12,6 @@ public:
     void raiseBet();
     void populateTable();
     void showPlayersHand();
-    void showNPCsHand();
     void showCards();
 
     void dealFlop();

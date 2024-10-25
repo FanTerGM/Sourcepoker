@@ -1,5 +1,5 @@
-#include "gameObject.h"
-#include "drawTable.h"
+#include "../../headers/config/gameObject.h"
+#include "../../headers/config/gameModes.h"
 
 drawTable::drawTable(int numberOfPlayers, int numberOfNPCs) : Table(numberOfPlayers,numberOfNPCs) {}
 

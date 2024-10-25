@@ -1,5 +1,5 @@
 #pragma once
-#include "gameObject.h"
+#include "../core/Table.h"
 
 class drawTable : public Table {
 public:

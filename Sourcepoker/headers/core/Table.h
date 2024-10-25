@@ -1,7 +1,5 @@
 #pragma once
-#include "gameObject.h"
-
-
+#include "../../headers/config/gameObject.h"
 
 class Table: public Hand{
 

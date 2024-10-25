@@ -1,5 +1,4 @@
-#include "gameObject.h"
-#include "Player.h"
+#include "../../headers/config/gameObject.h"
 
 int Player::currentId = 0; 
 
