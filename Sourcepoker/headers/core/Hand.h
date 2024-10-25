@@ -1,6 +1,5 @@
 #pragma once
-
-using namespace std; 
+#include "../config/gameObject.h" 
 
 class Hand {
 public:
