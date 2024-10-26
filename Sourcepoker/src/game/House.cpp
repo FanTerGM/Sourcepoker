@@ -1,4 +1,4 @@
-#include "../../headers/config/gameObject.h"
+#include <gameObject.h>
 #include "../../headers/game/House.h"
 
 House::House(Table* table) : currentTable(table) {}

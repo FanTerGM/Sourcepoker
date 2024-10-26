@@ -1,4 +1,4 @@
-#include "../../headers/config/gameObject.h"
+#include <gameObject.h>
 
 
 Table::Table() : numberOfPlayer(1), numberOfNPC(1) { populateTable(); }
@@ -9,7 +9,7 @@ void Table::populateTable() {
 	for (int i = 0; i < numberOfPlayer - numberOfNPC; i++) {
 		string input;
 		cout << "Enter Player " << i+1 << "'s name: ";  cin >> input;
-		Player player(input);
+		Player player = player.loadPlayer(input);
 		players.push_back(player);
 	}
 

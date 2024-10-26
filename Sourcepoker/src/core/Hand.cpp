@@ -1,4 +1,5 @@
-#include "../../headers/config/gameObject.h"
+#include <gameObject.h>
+
 
 Hand::Hand() {}
 

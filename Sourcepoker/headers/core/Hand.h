@@ -1,5 +1,4 @@
 #pragma once
-#include "../config/gameObject.h" 
 
 class Hand {
 public:

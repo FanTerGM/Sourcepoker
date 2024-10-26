@@ -1,5 +1,5 @@
-#include "../../headers/config/gameObject.h"
-#include "../../headers/config/gameModes.h"
+#include <gameObject.h>
+#include <gameModes.h>
 
 studTable::studTable(int numberOfPlayers, int numberOfNPCs) : Table(numberOfPlayers, numberOfNPCs) {}
 

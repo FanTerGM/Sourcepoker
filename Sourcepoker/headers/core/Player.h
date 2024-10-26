@@ -3,22 +3,26 @@
 
 class Player : public Hand{
 public:
-    Player();
     Player(string);
+    Player(string name, double win, double played, double winrate, int favoriteHand);
     
-    int money;
-    int getID();
-    string getPlayerUsername();
-    int getPlayerRank();
+    // call player's information
+    string getPlayerUsername() const;
+    int getPlayerRank() const;
+    int getPlayerfavoriteHand() const;
+    void updateGameHistoryAndWinrate(bool won);
     double getPlayertWinrate();
-    vector<Card> getPlayerfavoriteHand();
     
+    void recordPlayer(const string& directory = "Resources/playerInfo/") const;
+    Player loadPlayer(const string& username, const string& directory = "Resources/playerInfo/");
+
 private:
-    int id;
     string username;
-    double winrate;
+    double gameWon = 0;
+    double gamePlayed = 0;
+    double winrate = 0; 
     int rank;
-    vector<Card> favoriteHand;
-    static int currentId;
+    int favoriteHand = 0;
+    
 };
     

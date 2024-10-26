@@ -1,4 +1,7 @@
-#include "../../headers/config/gameObject.h"
+#include <gameObject.h>
+#include <algorithm>
+#include <random>
+
 
 //Create a deck (unshuffled)
 Deck::Deck(): topCardIndex(0){
@@ -8,8 +11,9 @@ Deck::Deck(): topCardIndex(0){
 			cards[index++] = Card(static_cast<Card::Suit>(s), static_cast<Card::Rank>(r));
 		}
 	}
-	srand(unsigned(std::time(0)));
-	random_shuffle(&cards[0], &cards[52]);
+	random_device rd;
+	mt19937 eng(rd());
+	shuffle(&cards[0], &cards[52], eng);
 }
 
 Card Deck::deal(bool Shown = true) {
