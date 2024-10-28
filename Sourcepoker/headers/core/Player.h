@@ -54,7 +54,7 @@ private:
     vector<gameRecord> gameHistory;
     double winrate = 0; 
     int rank = 0;
-    vector<Card> favoriteHand = 0;
+    vector<Card> favoriteHand;
 };
 
 

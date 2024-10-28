@@ -2,15 +2,18 @@
 #include <nlohmann/json.hpp>
 using namespace std;
 
-enum Suit { HEARTS, DIAMONDS, CLUBS, SPADES };
-enum Rank { TWO = 2, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE };
+class Card {
+public:
 
-NLOHMANN_JSON_SERIALIZE_ENUM(Suit, {
-    {Suit::HEARTS, "HEARTS"},
-    {Suit::DIAMONDS, "DIAMONDS"},
-    {Suit::CLUBS, "CLUBS"},
-    {Suit::SPADES, "SPADES"}
-    })
+    enum Suit { HEARTS, DIAMONDS, CLUBS, SPADES };
+    enum Rank { TWO = 2, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE };
+
+    NLOHMANN_JSON_SERIALIZE_ENUM(Suit, {
+        {Suit::HEARTS, "HEARTS"},
+        {Suit::DIAMONDS, "DIAMONDS"},
+        {Suit::CLUBS, "CLUBS"},
+        {Suit::SPADES, "SPADES"}
+        });
 
     // Use NLOHMANN_JSON_SERIALIZE_ENUM to create JSON conversion for Rank
     NLOHMANN_JSON_SERIALIZE_ENUM(Rank, {
@@ -30,8 +33,7 @@ NLOHMANN_JSON_SERIALIZE_ENUM(Suit, {
         })
 
 
-class Card {
-public:
+
     //default constructor
     Card();
     //Regular constructor with specified suit & rank
