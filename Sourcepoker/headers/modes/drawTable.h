@@ -6,4 +6,5 @@ public:
 	drawTable(int numberOfPlayers, int numberOfNPCs);
 
 	void dealCardtoPlayers() override;
+	string getModeName() override;
 };

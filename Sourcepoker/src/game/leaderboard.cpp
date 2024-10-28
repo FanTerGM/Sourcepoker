@@ -15,13 +15,10 @@ leaderboard::leaderboard() {
 			file >> playerData;
 			file.close();
 
-			playerLeaderboard.push_back(pair(
-				playerData["username"].get<string>(),
-				playerData["winrate"].get<double>()
-			));
+			playerLeaderboard.push_back(playerData.get<Player>());
 
-			std::sort(playerLeaderboard.begin(), playerLeaderboard.end(), [](pair <string, double> & left, pair<string, double>& right) {
-				return left.second >= right.second;
+			std::sort(playerLeaderboard.begin(), playerLeaderboard.end(), [](Player& left, Player& right) {
+				return left.getPlayertWinrate() > right.getPlayertWinrate();
 				});
 		}
 	}
@@ -32,9 +29,11 @@ void leaderboard::display() {
 	cout << "| Rank |   Player's name   | winrate |" << endl;
 	cout << "--------------------------------------" << endl;
 	int rank = 0;
-	for (const pair<string, double>& player : playerLeaderboard) {
-		cout << "| "<< setw(4) << ++rank << " | " << setw(17) << player.first << " | " << setw(7) << player.second << " |" << endl;
+	for (Player& player : playerLeaderboard) {
+		cout << "| "<< setw(4) << ++rank << " | " << setw(17) << player.getPlayerUsername() << " | " << setw(7) << player.getPlayertWinrate() << " |" << endl;
 		cout << "--------------------------------------" << endl;
+		player.updateRanking(rank);
+		player.recordPlayer();
 	}
 }
 

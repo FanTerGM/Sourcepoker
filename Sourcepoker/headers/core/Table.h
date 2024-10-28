@@ -22,6 +22,7 @@ public:
     void populateTable();
     void showPlayersHand();
 
+    virtual string getModeName();
     virtual void dealFlop();
     virtual void StartGame();
     virtual void checkWinner();

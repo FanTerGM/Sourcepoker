@@ -10,3 +10,7 @@ void texasTable::dealCardtoPlayers() {
 }
 
 void texasTable::dealFlop() { cardToHand(deck, 3, true);}
+
+string texasTable::getModeName(){
+	return "texas";
+}

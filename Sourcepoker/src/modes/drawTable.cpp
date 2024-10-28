@@ -9,3 +9,7 @@ void drawTable::dealCardtoPlayers() {
 	}
 }
 
+string drawTable::getModeName(){
+	return "draw";
+}
+

@@ -1,8 +1,10 @@
 #pragma once
-#include "../core/Table.h"
+#include <gameObject.h>
 
 class superTable : public Table{
 public:
 	superTable(int numberOfPlayers, int numberOfNPCs);
+
+	string getModeName() override;
 };
 

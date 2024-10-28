@@ -1,5 +1,5 @@
 #pragma once
-#include "../core/Table.h"
+#include <gameObject.h>
 
 class texasTable : public Table{
 public: 
@@ -7,4 +7,5 @@ public:
 	
 	void dealCardtoPlayers() override; 
 	void dealFlop() override;
+	string getModeName() override; 
 };

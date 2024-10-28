@@ -7,4 +7,5 @@ public:
 	
 	void dealFlop() override;
 	void dealCardtoPlayers() override;
+	string getModeName() override; 
 };

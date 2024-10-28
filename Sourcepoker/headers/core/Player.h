@@ -6,14 +6,17 @@ struct gameRecord {
     gameRecord();
     gameRecord(string gameMode, int earning, vector<Card> hand);
     string gameMode;
-    int earning;
+    int earning = 0;
     vector<Card> hand;
 };
 
 class Player : public Hand{
 public:
 
-    // Create player with default gameWon, gamePlayed, winrate and favorite hand as 0, money as 1000 
+    //Default player placeholder
+    Player();
+
+    // Create new player with gameWon, gamePlayed, winrate and favorite hand as 0, money as 1000 
     Player(string);
 
     // Create player with already avalable profile.
@@ -35,7 +38,7 @@ public:
     void updateGameHistoryAndWinrate(bool won, const vector<Card>& hand, string gameMode, int earning);
     
     //Update ranking
-    void updateRankking();
+    void updateRanking(int rank);
 
     // Save player profile as json file
     void recordPlayer(const string& directory = "Resources/playerInfo/") const;
@@ -43,6 +46,7 @@ public:
     // Load player's json file if exist, if not create a new one.
     Player loadPlayer(const string& username, const string& directory = "Resources/playerInfo/");
 
+    /* Friend of fuctions to get private atribute of player's profile*/
     friend void to_json(nlohmann::json& j, const Player& p);
 
     friend void from_json(const nlohmann::json& j, Player& p);
@@ -58,10 +62,12 @@ private:
 };
 
 
+
+/* Fuctions to get player profile*/
 void to_json(nlohmann::json& j, const gameRecord& g);
-
+/* Fuctions to get player profile*/
 void from_json(const nlohmann::json& j, gameRecord& g);
-
+/* Fuctions to get player profile*/
 void to_json(nlohmann::json& j, const Player& p);
-
+/* Fuctions to get player profile*/
 void from_json(const nlohmann::json& j, Player& p);

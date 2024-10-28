@@ -6,7 +6,7 @@ Table::Table(int numberOfPlayer, int numberOfNPC) : numberOfPlayer(numberOfPlaye
 
 
 void Table::populateTable() {
-	for (int i = 0; i < numberOfPlayer - numberOfNPC; i++) {
+	for (int i = 0; i < numberOfPlayer; i++) {
 		string input;
 		cout << "Enter Player " << i+1 << "'s name: ";  cin >> input;
 		Player player = player.loadPlayer(input);
@@ -16,7 +16,7 @@ void Table::populateTable() {
 	for (int i = 0; i < numberOfNPC; i++) {
 		string name = "AI_" + to_string(i);
 		Player AI(name);
-		players.push_back(name); 
+		players.push_back(AI); 
 	}
 }
 
@@ -24,6 +24,10 @@ void Table::dealCardtoPlayers() {
 	for (Player& player : players) {
 		player.cardToHand(deck, 5, true);
 	}
+}
+
+string Table::getModeName(){
+	return "Default5";
 }
 
 void Table::dealFlop() {

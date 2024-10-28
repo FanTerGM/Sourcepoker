@@ -5,11 +5,34 @@
 
 using json = nlohmann::json;
 
-Player::Player(string name) : username(name) {}
+/*Defenition for class gameRecord, used for recording player's history*/
 
-gameRecord::gameRecord(): gameMode("default5"), earning(0){}
+gameRecord::gameRecord(){}
 
 gameRecord::gameRecord(string gameMode, int earning, vector<Card> hand) : gameMode(gameMode), earning(earning), hand(hand) {};
+
+
+void to_json(nlohmann::json& j, const gameRecord& g) {
+	j = nlohmann::json{
+		{"gameMode", g.gameMode},
+		{"earning", g.earning},
+		{"hand", g.hand}
+	};
+}
+
+void from_json(const nlohmann::json& j, gameRecord& g) {
+	j.at("gameMode").get_to(g.gameMode);
+	j.at("earning").get_to(g.earning);
+	j.at("hand").get_to(g.hand);
+}
+
+
+
+/*Defenition for class Player, used to represent the user*/
+
+Player::Player() {}
+
+Player::Player(string name) : username(name) {}
 
 Player::Player(string name, double win, vector<gameRecord> gameHistory, double winrate, int money, int rank, vector<Card> favoriteHand)
 	: username(name), gameWon(win), gameHistory(gameHistory), winrate(winrate), money(money), rank(rank), favoriteHand(favoriteHand){}
@@ -23,17 +46,19 @@ double Player::getPlayertWinrate() const { return winrate; }
 void Player::updateGameHistoryAndWinrate(bool won, const vector<Card>& hand, string gameMode, int earning) {
 	gameHistory.push_back(gameRecord(gameMode, earning, hand));
 	if (won) gameWon++;
+	winrate = gameWon * 100 / gameHistory.size();
 	money += earning;	
 }
 
-void Player::recordPlayer(const string & directory, const Player& player) const {
-	json playerData;
+void Player::updateRanking(int newRank) { rank = newRank; }
+
+void Player::recordPlayer(const string & directory) const {
 
 	std::filesystem::create_directories(directory);
 
 	std::ofstream outFile(directory + username + ".json");
 	if (outFile.is_open()) {
-		outFile << json(player).dump(4);
+		outFile << json(*this).dump(4);
 		outFile.close();
 	}
 }
@@ -71,19 +96,7 @@ Player Player::loadPlayer(const string& username, const string& directory) {
 	return newPlayer;
 }
 
-void to_json(nlohmann::json& j, const gameRecord& g) {
-	j = nlohmann::json{
-		{"gameMode", g.gameMode},
-		{"earning", g.earning},
-		{"hand", g.hand}
-	};
-}
 
-void from_json(const nlohmann::json& j, gameRecord& g) {
-	j.at("gameMode").get_to(g.gameMode);
-	j.at("earning").get_to(g.earning);
-	j.at("hand").get_to(g.hand);
-}
 
 void to_json(nlohmann::json& j, const Player& p){
 	j = nlohmann::json{
@@ -106,5 +119,3 @@ void from_json(const nlohmann::json& j, Player& p) {
 	j.at("rank").get_to(p.rank);
 	j.at("favoriteHand").get_to(p.favoriteHand);
 }
-
-

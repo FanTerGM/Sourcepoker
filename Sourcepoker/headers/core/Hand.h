@@ -7,10 +7,7 @@ public:
     //Sort the card according to Rank
     void organize();
 
-    //Empty hand;
-    void clearHand();
-
-    //Add card to Hand
+    //Add card to Hand / Replace all current card. 
     void cardToHand(Deck& deck, int count, bool Shown);
 
     //Display Cards 
@@ -18,6 +15,7 @@ public:
 
    //Get vector cards that make up the Hand
     vector<Card> getHand();
+
 
 private:
     vector<Card> cards;

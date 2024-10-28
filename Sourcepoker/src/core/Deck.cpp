@@ -2,8 +2,6 @@
 #include <algorithm>
 #include <random>
 
-
-
 Deck::Deck(): topCardIndex(0){
 	int index = 0;
 	for (int s = Card::HEARTS; s <= Card::SPADES; s++) {

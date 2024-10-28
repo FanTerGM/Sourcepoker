@@ -13,7 +13,7 @@ public:
         {Suit::DIAMONDS, "DIAMONDS"},
         {Suit::CLUBS, "CLUBS"},
         {Suit::SPADES, "SPADES"}
-        });
+    })
 
     // Use NLOHMANN_JSON_SERIALIZE_ENUM to create JSON conversion for Rank
     NLOHMANN_JSON_SERIALIZE_ENUM(Rank, {
@@ -28,9 +28,9 @@ public:
         {Rank::TEN, "TEN"},
         {Rank::JACK, "JACK"},
         {Rank::QUEEN, "QUEEN"},
-        {Rank::KING, "KING"}
-        { Rank::ACE, "ACE" },
-        })
+        {Rank::KING, "KING"},
+        {Rank::ACE, "ACE" }
+     })
 
 
 

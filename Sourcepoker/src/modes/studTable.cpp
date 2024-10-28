@@ -12,3 +12,7 @@ void studTable::dealFlop() {
 void studTable::dealCardtoPlayers() {
 	cardToHand(deck, 1, true);
 }
+
+string studTable::getModeName(){
+	return "stud";
+}

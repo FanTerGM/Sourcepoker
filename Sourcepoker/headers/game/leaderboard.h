@@ -6,5 +6,5 @@ public:
 	void display();
 	
 private:
-	vector<pair<string, double>> playerLeaderboard; 
+	vector<Player> playerLeaderboard; 
 };
