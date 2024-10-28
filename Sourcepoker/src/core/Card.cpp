@@ -1,7 +1,5 @@
 #include <gameObject.h>
 
-
-
 Card::Card() : suit(HEARTS), rank(TWO) {}
 
 Card::Card(Suit s, Rank r) : suit(s), rank(r) {}
@@ -48,4 +46,15 @@ string Card::getRank() const {
 // Function to return the card as a string (e.g., "Ace of Spades")
 string Card::toString() const {
     return getRank() + " of " + getSuit();
+}
+
+// Define to_json for Card
+void to_json(nlohmann::json& j, const Card& c) {
+    j = nlohmann::json{ {"Suit",c.suit}, {"Rank", c.rank}};
+}
+
+// Define from_json for Card
+void from_json(const nlohmann::json& j, Card& c) {
+    j.at("suit").get_to(c.suit);
+    j.at("Rank").get_to(c.rank);
 }

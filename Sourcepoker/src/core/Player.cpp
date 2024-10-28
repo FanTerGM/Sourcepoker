@@ -2,56 +2,50 @@
 #include <fstream>
 #include <filesystem>
 #include <nlohmann/json.hpp>
+
 using json = nlohmann::json;
 
-//Dùng để tạo người chơi mới với số liệu mặc định được định dạng trong header 
 Player::Player(string name) : username(name) {}
 
-//Dùng để tạo người chơi có thông tin được lưu lại
-Player::Player(string name, double win, double played, double winrate, int favoriteHand)
-	: username(name), gameWon(win), gamePlayed(played), winrate(winrate), favoriteHand(favoriteHand){}
+gameRecord::gameRecord(): gameMode("default5"), earning(0){}
 
-//Lấy cái số liệu của người chơi
+gameRecord::gameRecord(string gameMode, int earning, vector<Card> hand) : gameMode(gameMode), earning(earning), hand(hand) {};
+
+Player::Player(string name, double win, vector<gameRecord> gameHistory, double winrate, int money, int rank, vector<Card> favoriteHand)
+	: username(name), gameWon(win), gameHistory(gameHistory), winrate(winrate), money(money), rank(rank), favoriteHand(favoriteHand){}
+
+
 int Player::getPlayerRank() const { return rank; }
 string Player::getPlayerUsername() const { return username; }
-int Player::getPlayerfavoriteHand() const { return favoriteHand; }
-double Player::getPlayertWinrate() { return winrate; }
+vector<Card> Player::getPlayerfavoriteHand() const { return favoriteHand; }
+double Player::getPlayertWinrate() const { return winrate; }
 
-void Player::updateGameHistoryAndWinrate(bool won) {
-	
-	gamePlayed++;
+void Player::updateGameHistoryAndWinrate(bool won, const vector<Card>& hand, string gameMode, int earning) {
+	gameHistory.push_back(gameRecord(gameMode, earning, hand));
 	if (won) gameWon++;
-	winrate = gameWon * 100 / gamePlayed;
+	money += earning;	
 }
 
-//Lưu hoặc tạo mới nếu cần lại thông tin người chơi trong file
-void Player::recordPlayer(const string & directory) const {
+void Player::recordPlayer(const string & directory, const Player& player) const {
 	json playerData;
-	playerData["username"] = username;
-	playerData["gameWon"] = gameWon;
-	playerData["gamePlayed"] = gamePlayed;
-	playerData["winrate"] = winrate; 
-	playerData["favoriteHand"] = favoriteHand;
 
-	//Tạo file để đảm bảo file của người chơi tồn tại
 	std::filesystem::create_directories(directory);
 
-	//Mở file và lưu thông tin lại 
 	std::ofstream outFile(directory + username + ".json");
 	if (outFile.is_open()) {
-		outFile << playerData.dump(4);
+		outFile << json(player).dump(4);
 		outFile.close();
 	}
 }
 
-/*Tìm và tải thông tin người chơi nếu có, trong trường hợp không thì tạo file người chơi mới */
+
 Player Player::loadPlayer(const string& username, const string& directory) {
 	string filename = directory + username + ".json";
 
-	//Thông báo người dùng và đảm bảo là người chơi đang được tải 
+
 	cout << "Loading player ..." << endl;
 	
-	//Kiểm tra trong thư mục Resources/playerInfo/ có tồn tại file người chơi không
+
 	if (std::filesystem::exists(filename)) {
 		
 		//Nếu tồn tại thì mở file
@@ -65,13 +59,7 @@ Player Player::loadPlayer(const string& username, const string& directory) {
 			cout << "Player found! Loading ..." << endl;
 			
 			//Trả về thông tin người chơi
-			return Player(
-				playerData["username"].get<string>(),
-				playerData["gameWon"].get<double>(),
-				playerData["gamePlayed"].get<double>(),
-				playerData["winrate"].get<double>(),
-				playerData["favoriteHand"].get<int>()
-			);
+			return playerData.get<Player>();
 		}
 	}
 	//Nếu không tồn tại thì thông báo
@@ -82,3 +70,41 @@ Player Player::loadPlayer(const string& username, const string& directory) {
 	newPlayer.recordPlayer();
 	return newPlayer;
 }
+
+void to_json(nlohmann::json& j, const gameRecord& g) {
+	j = nlohmann::json{
+		{"gameMode", g.gameMode},
+		{"earning", g.earning},
+		{"hand", g.hand}
+	};
+}
+
+void from_json(const nlohmann::json& j, gameRecord& g) {
+	j.at("gameMode").get_to(g.gameMode);
+	j.at("earning").get_to(g.earning);
+	j.at("hand").get_to(g.hand);
+}
+
+void to_json(nlohmann::json& j, const Player& p){
+	j = nlohmann::json{
+		{"username", p.username},
+		{"gameWon", p.gameWon},
+		{"gameHistory", p.gameHistory},
+		{"winrate", p.winrate},
+		{"money", p.money},
+		{"rank", p.rank},
+		{"favoriteHand", p.favoriteHand}
+	};
+}
+
+void from_json(const nlohmann::json& j, Player& p) {
+	j.at("username").get_to(p.username);
+	j.at("gameWon").get_to(p.gameWon);
+	j.at("gameHistory").get_to(p.gameHistory);
+	j.at("winrate").get_to(p.winrate);
+	j.at("money").get_to(p.money);
+	j.at("rank").get_to(p.rank);
+	j.at("favoriteHand").get_to(p.favoriteHand);
+}
+
+

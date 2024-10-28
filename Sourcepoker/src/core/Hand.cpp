@@ -1,10 +1,9 @@
 #include <gameObject.h>
 
-
 Hand::Hand() {}
 
-int Hand::getHandSize() {
-	return cards.size();
+void Hand::organize() {
+	sort(cards.begin(), cards.end(), [](Card& left, Card& right) {return left.getRank() < right.getRank();});
 }
 
 void Hand::clearHand() { cards.clear();}
@@ -18,10 +17,11 @@ void Hand::cardToHand(Deck& deck, int count, bool Shown) {
 }
 
 void Hand::showCards() {
+	organize();
 	for (const Card& card : cards) {
 		if (card.getShowState()) cout << card.getRank() << " of " << card.getSuit() << endl;
 		else cout << "Hidden" << endl;
 	}
 }
 
-vector<Card> Hand::getHand () { return cards; }
+vector<Card> Hand::getHand () { return cards;}

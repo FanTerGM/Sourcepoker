@@ -3,6 +3,7 @@
 #include <string>
 #include <ctime>
 #include <vector>
+#include <algorithm>
 
 #include "../headers/core/Card.h"
 #include "../headers/core/Deck.h"

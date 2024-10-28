@@ -3,7 +3,7 @@
 #include <random>
 
 
-//Create a deck (unshuffled)
+
 Deck::Deck(): topCardIndex(0){
 	int index = 0;
 	for (int s = Card::HEARTS; s <= Card::SPADES; s++) {
@@ -24,4 +24,4 @@ Card Deck::deal(bool Shown = true) {
 	throw out_of_range("Card not found, Deck out of bound");
 }
 
-int Deck::size() { return (52 - topCardIndex); }
+int Deck::remainingCards() const { return (52 - topCardIndex); }
