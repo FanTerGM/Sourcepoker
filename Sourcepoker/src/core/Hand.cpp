@@ -21,5 +21,8 @@ void Hand::showCards() {
 	}
 }
 
-vector<Card> Hand::getHand () { return cards;}
+vector<Card> Hand::getHand () {
+	organize();
+	return cards;
+}
 

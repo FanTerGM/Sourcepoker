@@ -41,12 +41,16 @@ void Table::showPlayersHand() {
 	}
 }
 
+bool Table::compareHandStrength(Player& a, Player& b) {
+	return a < b; 
+}
+
 void Table::raiseBet() {
 	cout << "unavalable" << endl;
 }
 
 void Table::checkWinner() {
-	cout << "unavalable" << endl;
+	sort(players.begin(), players.end(), compareHandStrength);
 }
 
 void Table::StartGame() {

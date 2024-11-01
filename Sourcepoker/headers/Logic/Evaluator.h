@@ -7,7 +7,10 @@ private:
 	map<Card::Rank, int> rankMap;
 	vector<Card> hand;
 public:
+	enum HandType { HIGH, ONE_PAIR, TWO_PAIR, THREE_OF_A_KIND, STRAIGHT, FLUSH, FULL_HOUSE, FOUR_OF_A_KIND, STRAIGHT_FLUSH, ROYAL_STRAIGHT_FLUSH };
+
 	Evaluator(vector<Card> hand);
+
 	bool FourOfAKind() const;
 	bool ThreeOfAKind() const;
 	bool Pair() const;
@@ -15,8 +18,14 @@ public:
 	bool Flush() const;
 	bool StraightFlush() const;
 	bool Straight() const;
+	bool TwoPairs() const;
 	bool RoyalFlush() const;
 
-	int getHandStrength();
+	int strengthRank() const;
+
+	bool operator<(const Evaluator& other);
+
+	bool strengthCard() const;
+
 };
 

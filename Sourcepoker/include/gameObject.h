@@ -11,3 +11,4 @@
 #include "../headers/core/Table.h"
 #include "../headers/core/Hand.h"
 #include "../headers/game/leaderboard.h"
+#include "../headers/Logic/Evaluator.h"

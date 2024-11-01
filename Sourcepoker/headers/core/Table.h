@@ -22,6 +22,8 @@ public:
     void populateTable();
     void showPlayersHand();
 
+    bool compareHandStrength(Player& a, Player& b);
+
     virtual string getModeName();
     virtual void dealFlop();
     virtual void StartGame();

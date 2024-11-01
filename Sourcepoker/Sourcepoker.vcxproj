@@ -129,7 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Evaluator.cpp" />
+    <ClCompile Include="src\Logic\Evaluator.cpp" />
     <ClCompile Include="src\core\Card.cpp" />
     <ClCompile Include="src\core\Deck.cpp" />
     <ClCompile Include="src\game\leaderboard.cpp" />
@@ -144,7 +144,7 @@
     <ClCompile Include="src\modes\texasTable.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Evaluator.h" />
+    <ClInclude Include="headers\Logic\Evaluator.h" />
     <ClInclude Include="headers\core\Card.h" />
     <ClInclude Include="headers\core\Deck.h" />
     <ClInclude Include="headers\game\leaderboard.h" />
