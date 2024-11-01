@@ -8,6 +8,8 @@ Card::Suit Card::getSuitEnum() const { return suit; }
 Card::Rank Card::getRankEnum() const { return rank; }
 
 
+
+
 void Card::setShown(bool set) {
     isShown = set;
 }

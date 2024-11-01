@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Evaluator.cpp" />
     <ClCompile Include="src\core\Card.cpp" />
     <ClCompile Include="src\core\Deck.cpp" />
     <ClCompile Include="src\game\leaderboard.cpp" />
@@ -143,6 +144,7 @@
     <ClCompile Include="src\modes\texasTable.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Evaluator.h" />
     <ClInclude Include="headers\core\Card.h" />
     <ClInclude Include="headers\core\Deck.h" />
     <ClInclude Include="headers\game\leaderboard.h" />
@@ -201,6 +203,9 @@
     <ClInclude Include="include\nlohmann\ordered_map.hpp" />
     <ClInclude Include="include\nlohmann\thirdparty\hedley\hedley.hpp" />
     <ClInclude Include="include\nlohmann\thirdparty\hedley\hedley_undef.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

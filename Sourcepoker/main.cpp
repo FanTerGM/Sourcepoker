@@ -10,7 +10,7 @@ void Games() {
     int choice; cout << "Enter a number to choose what to do: ";  cin >> choice;
 
     int numberOfPlayers, numberOfNPCs;
-    cout << "Enter the totabl number of players (Humans & AIs): "; cin >> numberOfPlayers;
+    cout << "Enter the number of humnan players: "; cin >> numberOfPlayers;
     cout << "Enter the amount of NPC: "; cin >> numberOfNPCs;
     House house(new Table(numberOfPlayers, numberOfNPCs));
 
