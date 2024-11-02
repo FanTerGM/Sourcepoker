@@ -1,6 +1,7 @@
 #include <gameObject.h>
 
 Evaluator::Evaluator(vector<Card> hand) : hand(hand) {
+    sort(hand.begin(), hand.end());
     for (const Card& card : hand) {
         suitMap[card.getSuitEnum()]++;
         rankMap[card.getRankEnum()]++;
@@ -33,7 +34,7 @@ bool Evaluator::StraightFlush() const {
 
 bool Evaluator::Straight() const {
     for (int i = 0; i < hand.size() - 1; ++i) {
-        if (hand[i].getRankEnum() + 1 != hand[i + 1].getRankEnum())
+        if (hand[i].getRankEnum() + 1 != hand[i + 1].getRankEnum()) 
             return false;
     }
     return true;
@@ -52,7 +53,7 @@ bool Evaluator::RoyalFlush() const {
 bool Evaluator::operator < (const Evaluator& other) {
     int a = strengthRank(), b = other.strengthRank();
     if (a != b) return a < b;
-    return strengthCard() < other.strengthCard();
+    return strengthHand() < other.strengthHand();
 }
 
 int Evaluator::strengthRank() const {
@@ -68,25 +69,25 @@ int Evaluator::strengthRank() const {
     return HIGH;
 }
 
-bool Evaluator::strengthCard() const {
+int Evaluator::strengthHand() const {
     switch (strengthRank()) {
-    case HIGH: 
     case ONE_PAIR:
     case TWO_PAIR:
     case THREE_OF_A_KIND:
+    case FOUR_OF_A_KIND:
+        int handId = 0; 
+        for (const Card& card : hand) {
+            handId = handId * 100 + card.getRankEnum();
+        }
+        return handId;
+    case HIGH:
     case STRAIGHT:
     case FLUSH:
     case FULL_HOUSE:
-    case FOUR_OF_A_KIND:
     case STRAIGHT_FLUSH:
     case ROYAL_STRAIGHT_FLUSH:
+        return hand[0].getRankEnum();
     default:
-        return 0; 
+        return hand[0].getRankEnum();
     }
 }
-
-
-
-
-
-

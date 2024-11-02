@@ -23,9 +23,9 @@ public:
 
 	int strengthRank() const;
 
-	bool operator<(const Evaluator& other);
+	int strengthHand() const;
 
-	bool strengthCard() const;
+	bool operator<(const Evaluator& other);
 
 };
 
