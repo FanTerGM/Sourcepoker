@@ -21,13 +21,13 @@ public:
     void raiseBet();
     void populateTable();
     void showPlayersHand();
-
-    bool compareHandStrength(Player& a, Player& b);
+    void createDeck();
 
     virtual string getModeName();
     virtual void dealFlop();
     virtual void StartGame();
     virtual void checkWinner();
+    void clearTable();
     virtual void dealCardtoPlayers();
     virtual ~Table() {}
 };

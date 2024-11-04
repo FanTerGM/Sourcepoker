@@ -41,18 +41,26 @@ void Table::showPlayersHand() {
 	}
 }
 
-bool Table::compareHandStrength(Player& a, Player& b) {
-	return a < b; 
-}
-
-void Table::raiseBet() {
-	cout << "unavalable" << endl;
+void Table::createDeck(){
+	deck = Deck();
 }
 
 void Table::checkWinner() {
-	sort(players.begin(), players.end(), compareHandStrength);
+	sort(players.begin(), players.end(), [](const Player& a, const Player& b) {return Evaluator(a.getHand()) > Evaluator(b.getHand()); });
+	cout << players[0].getPlayerUsername() << " is the winner" << endl;
+	cout << Evaluator(players[0].getHand()).strengthRank() << endl;
+}
+
+void Table::clearTable() {
+	for (Player& player : players) {
+		player.clearHand();
+	}
 }
 
 void Table::StartGame() {
+	cout << "unavalable" << endl;
+}
+
+void Table::raiseBet() {
 	cout << "unavalable" << endl;
 }

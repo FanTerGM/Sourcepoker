@@ -1,7 +1,7 @@
 #include <gameObject.h>
 
 Evaluator::Evaluator(vector<Card> hand) : hand(hand) {
-    sort(hand.begin(), hand.end());
+    sort(hand.begin(), hand.end(), [](Card& left, Card& right) {return left.getRank() > right.getRank(); });
     for (const Card& card : hand) {
         suitMap[card.getSuitEnum()]++;
         rankMap[card.getRankEnum()]++;
@@ -50,10 +50,14 @@ bool Evaluator::RoyalFlush() const {
         hand[0].getRankEnum() == Card::Rank::TEN && hand[hand.size() - 1].getRankEnum() == Card::Rank::ACE;
 }
 
-bool Evaluator::operator < (const Evaluator& other) {
+bool Evaluator::operator > (const Evaluator& other) const {
     int a = strengthRank(), b = other.strengthRank();
-    if (a != b) return a < b;
-    return strengthHand() < other.strengthHand();
+    if (a != b) return a > b;
+    return strengthHand() > other.strengthHand();
+}
+
+bool Evaluator:: operator == (const Evaluator& other) const {
+   return strengthRank() == other.strengthRank() && strengthHand() == other.strengthHand();
 }
 
 int Evaluator::strengthRank() const {
@@ -69,25 +73,67 @@ int Evaluator::strengthRank() const {
     return HIGH;
 }
 
+int Evaluator::getCardHighAndFlush() const {
+    int res = 0;
+    for (const Card& card : hand) {
+        res = res * 100 + card.getRankEnum();  // Shift left and add next rank
+    }
+    return res;
+}
+
+bool Evaluator::isAceLowStraight() const {
+    return hand[0].getRankEnum() == 14 && hand[4].getRankEnum() == 5;
+}
+
+int Evaluator::getCardStraight() const {
+    if (isAceLowStraight()) {
+        return 500;  // Arbitrary low value for Ace-low straight
+    }
+    return hand[0].getRankEnum();  // High card of the straight
+}
+
+int Evaluator::getCardFullHouse() const {
+    int threeRank = 0, pairRank = 0;
+    for (const auto& [key, value] : rankMap) {
+        if (value == 3) threeRank = key;
+        else if (value == 2) pairRank = key;
+    }
+    return threeRank * 100 + pairRank;
+}
+
+int Evaluator::getCardMult() const {
+    int isMult = 0, other = 0;
+    for (const auto& [key, value] : rankMap) {
+        if (value >= 2) isMult = isMult * 100 + key;  // For pairs, trips, quads
+        else other = other * 100 + key;  // Remaining single cards
+    }
+    return isMult * 10000 + other;  // Combine multiplets with other cards
+}
+
 int Evaluator::strengthHand() const {
     switch (strengthRank()) {
     case ONE_PAIR:
     case TWO_PAIR:
     case THREE_OF_A_KIND:
     case FOUR_OF_A_KIND:
-        int handId = 0; 
-        for (const Card& card : hand) {
-            handId = handId * 100 + card.getRankEnum();
-        }
-        return handId;
+        return getCardMult();
     case HIGH:
-    case STRAIGHT:
     case FLUSH:
+        return getCardHighAndFlush();
     case FULL_HOUSE:
+        return getCardFullHouse();
+    case STRAIGHT:
     case STRAIGHT_FLUSH:
+        return getCardStraight();
     case ROYAL_STRAIGHT_FLUSH:
-        return hand[0].getRankEnum();
+        return 1000000;  // Highest possible hand with a unique high value
     default:
-        return hand[0].getRankEnum();
+        return 0;  // Fallback for unexpected cases
     }
+}
+
+bool Evaluator::operator<(const Evaluator& other) const{
+    int a = strengthRank(), b = other.strengthRank();
+    if (a != b) return a < b;
+    return strengthHand() < other.strengthHand();
 }

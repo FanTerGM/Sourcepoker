@@ -14,6 +14,8 @@ public:
     void showPlayersHand();
     void showCards();
 
+    void createDeck();
+    void clearTable();
     void dealFlop();
     void StartGame();
     void checkWinner();

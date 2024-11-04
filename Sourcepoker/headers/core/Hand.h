@@ -13,9 +13,10 @@ public:
     //Display Cards 
     void showCards();
 
-   //Get vector cards that make up the Hand
-    vector<Card> getHand();
+    void clearHand();
 
+   //Get vector cards that make up the Hand
+    vector<Card> getHand() const ;
 
 private:
     vector<Card> cards;
