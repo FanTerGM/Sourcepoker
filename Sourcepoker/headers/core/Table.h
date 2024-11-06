@@ -23,6 +23,8 @@ public:
     void showPlayersHand();
     void createDeck();
 
+    int printTie();
+
     virtual string getModeName();
     virtual void dealFlop();
     virtual void StartGame();

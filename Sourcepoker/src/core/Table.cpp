@@ -45,15 +45,23 @@ void Table::createDeck(){
 	deck = Deck();
 }
 
-void Table::checkWinner() {
-	sort(players.begin(), players.end(), greater<Player>());
+int Table::printTie() {
 	int i = 0;
-	cout << "Winner:" << endl; 
-	cout << players[0].getPlayerUsername() << endl;
 	while (players[0] == players[++i]) {
 		players[i].updateGameHistoryAndWinrate(true, getModeName(), 1);
 		cout << players[i].getPlayerUsername() << endl;
 	}
+	return i;
+}
+
+void Table::checkWinner() {
+	sort(players.begin(), players.end(), greater<Player>()); 
+	int i = (players.size() != 1)? printTie() : 0;
+	for (i; i < players.size(); i++) 
+		players[i].updateGameHistoryAndWinrate(false, getModeName(), 1);
+	cout << "Winner:" << endl; 
+	cout << players[0].getPlayerUsername() << endl;
+	players[0].updateGameHistoryAndWinrate(true, getModeName(), 1);
 	cout << Evaluator(players[0].getHand()).strengthRank() << endl;
 }
 

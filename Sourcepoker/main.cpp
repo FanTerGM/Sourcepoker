@@ -2,14 +2,15 @@
 #include <gameModes.h>
 
 
-void Games() {
+static void Games() {
     while (true) {
         cout << "0. Default 5 cards" << endl;
-        cout << "1. Texas Hold 'em" << endl;
+        /*cout << "1. Texas Hold 'em" << endl;
         cout << "2. Draw 5 Poker" << endl;
-        cout << "3. Stud Poker" << endl;
+        cout << "3. Stud Poker" << endl;*/
+        cout << "4. Quit" << endl;
         int choice; cout << "Enter a number to choose what to do: ";  cin >> choice;
-
+        if (choice == 4) break; 
         int numberOfPlayers, numberOfNPCs;
         cout << "Enter the number of humnan players: "; cin >> numberOfPlayers;
         cout << "Enter the amount of NPC: "; cin >> numberOfNPCs;

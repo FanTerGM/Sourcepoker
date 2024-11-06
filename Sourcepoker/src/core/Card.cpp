@@ -8,8 +8,6 @@ Card::Suit Card::getSuitEnum() const { return suit; }
 Card::Rank Card::getRankEnum() const { return rank; }
 
 
-
-
 void Card::setShown(bool set) {
     isShown = set;
 }
@@ -57,6 +55,6 @@ void to_json(nlohmann::json& j, const Card& c) {
 
 // Define from_json for Card
 void from_json(const nlohmann::json& j, Card& c) {
-    j.at("suit").get_to(c.suit);
+    j.at("Suit").get_to(c.suit);
     j.at("Rank").get_to(c.rank);
 }

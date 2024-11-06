@@ -1,0 +1,36 @@
+{
+    "favoriteHand": [],
+    "gameHistory": [
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 2,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 4,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 6,
+                    "Suit": 2
+                },
+                {
+                    "Rank": 8,
+                    "Suit": 1
+                },
+                {
+                    "Rank": 11,
+                    "Suit": 2
+                }
+            ]
+        }
+    ],
+    "gameWon": 0.0,
+    "money": 1001,
+    "rank": 13,
+    "username": "Unknown",
+    "winrate": 0.0
+}

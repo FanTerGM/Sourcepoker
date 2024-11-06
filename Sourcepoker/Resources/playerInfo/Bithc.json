@@ -6,20 +6,98 @@
             "gameMode": "Default5",
             "hand": [
                 {
+                    "Rank": 10,
+                    "Suit": 1
+                },
+                {
+                    "Rank": 2,
+                    "Suit": 2
+                },
+                {
                     "Rank": 3,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 11,
+                    "Suit": 2
+                },
+                {
+                    "Rank": 13,
+                    "Suit": 1
+                }
+            ]
+        },
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 5,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 7,
+                    "Suit": 1
+                },
+                {
+                    "Rank": 9,
                     "Suit": 0
+                },
+                {
+                    "Rank": 13,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 12,
+                    "Suit": 2
+                }
+            ]
+        },
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 3,
+                    "Suit": 3
                 },
                 {
                     "Rank": 4,
-                    "Suit": 3
+                    "Suit": 2
                 },
                 {
-                    "Rank": 6,
-                    "Suit": 0
+                    "Rank": 5,
+                    "Suit": 3
                 },
                 {
                     "Rank": 8,
+                    "Suit": 2
+                },
+                {
+                    "Rank": 9,
+                    "Suit": 0
+                }
+            ]
+        },
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 10,
+                    "Suit": 2
+                },
+                {
+                    "Rank": 10,
                     "Suit": 3
+                },
+                {
+                    "Rank": 2,
+                    "Suit": 1
+                },
+                {
+                    "Rank": 3,
+                    "Suit": 0
                 },
                 {
                     "Rank": 12,
@@ -33,23 +111,75 @@
             "hand": [
                 {
                     "Rank": 2,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 3,
                     "Suit": 2
                 },
                 {
-                    "Rank": 3,
+                    "Rank": 4,
                     "Suit": 0
                 },
                 {
                     "Rank": 4,
+                    "Suit": 1
+                },
+                {
+                    "Rank": 6,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 8,
+                    "Suit": 1
+                }
+            ]
+        },
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 10,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 5,
+                    "Suit": 1
+                },
+                {
+                    "Rank": 14,
                     "Suit": 2
+                },
+                {
+                    "Rank": 13,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 12,
+                    "Suit": 2
+                }
+            ]
+        },
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 4,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 11,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 13,
+                    "Suit": 0
                 },
                 {
                     "Rank": 13,
                     "Suit": 3
+                },
+                {
+                    "Rank": 12,
+                    "Suit": 2
                 }
             ]
         },
@@ -63,15 +193,15 @@
                 },
                 {
                     "Rank": 4,
-                    "Suit": 1
+                    "Suit": 2
+                },
+                {
+                    "Rank": 11,
+                    "Suit": 0
                 },
                 {
                     "Rank": 11,
                     "Suit": 1
-                },
-                {
-                    "Rank": 13,
-                    "Suit": 2
                 },
                 {
                     "Rank": 12,
@@ -84,16 +214,42 @@
             "gameMode": "Default5",
             "hand": [
                 {
-                    "Rank": 10,
-                    "Suit": 0
+                    "Rank": 3,
+                    "Suit": 3
                 },
                 {
-                    "Rank": 5,
+                    "Rank": 3,
                     "Suit": 2
                 },
                 {
-                    "Rank": 8,
+                    "Rank": 3,
                     "Suit": 0
+                },
+                {
+                    "Rank": 7,
+                    "Suit": 2
+                },
+                {
+                    "Rank": 11,
+                    "Suit": 2
+                }
+            ]
+        },
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 10,
+                    "Suit": 2
+                },
+                {
+                    "Rank": 4,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 6,
+                    "Suit": 2
                 },
                 {
                     "Rank": 11,
@@ -101,7 +257,33 @@
                 },
                 {
                     "Rank": 12,
+                    "Suit": 0
+                }
+            ]
+        },
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 4,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 4,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 7,
                     "Suit": 1
+                },
+                {
+                    "Rank": 9,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 14,
+                    "Suit": 0
                 }
             ]
         },
@@ -115,19 +297,45 @@
                 },
                 {
                     "Rank": 6,
-                    "Suit": 3
+                    "Suit": 2
                 },
                 {
                     "Rank": 8,
                     "Suit": 3
                 },
                 {
-                    "Rank": 13,
+                    "Rank": 11,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 12,
+                    "Suit": 3
+                }
+            ]
+        },
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 7,
                     "Suit": 2
                 },
                 {
-                    "Rank": 13,
+                    "Rank": 14,
+                    "Suit": 2
+                },
+                {
+                    "Rank": 14,
                     "Suit": 1
+                },
+                {
+                    "Rank": 11,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 12,
+                    "Suit": 2
                 }
             ]
         },
@@ -137,11 +345,115 @@
             "hand": [
                 {
                     "Rank": 4,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 11,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 11,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 12,
+                    "Suit": 2
+                },
+                {
+                    "Rank": 12,
+                    "Suit": 1
+                }
+            ]
+        },
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 10,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 3,
+                    "Suit": 2
+                },
+                {
+                    "Rank": 6,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 8,
+                    "Suit": 2
+                },
+                {
+                    "Rank": 11,
+                    "Suit": 2
+                }
+            ]
+        },
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 5,
                     "Suit": 2
                 },
                 {
                     "Rank": 7,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 14,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 11,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 12,
                     "Suit": 2
+                }
+            ]
+        },
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 10,
+                    "Suit": 2
+                },
+                {
+                    "Rank": 7,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 8,
+                    "Suit": 1
+                },
+                {
+                    "Rank": 14,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 13,
+                    "Suit": 2
+                }
+            ]
+        },
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 3,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 6,
+                    "Suit": 3
                 },
                 {
                     "Rank": 8,
@@ -149,11 +461,37 @@
                 },
                 {
                     "Rank": 9,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 13,
+                    "Suit": 0
+                }
+            ]
+        },
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 10,
                     "Suit": 2
                 },
                 {
-                    "Rank": 12,
-                    "Suit": 1
+                    "Rank": 4,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 7,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 14,
+                    "Suit": 2
+                },
+                {
+                    "Rank": 13,
+                    "Suit": 0
                 }
             ]
         },
@@ -167,93 +505,15 @@
                 },
                 {
                     "Rank": 4,
-                    "Suit": 0
-                },
-                {
-                    "Rank": 11,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 13,
-                    "Suit": 3
-                },
-                {
-                    "Rank": 12,
-                    "Suit": 0
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 2,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 5,
-                    "Suit": 0
+                    "Suit": 2
                 },
                 {
                     "Rank": 8,
                     "Suit": 1
                 },
                 {
-                    "Rank": 14,
-                    "Suit": 0
-                },
-                {
-                    "Rank": 13,
-                    "Suit": 1
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 3,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 5,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 7,
-                    "Suit": 3
-                },
-                {
-                    "Rank": 14,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 13,
-                    "Suit": 2
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 5,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 6,
-                    "Suit": 1
-                },
-                {
                     "Rank": 11,
                     "Suit": 0
-                },
-                {
-                    "Rank": 13,
-                    "Suit": 3
                 },
                 {
                     "Rank": 12,
@@ -266,22 +526,48 @@
             "gameMode": "Default5",
             "hand": [
                 {
-                    "Rank": 2,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 7,
+                    "Rank": 10,
                     "Suit": 3
-                },
-                {
-                    "Rank": 7,
-                    "Suit": 0
                 },
                 {
                     "Rank": 9,
                     "Suit": 3
                 },
                 {
+                    "Rank": 11,
+                    "Suit": 1
+                },
+                {
+                    "Rank": 13,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 13,
+                    "Suit": 3
+                }
+            ]
+        },
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 3,
+                    "Suit": 2
+                },
+                {
+                    "Rank": 4,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 4,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 14,
+                    "Suit": 3
+                },
+                {
                     "Rank": 13,
                     "Suit": 2
                 }
@@ -292,50 +578,50 @@
             "gameMode": "Default5",
             "hand": [
                 {
-                    "Rank": 10,
+                    "Rank": 3,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 4,
+                    "Suit": 2
+                },
+                {
+                    "Rank": 14,
                     "Suit": 0
                 },
                 {
-                    "Rank": 2,
-                    "Suit": 3
+                    "Rank": 14,
+                    "Suit": 2
+                },
+                {
+                    "Rank": 13,
+                    "Suit": 1
+                }
+            ]
+        },
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 10,
+                    "Suit": 1
+                },
+                {
+                    "Rank": 3,
+                    "Suit": 0
                 },
                 {
                     "Rank": 8,
-                    "Suit": 3
+                    "Suit": 2
                 },
                 {
                     "Rank": 9,
                     "Suit": 1
                 },
                 {
-                    "Rank": 12,
-                    "Suit": 0
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 2,
-                    "Suit": 3
-                },
-                {
-                    "Rank": 8,
-                    "Suit": 0
-                },
-                {
-                    "Rank": 14,
-                    "Suit": 1
-                },
-                {
                     "Rank": 14,
                     "Suit": 3
-                },
-                {
-                    "Rank": 13,
-                    "Suit": 3
                 }
             ]
         },
@@ -343,422 +629,110 @@
             "earning": 1,
             "gameMode": "Default5",
             "hand": [
-                {
-                    "Rank": 8,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 11,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 13,
-                    "Suit": 3
-                },
-                {
-                    "Rank": 12,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 12,
-                    "Suit": 0
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 10,
-                    "Suit": 3
-                },
-                {
-                    "Rank": 2,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 5,
-                    "Suit": 3
-                },
-                {
-                    "Rank": 7,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 11,
-                    "Suit": 1
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 2,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 4,
-                    "Suit": 0
-                },
-                {
-                    "Rank": 6,
-                    "Suit": 2
-                },
                 {
                     "Rank": 7,
                     "Suit": 2
-                },
-                {
-                    "Rank": 13,
-                    "Suit": 1
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 3,
-                    "Suit": 3
-                },
-                {
-                    "Rank": 5,
-                    "Suit": 3
-                },
-                {
-                    "Rank": 7,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 14,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 13,
-                    "Suit": 0
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 14,
-                    "Suit": 0
-                },
-                {
-                    "Rank": 14,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 11,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 11,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 12,
-                    "Suit": 1
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 4,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 5,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 7,
-                    "Suit": 0
-                },
-                {
-                    "Rank": 11,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 11,
-                    "Suit": 0
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 10,
-                    "Suit": 0
-                },
-                {
-                    "Rank": 2,
-                    "Suit": 3
-                },
-                {
-                    "Rank": 5,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 6,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 12,
-                    "Suit": 0
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 10,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 2,
-                    "Suit": 3
-                },
-                {
-                    "Rank": 6,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 8,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 12,
-                    "Suit": 0
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 3,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 6,
-                    "Suit": 3
-                },
-                {
-                    "Rank": 6,
-                    "Suit": 0
-                },
-                {
-                    "Rank": 7,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 14,
-                    "Suit": 1
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 10,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 7,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 11,
-                    "Suit": 3
-                },
-                {
-                    "Rank": 12,
-                    "Suit": 0
-                },
-                {
-                    "Rank": 12,
-                    "Suit": 2
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 2,
-                    "Suit": 0
-                },
-                {
-                    "Rank": 4,
-                    "Suit": 0
-                },
-                {
-                    "Rank": 6,
-                    "Suit": 0
-                },
-                {
-                    "Rank": 8,
-                    "Suit": 0
-                },
-                {
-                    "Rank": 12,
-                    "Suit": 3
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 4,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 5,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 6,
-                    "Suit": 0
-                },
-                {
-                    "Rank": 11,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 11,
-                    "Suit": 1
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 2,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 4,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 5,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 12,
-                    "Suit": 3
-                },
-                {
-                    "Rank": 12,
-                    "Suit": 0
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 10,
-                    "Suit": 3
-                },
-                {
-                    "Rank": 3,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 6,
-                    "Suit": 3
-                },
-                {
-                    "Rank": 7,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 13,
-                    "Suit": 1
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 10,
-                    "Suit": 3
-                },
-                {
-                    "Rank": 2,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 8,
-                    "Suit": 0
-                },
-                {
-                    "Rank": 13,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 13,
-                    "Suit": 1
-                }
-            ]
-        },
-        {
-            "earning": 1,
-            "gameMode": "Default5",
-            "hand": [
-                {
-                    "Rank": 3,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 5,
-                    "Suit": 1
-                },
-                {
-                    "Rank": 7,
-                    "Suit": 2
-                },
-                {
-                    "Rank": 8,
-                    "Suit": 3
                 },
                 {
                     "Rank": 9,
+                    "Suit": 1
+                },
+                {
+                    "Rank": 14,
+                    "Suit": 1
+                },
+                {
+                    "Rank": 14,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 11,
+                    "Suit": 3
+                }
+            ]
+        },
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 10,
                     "Suit": 2
+                },
+                {
+                    "Rank": 5,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 5,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 7,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 12,
+                    "Suit": 3
+                }
+            ]
+        },
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 5,
+                    "Suit": 1
+                },
+                {
+                    "Rank": 6,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 7,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 14,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 13,
+                    "Suit": 3
+                }
+            ]
+        },
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 10,
+                    "Suit": 1
+                },
+                {
+                    "Rank": 3,
+                    "Suit": 1
+                },
+                {
+                    "Rank": 5,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 6,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 11,
+                    "Suit": 3
                 }
             ]
         }
     ],
-    "gameWon": 2.0,
-    "money": 1029,
-    "rank": 4,
-    "username": "Admin",
-    "winrate": 6.896551724137931
+    "gameWon": 6.0,
+    "money": 1028,
+    "rank": 1,
+    "username": "Bithc",
+    "winrate": 21.428571428571427
 }
