@@ -1,8 +1,35 @@
 {
     "favoriteHand": [],
-    "gameHistory": [],
-    "gameWon": 0.0,
-    "money": 1000,
+    "gameHistory": [
+        {
+            "earning": 1,
+            "gameMode": "Default5",
+            "hand": [
+                {
+                    "Rank": 4,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 5,
+                    "Suit": 3
+                },
+                {
+                    "Rank": 11,
+                    "Suit": 0
+                },
+                {
+                    "Rank": 12,
+                    "Suit": 2
+                },
+                {
+                    "Rank": 12,
+                    "Suit": 3
+                }
+            ]
+        }
+    ],
+    "gameWon": 1.0,
+    "money": 1001,
     "rank": 1,
     "username": "Admin",
     "winrate": 100.0

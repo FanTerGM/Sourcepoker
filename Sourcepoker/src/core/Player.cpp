@@ -26,8 +26,6 @@ void from_json(const nlohmann::json& j, gameRecord& g) {
 	j.at("hand").get_to(g.hand);
 }
 
-
-
 /*Defenition for class Player, used to represent the user*/
 
 Player::Player() {}
@@ -37,23 +35,33 @@ Player::Player(string name) : username(name) {}
 Player::Player(string name, double win, vector<gameRecord> gameHistory, double winrate, int money, int rank, vector<Card> favoriteHand)
 	: username(name), gameWon(win), gameHistory(gameHistory), winrate(winrate), money(money), rank(rank), favoriteHand(favoriteHand){}
 
+bool Player::operator > (const Player& other) const {
+	return Evaluator(getHand()) > Evaluator(other.getHand());
+}
+
+bool Player::operator == (const Player& other) const {
+	return Evaluator(getHand()) == Evaluator(other.getHand());
+}
+
 
 int Player::getPlayerRank() const { return rank; }
 string Player::getPlayerUsername() const { return username; }
 vector<Card> Player::getPlayerfavoriteHand() const { return favoriteHand; }
 double Player::getPlayertWinrate() const { return winrate; }
 
-void Player::updateGameHistoryAndWinrate(bool won, const vector<Card>& hand, string gameMode, int earning) {
-	gameHistory.push_back(gameRecord(gameMode, earning, hand));
+void Player::updateGameHistoryAndWinrate(bool won, string gameMode, int earning) {
+	gameHistory.push_back(gameRecord(gameMode, earning, getHand()));
 	if (won) gameWon++;
 	winrate = gameWon * 100 / gameHistory.size();
-	money += earning;	
+	money += earning;
+	recordPlayer();
 }
 
 void Player::updateRanking(int newRank) { rank = newRank; }
 
 void Player::recordPlayer(const string & directory) const {
 
+	if (username.find("AI_") != string::npos) return;
 	std::filesystem::create_directories(directory);
 
 	std::ofstream outFile(directory + username + ".json");

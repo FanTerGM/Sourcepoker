@@ -21,10 +21,14 @@ public:
 
     // Create player with already avalable profile.
     Player(string name, double win, vector<gameRecord> gameHistory, double winrate, int money, int rank, vector<Card> favoriteHand);
+
+    bool operator>(const Player& other) const;
     
     // get player's username
     string getPlayerUsername() const;
     
+    bool operator==(const Player& other) const;
+
     // get player's ranking
     int getPlayerRank() const;
 
@@ -33,9 +37,8 @@ public:
 
     // get winrate
     double getPlayertWinrate() const;
-
     // Update gameHistory (Win or lose) amd win rate
-    void updateGameHistoryAndWinrate(bool won, const vector<Card>& hand, string gameMode, int earning);
+    void updateGameHistoryAndWinrate(bool won, string gameMode, int earning);
     
     //Update ranking
     void updateRanking(int rank);

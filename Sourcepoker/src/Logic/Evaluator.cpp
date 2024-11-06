@@ -57,7 +57,7 @@ bool Evaluator::operator > (const Evaluator& other) const {
 }
 
 bool Evaluator:: operator == (const Evaluator& other) const {
-   return strengthRank() == other.strengthRank() && strengthHand() == other.strengthHand();
+    return strengthRank() == other.strengthRank() && strengthHand() == other.strengthHand();;
 }
 
 int Evaluator::strengthRank() const {
