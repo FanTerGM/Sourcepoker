@@ -5,35 +5,15 @@
 
 using json = nlohmann::json;
 
-/*Defenition for class gameRecord, used for recording player's history*/
-
-gameRecord::gameRecord(){}
-
-gameRecord::gameRecord(string gameMode, int earning, vector<Card> hand) : gameMode(gameMode), earning(earning), hand(hand) {};
-
-
-void to_json(nlohmann::json& j, const gameRecord& g) {
-	j = nlohmann::json{
-		{"gameMode", g.gameMode},
-		{"earning", g.earning},
-		{"hand", g.hand}
-	};
-}
-
-void from_json(const nlohmann::json& j, gameRecord& g) {
-	j.at("gameMode").get_to(g.gameMode);
-	j.at("earning").get_to(g.earning);
-	j.at("hand").get_to(g.hand);
-}
-
 /*Defenition for class Player, used to represent the user*/
 
 Player::Player() {}
 
 Player::Player(string name) : username(name) {}
 
-Player::Player(string name, double win, vector<gameRecord> gameHistory, double winrate, int money, int rank, vector<Card> favoriteHand)
-	: username(name), gameWon(win), gameHistory(gameHistory), winrate(winrate), money(money), rank(rank), favoriteHand(favoriteHand){}
+
+Player::Player(string name, double win, double winrate, int money, int rank, array<int, 10>& handPlayed) 
+	: username(name), gameWon(win), winrate(winrate), money(money), rank(rank), handPlayed(handPlayed) {}
 
 bool Player::operator > (const Player& other) const {
 	return Evaluator(getHand()) > Evaluator(other.getHand());
@@ -46,15 +26,20 @@ bool Player::operator == (const Player& other) const {
 
 int Player::getPlayerRank() const { return rank; }
 string Player::getPlayerUsername() const { return username; }
-vector<Card> Player::getPlayerfavoriteHand() const { return favoriteHand; }
 double Player::getPlayertWinrate() const { return winrate; }
 
-void Player::updateGameHistoryAndWinrate(bool won, string gameMode, int earning) {
-	gameHistory.push_back(gameRecord(gameMode, earning, getHand()));
+void Player::updateGameHistoryAndWinrate(bool won, int earning) {
+	int index = static_cast<int>(Evaluator(getHand()).strengthRank());
+	handPlayed[index]++;
 	if (won) gameWon++;
-	winrate = gameWon * 100 / gameHistory.size();
+	winrate = gameWon * 100 ;
 	money += earning;
 	recordPlayer();
+}
+
+void Player::getFavoriteHand() const {
+	int HandId = distance(handPlayed.begin(), max_element(handPlayed.begin(), handPlayed.end()));
+	cout << Evaluator().IntToEnumName(HandId) << endl;
 }
 
 void Player::updateRanking(int newRank) { rank = newRank; }
@@ -107,23 +92,21 @@ Player Player::loadPlayer(const string& username, const string& directory) {
 
 
 void to_json(nlohmann::json& j, const Player& p){
-	j = nlohmann::json{
+	 j = nlohmann::json {
 		{"username", p.username},
 		{"gameWon", p.gameWon},
-		{"gameHistory", p.gameHistory},
 		{"winrate", p.winrate},
 		{"money", p.money},
 		{"rank", p.rank},
-		{"favoriteHand", p.favoriteHand}
+		{"handPlayed", p.handPlayed}
 	};
 }
 
 void from_json(const nlohmann::json& j, Player& p) {
 	j.at("username").get_to(p.username);
 	j.at("gameWon").get_to(p.gameWon);
-	j.at("gameHistory").get_to(p.gameHistory);
 	j.at("winrate").get_to(p.winrate);
 	j.at("money").get_to(p.money);
 	j.at("rank").get_to(p.rank);
-	j.at("favoriteHand").get_to(p.favoriteHand);
+	j.at("handPlayed").get_to(p.handPlayed);
 }

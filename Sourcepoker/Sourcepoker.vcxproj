@@ -144,10 +144,10 @@
     <ClCompile Include="src\modes\texasTable.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="headers\Logic\Evaluator.h" />
     <ClInclude Include="headers\core\Card.h" />
     <ClInclude Include="headers\core\Deck.h" />
     <ClInclude Include="headers\game\leaderboard.h" />
+    <ClInclude Include="headers\Logic\Evaluator.h" />
     <ClInclude Include="headers\modes\drawTable.h" />
     <ClInclude Include="headers\core\Hand.h" />
     <ClInclude Include="headers\game\House.h" />

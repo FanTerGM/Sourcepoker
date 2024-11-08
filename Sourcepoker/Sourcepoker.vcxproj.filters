@@ -51,7 +51,7 @@
     <ClCompile Include="src\game\leaderboard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Evaluator.cpp">
+    <ClCompile Include="src\Logic\Evaluator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -230,7 +230,7 @@
     <ClInclude Include="include\nlohmann\thirdparty\hedley\hedley_undef.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Evaluator.h">
+    <ClInclude Include="headers\Logic\Evaluator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,10 +1,27 @@
 #include <gameObject.h>
 
+Evaluator::Evaluator(){}
+
 Evaluator::Evaluator(vector<Card> hand) : hand(hand) {
     sort(hand.begin(), hand.end(), [](Card& left, Card& right) {return left.getRank() > right.getRank(); });
     for (const Card& card : hand) {
         suitMap[card.getSuitEnum()]++;
         rankMap[card.getRankEnum()]++;
+    }
+}
+
+string Evaluator::IntToEnumName(int rank) {
+    switch (rank) {
+    case 1: return "HIGH";
+    case 2: return "ONE_PAIR";
+    case 3: return "TWO_PAIR";
+    case 4: return "THREE_OF_A_KIND";
+    case 5: return "STRAIGHT";
+    case 6: return "FLUSH";
+    case 7: return "FULL_HOUSE";
+    case 8: return "FOUR_OF_A_KIND";
+    case 9: return "STRAIGHT_FLUSH";
+    case 10: return " ROYAL_STRAIGHT_FLUSH";
     }
 }
 

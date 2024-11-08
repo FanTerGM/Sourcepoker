@@ -1,14 +1,6 @@
 #pragma once
 #include "Hand.h"
-#include <nlohmann/json.hpp>
-
-struct gameRecord {
-    gameRecord();
-    gameRecord(string gameMode, int earning, vector<Card> hand);
-    string gameMode;
-    int earning = 0;
-    vector<Card> hand;
-};
+#include "../Logic/Evaluator.h"
 
 class Player : public Hand{
 public:
@@ -20,7 +12,7 @@ public:
     Player(string);
 
     // Create player with already avalable profile.
-    Player(string name, double win, vector<gameRecord> gameHistory, double winrate, int money, int rank, vector<Card> favoriteHand);
+    Player(string name, double win, double winrate, int money, int rank, array<int, 10>& handPlayed);
 
     bool operator>(const Player& other) const;
     
@@ -32,13 +24,13 @@ public:
     // get player's ranking
     int getPlayerRank() const;
 
-    // get player's favorite hand
-    vector<Card> getPlayerfavoriteHand() const;
 
     // get winrate
     double getPlayertWinrate() const;
     // Update gameHistory (Win or lose) amd win rate
-    void updateGameHistoryAndWinrate(bool won, string gameMode, int earning);
+    void updateGameHistoryAndWinrate(bool won, int earning);
+
+    void getFavoriteHand() const;
     
     //Update ranking
     void updateRanking(int rank);
@@ -58,18 +50,14 @@ private:
     string username;
     int money = 1000;
     double gameWon = 0;
-    vector<gameRecord> gameHistory;
     double winrate = 0; 
     int rank = 0;
-    vector<Card> favoriteHand;
+    array<int, 10> handPlayed{};
 };
 
 
 
-/* Fuctions to get player profile*/
-void to_json(nlohmann::json& j, const gameRecord& g);
-/* Fuctions to get player profile*/
-void from_json(const nlohmann::json& j, gameRecord& g);
+
 /* Fuctions to get player profile*/
 void to_json(nlohmann::json& j, const Player& p);
 /* Fuctions to get player profile*/
