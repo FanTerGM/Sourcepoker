@@ -1,10 +1,10 @@
 {
-    "gameWon": 4.0,
+    "gameWon": 21.0,
     "handPlayed": [
-        9,
-        7,
+        33,
+        45,
+        4,
         1,
-        0,
         0,
         0,
         1,
@@ -12,8 +12,8 @@
         0,
         0
     ],
-    "money": 1018,
-    "rank": 0,
+    "money": 1084,
+    "rank": 2,
     "username": "Admin",
-    "winrate": 400.0
+    "winrate": 25.0
 }

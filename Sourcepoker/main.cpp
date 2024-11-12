@@ -22,21 +22,7 @@ static void Games() {
 
         house.populateTable();
         // Deal cards to the player's hand and table.
-
-        while (true) {
-            house.createDeck();
-            house.clearTable();
-            house.dealCardtoPlayers();
-            // Display the player's hand and the community card.
-            cout << "Community cards:" << endl;
-            house.showCards();
-            cout << "Player hand:" << endl;
-            house.showPlayersHand();
-            house.checkWinner();
-            cout << "Another round? Press 1 t0 quit" << endl;
-            cin >> choice;
-            if (choice == 1) break;
-        }
+        house.StartGame();
     }
 }
 

@@ -34,17 +34,17 @@ public:
 
 	int strengthRank() const;
 
-	int getCardHighAndFlush() const;
+	string getCardHighAndFlush() const;
 
 	bool isAceLowStraight() const;
 
-	int getCardStraight() const;
+	string getCardStraight() const;
 
-	int getCardFullHouse() const;
+	string getCardFullHouse() const;
 
-	int getCardMult() const;
+	string getCardMult() const;
 
-	int strengthHand() const;
+	string strengthHand() const;
 
 	bool operator<(const Evaluator& other) const;
 

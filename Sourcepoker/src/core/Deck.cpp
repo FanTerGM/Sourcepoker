@@ -14,7 +14,7 @@ Deck::Deck(): topCardIndex(0){
 	shuffle(&cards[0], &cards[52], eng);
 }
 
-Card Deck::deal(bool Shown = true) {
+Card Deck::deal(bool Shown) {
 	if (topCardIndex < 52) {
 		cards[topCardIndex].setShown(Shown);
 		return cards[topCardIndex++];

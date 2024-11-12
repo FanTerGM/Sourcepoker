@@ -6,7 +6,7 @@ public:
     Deck();
 
     //Take card from deck 
-    Card deal(bool Shown);
+    Card deal(bool Shown = true);
 
     //get the number of remaning cards
     int remainingCards() const;

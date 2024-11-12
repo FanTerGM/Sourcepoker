@@ -15,16 +15,13 @@ public:
     Table();
     Table(int numberOfPlayer, int numberOfNPC);
 
-    int pot;
-    int call;
-
     void raiseBet();
     void populateTable();
     void showPlayersHand();
     void createDeck();
 
     int printTie();
-
+    virtual void draw(int playerSeat);
     virtual string getModeName();
     virtual void dealFlop();
     virtual void StartGame();

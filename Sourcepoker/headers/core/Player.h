@@ -27,6 +27,7 @@ public:
 
     // get winrate
     double getPlayertWinrate() const;
+    int getGamePlayed() const;
     // Update gameHistory (Win or lose) amd win rate
     void updateGameHistoryAndWinrate(bool won, int earning);
 

@@ -14,13 +14,19 @@ void Hand::cardToHand(Deck& deck, int count, bool Shown) {
 	organize();
 }
 
+void Hand::replaceCard(int placeInVector, Deck& deck){
+	const Card& dealtCard = deck.deal();
+	cards[placeInVector] = dealtCard;
+}
+
 void Hand::clearHand() {
 	cards.clear();
 }
 
 void Hand::showCards() {
+	int i = 0;
 	for (const Card& card : cards) {
-		if (card.getShowState()) cout << card.getRank() << " of " << card.getSuit() << endl;
+		if (card.getShowState()) cout << ++i << ". " << card.getRank() << " of " << card.getSuit() << endl;
 		else cout << "Hidden" << endl;
 	}
 }

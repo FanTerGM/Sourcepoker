@@ -27,12 +27,17 @@ bool Player::operator == (const Player& other) const {
 int Player::getPlayerRank() const { return rank; }
 string Player::getPlayerUsername() const { return username; }
 double Player::getPlayertWinrate() const { return winrate; }
+int Player::getGamePlayed() const {
+	int res = 0;
+	for (const int& i : handPlayed) res += i;
+	return res; 
+}
 
 void Player::updateGameHistoryAndWinrate(bool won, int earning) {
 	int index = static_cast<int>(Evaluator(getHand()).strengthRank());
 	handPlayed[index]++;
 	if (won) gameWon++;
-	winrate = gameWon * 100 ;
+	winrate = gameWon * 100/ getGamePlayed();
 	money += earning;
 	recordPlayer();
 }

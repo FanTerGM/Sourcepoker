@@ -54,8 +54,16 @@ int Table::printTie() {
 	return i;
 }
 
+void Table::draw(int playerSeat){
+	return;
+}
+
+
 void Table::checkWinner() {
 	sort(players.begin(), players.end(), greater<Player>()); 
+	for (const Player& player : players) {
+		cout << Evaluator(player.getHand()).strengthHand() << endl;
+	}
 	int i = (players.size() != 1)? printTie() : 0;
 	for (i; i < players.size(); i++) 
 		players[i].updateGameHistoryAndWinrate(false, 1);
@@ -72,7 +80,18 @@ void Table::clearTable() {
 }
 
 void Table::StartGame() {
-	cout << "unavalable" << endl;
+	do{
+		createDeck();
+		clearTable();
+		dealCardtoPlayers();
+		// Display the player's hand and the community card.
+		cout << "Player hand:" << endl;
+		showPlayersHand();
+		checkWinner();
+		cout << "Another round? (Press 1 to continue)" << endl;
+		cin.ignore(1000, '\n');
+		
+	} while (cin.get() == '1');
 }
 
 void Table::raiseBet() {
