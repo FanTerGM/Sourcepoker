@@ -3,19 +3,37 @@
 
 drawTable::drawTable(int numberOfPlayers, int numberOfNPCs) : Table(numberOfPlayers,numberOfNPCs) {}
 
-void drawTable::draw(int playerSeat){
-	players[playerSeat].showCards();
-	cout << "Choose Card to replace: ";
-	replaceCard(cin.get(), deck);
-}
-
 void drawTable::dealCardtoPlayers() {
 	for (Player& player: players) {
-		cardToHand(deck, 5, true);
+		player.cardToHand(deck, 5, true);
 	}
 }
 
 string drawTable::getModeName(){
 	return "draw";
+}
+
+void drawTable::StartGame(){
+	do {
+		createDeck();
+		clearTable();
+		dealCardtoPlayers();
+		// Display the player's hand and the community card.
+		cout << "Player hand:" << endl;
+		for (Player& player : players) {
+			cout << player.getPlayerUsername() << endl;
+			player.showCards();
+			if (player.getPlayerUsername().find("AI_") != string::npos) continue;
+			cout << "Choose cards to replace: " << endl;
+			player.replaceCard(deck);
+			cout << "After replacement: " << endl;
+			player.showCards();
+		}
+		checkWinner();
+		cout << "Another round? (Press 1 to continue)" << endl;
+		cin.clear();
+		cin.ignore(1000, '\n');
+
+	} while (cin.get() == '1');
 }
 

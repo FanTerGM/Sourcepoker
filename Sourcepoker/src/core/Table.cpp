@@ -35,7 +35,7 @@ void Table::dealFlop() {
 }
 
 void Table::showPlayersHand() {
-	for (Player& player : players) {
+	for (const Player& player : players) {
 		cout << player.getPlayerUsername() << endl;
 		player.showCards();
 	}
@@ -52,10 +52,6 @@ int Table::printTie() {
 		cout << players[i].getPlayerUsername() << endl;
 	}
 	return i;
-}
-
-void Table::draw(int playerSeat){
-	return;
 }
 
 
@@ -89,6 +85,7 @@ void Table::StartGame() {
 		showPlayersHand();
 		checkWinner();
 		cout << "Another round? (Press 1 to continue)" << endl;
+		cin.clear();
 		cin.ignore(1000, '\n');
 		
 	} while (cin.get() == '1');

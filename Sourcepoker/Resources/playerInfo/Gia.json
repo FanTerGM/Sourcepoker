@@ -1,9 +1,9 @@
 {
-    "gameWon": 32.0,
+    "gameWon": 33.0,
     "handPlayed": [
         75,
         48,
-        2,
+        3,
         2,
         3,
         0,
@@ -12,8 +12,8 @@
         0,
         0
     ],
-    "money": 1131,
+    "money": 1132,
     "rank": 3,
     "username": "Gia",
-    "winrate": 24.427480916030536
+    "winrate": 25.0
 }

@@ -1,7 +1,7 @@
 {
     "gameWon": 21.0,
     "handPlayed": [
-        33,
+        34,
         45,
         4,
         1,
@@ -12,8 +12,8 @@
         0,
         0
     ],
-    "money": 1084,
+    "money": 1085,
     "rank": 2,
     "username": "Admin",
-    "winrate": 25.0
+    "winrate": 24.705882352941178
 }

@@ -14,16 +14,25 @@ void Hand::cardToHand(Deck& deck, int count, bool Shown) {
 	organize();
 }
 
-void Hand::replaceCard(int placeInVector, Deck& deck){
-	const Card& dealtCard = deck.deal();
-	cards[placeInVector] = dealtCard;
+void Hand::replaceCard(Deck& deck){
+	vector<int> cardToReplace;
+	int i = 0;
+	do {
+		int a; cin >> a; 
+		if (a == 0) break;
+		cardToReplace.push_back(a-1);
+	} while (++i && i <= 5);
+	for (const int& i : cardToReplace) {
+		const Card& dealtCard = deck.deal();
+		cards[i] = dealtCard;
+	}
 }
 
 void Hand::clearHand() {
 	cards.clear();
 }
 
-void Hand::showCards() {
+void Hand::showCards() const {
 	int i = 0;
 	for (const Card& card : cards) {
 		if (card.getShowState()) cout << ++i << ". " << card.getRank() << " of " << card.getSuit() << endl;

@@ -21,7 +21,6 @@ public:
     void createDeck();
 
     int printTie();
-    virtual void draw(int playerSeat);
     virtual string getModeName();
     virtual void dealFlop();
     virtual void StartGame();
