@@ -23,10 +23,16 @@ bool Player::operator == (const Player& other) const {
 	return Evaluator(getHand()) == Evaluator(other.getHand());
 }
 
+void Player::infoDisplay() const {
+	cout << "Username: " << getPlayerUsername() << endl;
+	cout << "Winrate: " << getPlayerWinrate() << endl;
+	cout << "Player's current ranking: " << getPlayerRank() << endl;
+	cout << "Favorite Hand: " << getFavoriteHand() << endl; 
+}
 
 int Player::getPlayerRank() const { return rank; }
 string Player::getPlayerUsername() const { return username; }
-double Player::getPlayertWinrate() const { return winrate; }
+double Player::getPlayerWinrate() const { return winrate; }
 int Player::getGamePlayed() const {
 	int res = 0;
 	for (const int& i : handPlayed) res += i;
@@ -42,9 +48,9 @@ void Player::updateGameHistoryAndWinrate(bool won, int earning) {
 	recordPlayer();
 }
 
-void Player::getFavoriteHand() const {
+string Player::getFavoriteHand() const {
 	int HandId = distance(handPlayed.begin(), max_element(handPlayed.begin(), handPlayed.end()));
-	cout << Evaluator().IntToEnumName(HandId) << endl;
+	return Evaluator().IntToEnumName(HandId);
 }
 
 void Player::updateRanking(int newRank) { rank = newRank; }

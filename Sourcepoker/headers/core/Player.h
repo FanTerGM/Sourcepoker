@@ -21,17 +21,19 @@ public:
     
     bool operator==(const Player& other) const;
 
+    void infoDisplay() const;
+
     // get player's ranking
     int getPlayerRank() const;
 
 
     // get winrate
-    double getPlayertWinrate() const;
+    double getPlayerWinrate() const;
     int getGamePlayed() const;
     // Update gameHistory (Win or lose) amd win rate
     void updateGameHistoryAndWinrate(bool won, int earning);
 
-    void getFavoriteHand() const;
+    string getFavoriteHand() const;
     
     //Update ranking
     void updateRanking(int rank);

@@ -33,10 +33,12 @@ int main() {
         cout << "1. Play poker" << endl;
         cout << "2. view Leaderboard" << endl;
         cout << "3. Exit program" << endl;
+        cout << "4. Browse player list" << endl;
         int choice; cout << "Enter a number to choose what to do: ";  cin >> choice;
 
         if (choice == 1) Games();
         if (choice == 2) leaderboard().display();
         if (choice == 3) return 0;
-    }   
+        if (choice == 4) SeparateFunction().browsePlayers();
+    }
 }

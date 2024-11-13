@@ -22,6 +22,8 @@ string Evaluator::IntToEnumName(int rank) {
     case 8: return "FOUR_OF_A_KIND";
     case 9: return "STRAIGHT_FLUSH";
     case 10: return " ROYAL_STRAIGHT_FLUSH";
+    default:
+        return "UNKNOWN HAND"; 
     }
 }
 

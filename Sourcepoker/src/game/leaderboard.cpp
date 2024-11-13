@@ -18,7 +18,7 @@ leaderboard::leaderboard() {
 			playerLeaderboard.push_back(playerData.get<Player>());
 
 			std::sort(playerLeaderboard.begin(), playerLeaderboard.end(), [](Player& left, Player& right) {
-				return left.getPlayertWinrate() > right.getPlayertWinrate();	
+				return left.getPlayerWinrate() > right.getPlayerWinrate();	
 				});
 		}
 	}
@@ -30,7 +30,7 @@ void leaderboard::display() {
 	cout << "--------------------------------------" << endl;
 	int rank = 0;
 	for (Player& player : playerLeaderboard) {
-		cout << "| "<< setw(4) << ++rank << " | " << setw(17) << player.getPlayerUsername() << " | " << setw(7) << player.getPlayertWinrate() << fixed << setprecision(1)<< " |" << endl;
+		cout << "| "<< setw(4) << ++rank << " | " << setw(17) << player.getPlayerUsername() << " | " << setw(7) << player.getPlayerWinrate() << fixed << setprecision(1)<< " |" << endl;
 		cout << "--------------------------------------" << endl;
 		player.updateRanking(rank);
 		player.recordPlayer();
