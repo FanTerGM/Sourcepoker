@@ -15,10 +15,10 @@ void Hand::cardToHand(Deck& deck, int count, bool Shown) {
 }
 
 void Hand::replaceCard(Deck& deck){
-	vector<int> cardToReplace;
+	std::vector<int> cardToReplace;
 	int i = 0;
 	do {
-		int a; cin >> a; 
+		int a; std::cin >> a; 
 		if (a == 0) break;
 		cardToReplace.push_back(a-1);
 	} while (++i && i <= 5);
@@ -35,12 +35,12 @@ void Hand::clearHand() {
 void Hand::showCards() const {
 	int i = 0;
 	for (const Card& card : cards) {
-		if (card.getShowState()) cout << ++i << ". " << card.getRank() << " of " << card.getSuit() << endl;
-		else cout << "Hidden" << endl;
+		if (card.getShowState()) std::cout << ++i << ". " << card.getRank() << " of " << card.getSuit() << std::endl;
+		else std::cout << "Hidden" << std::endl;
 	}
 }
 
-vector<Card> Hand::getHand () const{
+std::vector<Card> Hand::getHand () const{
 	return cards;
 }
 

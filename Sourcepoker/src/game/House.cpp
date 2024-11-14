@@ -10,15 +10,15 @@ void House::setTable(Table* table) {
 
 void House::raiseBet() { currentTable->raiseBet(); }
 void House::populateTable() { currentTable->populateTable(); }
-void House::showPlayersHand() { currentTable->showPlayersHand(); }
+void House::showPlayersHand() { currentTable->showPlayersHands(); }
 void House::showCards() { currentTable -> showCards(); }
 void House::createDeck() { currentTable->createDeck(); }
 void House::clearTable() { currentTable->clearTable();}
 
 void House::dealFlop() { currentTable->dealFlop(); }
-void House::StartGame() { currentTable->StartGame(); }
-void House::checkWinner() { currentTable->checkWinner(); }
-void House::dealCardtoPlayers() { currentTable->dealCardtoPlayers(); }
+void House::StartGame() { currentTable->startGame(); }
+void House::checkWinner() { currentTable->determineWinner(); }
+void House::dealCardtoPlayers() { currentTable->dealCardsToPlayers(); }
 
 House::~House() {
 	delete currentTable; 

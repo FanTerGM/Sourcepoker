@@ -3,7 +3,7 @@
 
 texasTable::texasTable(int numberOfPlayers, int numberOfNPCs) : Table(numberOfPlayers, numberOfNPCs) {}
 
-void texasTable::dealCardtoPlayers() {
+void texasTable::dealCardsToPlayers() {
 	for (Player& player : players) {
 		player.cardToHand(deck, 2, true);
 	}
@@ -11,6 +11,6 @@ void texasTable::dealCardtoPlayers() {
 
 void texasTable::dealFlop() { cardToHand(deck, 3, true);}
 
-string texasTable::getModeName(){
+std::string texasTable::getModeName() const{
 	return "texas";
 }

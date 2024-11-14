@@ -1,6 +1,6 @@
 #include <gameObject.h>
 #include <gameModes.h>
-
+using namespace std; 
 
 static void Games() {
     while (true) {
@@ -20,7 +20,6 @@ static void Games() {
         if (choice == 2) house.setTable(new drawTable(numberOfPlayers, numberOfNPCs));
         if (choice == 1) house.setTable(new texasTable(numberOfPlayers, numberOfNPCs));
 
-        house.populateTable();
         // Deal cards to the player's hand and table.
         house.StartGame();
     }

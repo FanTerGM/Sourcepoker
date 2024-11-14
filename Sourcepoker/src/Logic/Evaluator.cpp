@@ -2,7 +2,7 @@
 
 Evaluator::Evaluator(){}
 
-Evaluator::Evaluator(vector<Card> hand) : hand(hand) {
+Evaluator::Evaluator(std::vector<Card> hand) : hand(hand) {
     sort(hand.begin(), hand.end(), [](Card& left, Card& right) {return left.getRank() > right.getRank(); });
     for (const Card& card : hand) {
         suitMap[card.getSuitEnum()]++;
@@ -10,18 +10,18 @@ Evaluator::Evaluator(vector<Card> hand) : hand(hand) {
     }
 }
 
-string Evaluator::IntToEnumName(int rank) {
+std::string Evaluator::IntToEnumName(int rank) {
     switch (rank) {
-    case 1: return "HIGH";
-    case 2: return "ONE_PAIR";
-    case 3: return "TWO_PAIR";
-    case 4: return "THREE_OF_A_KIND";
-    case 5: return "STRAIGHT";
-    case 6: return "FLUSH";
-    case 7: return "FULL_HOUSE";
-    case 8: return "FOUR_OF_A_KIND";
-    case 9: return "STRAIGHT_FLUSH";
-    case 10: return " ROYAL_STRAIGHT_FLUSH";
+    case 0: return "HIGH";
+    case 1: return "ONE_PAIR";
+    case 2: return "TWO_PAIR";
+    case 3: return "THREE_OF_A_KIND";
+    case 4: return "STRAIGHT";
+    case 5: return "FLUSH";
+    case 6: return "FULL_HOUSE";
+    case 7: return "FOUR_OF_A_KIND";
+    case 8: return "STRAIGHT_FLUSH";
+    case 9: return "ROYAL_STRAIGHT_FLUSH";
     default:
         return "UNKNOWN HAND"; 
     }
@@ -92,8 +92,8 @@ int Evaluator::strengthRank() const {
     return HIGH;
 }
 
-string Evaluator::getCardHighAndFlush() const {
-    string res = {};
+std::string Evaluator::getCardHighAndFlush() const {
+    std::string res = {};
     for (const Card& card : hand) {
         res += ('a' + card.getRankEnum());  // Shift left and add next rank
     }
@@ -104,16 +104,16 @@ bool Evaluator::isAceLowStraight() const {
     return hand[0].getRankEnum() == 14 && hand[4].getRankEnum() == 5;
 }
 
-string Evaluator::getCardStraight() const {
-    string res = {};
+std::string Evaluator::getCardStraight() const {
+    std::string res = {};
     if (isAceLowStraight()) {
         return "f";  // Arbitrary low value for Ace-low straight
     }
     return res += hand[0].getRankEnum();  // High card of the straight
 }
 
-string Evaluator::getCardFullHouse() const {
-    string threeRank = {}, pairRank = {};
+std::string Evaluator::getCardFullHouse() const {
+    std::string threeRank = {}, pairRank = {};
     for (const auto& [key, value] : rankMap) {
         if (value == 3) threeRank += ('a' + key);
         else if (value == 2) pairRank += ('a' + key);
@@ -121,8 +121,8 @@ string Evaluator::getCardFullHouse() const {
     return threeRank+pairRank;
 }
 
-string Evaluator::getCardMult() const {
-    string isMult = {}, other = {};
+std::string Evaluator::getCardMult() const {
+    std::string isMult = {}, other = {};
     for (const auto& [key, value] : rankMap) {
         if (value >= 2) isMult += ('a' + key);  // For pairs, trips, quads
         else other += ('a' + key);;  // Remaining single cards
@@ -130,7 +130,7 @@ string Evaluator::getCardMult() const {
     return isMult+"-"+ other;  // Combine multiplets with other cards
 }
 
-string Evaluator::strengthHand() const {
+std::string Evaluator::strengthHand() const {
     switch (strengthRank()) {
     case ONE_PAIR:
     case TWO_PAIR:

@@ -9,16 +9,16 @@ struct Descend{
 
 class Evaluator{
 private:
-	map<Card::Suit, int> suitMap;
-	map<Card::Rank, int, Descend> rankMap;
-	vector<Card> hand;
+	std::map<Card::Suit, int> suitMap;
+	std::map<Card::Rank, int, Descend> rankMap;
+	std::vector<Card> hand;
 public:
 	enum HandType { HIGH = 0, ONE_PAIR, TWO_PAIR, THREE_OF_A_KIND, STRAIGHT, FLUSH, FULL_HOUSE, FOUR_OF_A_KIND, STRAIGHT_FLUSH, ROYAL_STRAIGHT_FLUSH };
 
 	Evaluator();
-	Evaluator(vector<Card> hand);
+	Evaluator(std::vector<Card> hand);
 
-	string IntToEnumName(int rank);
+	std::string IntToEnumName(int rank);
 
 	bool FourOfAKind() const;
 	bool ThreeOfAKind() const;
@@ -34,17 +34,17 @@ public:
 
 	int strengthRank() const;
 
-	string getCardHighAndFlush() const;
+	std::string getCardHighAndFlush() const;
 
 	bool isAceLowStraight() const;
 
-	string getCardStraight() const;
+	std::string getCardStraight() const;
 
-	string getCardFullHouse() const;
+	std::string getCardFullHouse() const;
 
-	string getCardMult() const;
+	std::string getCardMult() const;
 
-	string strengthHand() const;
+	std::string strengthHand() const;
 
 	bool operator<(const Evaluator& other) const;
 

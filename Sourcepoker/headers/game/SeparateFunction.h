@@ -3,6 +3,6 @@
 
 class SeparateFunction {
 public:
-	void showListofPlayers(vector<string> files) const;
+	void showListofPlayers(std::vector<std::string> files) const;
 	void browsePlayers() const;
 };

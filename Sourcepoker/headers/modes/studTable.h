@@ -6,6 +6,6 @@ public:
 	studTable(int numberOfPlayers, int numberOfNPCs);
 	
 	void dealFlop() override;
-	void dealCardtoPlayers() override;
-	string getModeName() override; 
+	void dealCardsToPlayers() override;
+	std::string getModeName() const override; 
 };

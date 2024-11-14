@@ -3,37 +3,37 @@
 
 drawTable::drawTable(int numberOfPlayers, int numberOfNPCs) : Table(numberOfPlayers,numberOfNPCs) {}
 
-void drawTable::dealCardtoPlayers() {
+void drawTable::dealCardsToPlayers() {
 	for (Player& player: players) {
 		player.cardToHand(deck, 5, true);
 	}
 }
 
-string drawTable::getModeName(){
+std::string drawTable::getModeName() const{
 	return "draw";
 }
 
-void drawTable::StartGame(){
+void drawTable::startGame(){
 	do {
 		createDeck();
 		clearTable();
-		dealCardtoPlayers();
+		dealCardsToPlayers();
 		// Display the player's hand and the community card.
-		cout << "Player hand:" << endl;
+		std::cout << "Player hand:\n";
 		for (Player& player : players) {
-			cout << player.getPlayerUsername() << endl;
+			std::cout << player.getUsername() << std::endl;
 			player.showCards();
-			if (player.getPlayerUsername().find("AI_") != string::npos) continue;
-			cout << "Choose cards to replace: " << endl;
+			if (player.getUsername().find("AI_") != std::string::npos) continue;
+			std::cout << "Choose cards to replace: " << std::endl;
 			player.replaceCard(deck);
-			cout << "After replacement: " << endl;
+			std::cout << "After replacement: " << std::endl;
 			player.showCards();
 		}
-		checkWinner();
-		cout << "Another round? (Press 1 to continue)" << endl;
-		cin.clear();
-		cin.ignore(1000, '\n');
+		determineWinner();
+		std::cout << "Another round? (Press 1 to continue)" << std::endl;
+		std::cin.clear();
+		std::cin.ignore(1000, '\n');
 
-	} while (cin.get() == '1');
+	} while (std::cin.get() == '1');
 }
 

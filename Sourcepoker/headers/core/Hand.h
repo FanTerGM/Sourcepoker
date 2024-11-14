@@ -1,10 +1,11 @@
 #pragma once
+#include <gameObject.h>
 
 class Hand {
 public:
     Hand();
 
-    //Sort the card according to Rank
+    ///Sort the card according to Rank
     void organize();
 
     //Add card to Hand / Replace all current card. 
@@ -18,8 +19,8 @@ public:
     void clearHand();
 
    //Get vector cards that make up the Hand
-    vector<Card> getHand() const ;
+    std::vector<Card> getHand() const ;
 
 private:
-    vector<Card> cards;
+    std::vector<Card> cards;
 };

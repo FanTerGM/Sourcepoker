@@ -9,10 +9,10 @@ void studTable::dealFlop() {
 	}
 }
 
-void studTable::dealCardtoPlayers() {
+void studTable::dealCardsToPlayers() {
 	cardToHand(deck, 1, true);
 }
 
-string studTable::getModeName(){
+std::string studTable::getModeName() const{
 	return "stud";
 }
