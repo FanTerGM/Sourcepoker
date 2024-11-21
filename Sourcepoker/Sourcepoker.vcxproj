@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="src\game\SeparateFunction.cpp" />
     <ClCompile Include="src\Logic\Evaluator.cpp" />
     <ClCompile Include="src\core\Card.cpp" />
