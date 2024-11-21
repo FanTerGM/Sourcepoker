@@ -9,31 +9,34 @@ using json = nlohmann::json;
 
 leaderboard::leaderboard() {
 	for (const auto& info : fs::directory_iterator("Resources/playerInfo")) {
-		std::ifstream file(info.path());
-		if (file.is_open()) {
-			json playerData;
-			file >> playerData;
-			file.close();
+		if (std::filesystem::exists(info.path())) {
+			std::ifstream file(info.path());
+			if (file.is_open()) {
+				json playerData;
+				file >> playerData;
+				file.close();
 
-			playerLeaderboard.push_back(playerData.get<Player>());
-
-			std::sort(playerLeaderboard.begin(), playerLeaderboard.end(), [](Player& left, Player& right) {
-				return left.getPlayertWinrate() > right.getPlayertWinrate();
-				});
+				std::cout << "Player found! Loading..." << std::endl;
+				playerLeaderboard.push_back(playerData.get<Player>()); // Deserialize JSON to Player
+			}
 		}
 	}
+	std::sort(playerLeaderboard.begin(), playerLeaderboard.end(), [](Player& left, Player& right) {
+		return left.getWinRate() > right.getWinRate(); 
+		});
 };
 
 void leaderboard::display() {
-	cout << "--------------------------------------" << endl;
-	cout << "| Rank |   Player's name   | winrate |" << endl;
-	cout << "--------------------------------------" << endl;
+	std::cout  << "--------------------------------------" << std::endl;
+	std::cout  << "| Rank |   Player's name   | winrate |" << std::endl;
+	std::cout  << "--------------------------------------" << std::endl;
 	int rank = 0;
 	for (Player& player : playerLeaderboard) {
-		cout << "| "<< setw(4) << ++rank << " | " << setw(17) << player.getPlayerUsername() << " | " << setw(7) << player.getPlayertWinrate() << " |" << endl;
-		cout << "--------------------------------------" << endl;
-		player.updateRanking(rank);
-		player.recordPlayer();
+		std::cout << "| " << std::setw(4) << ++rank << " | " << std::setw(17) << player.getUsername() << " | ";
+		std::cout << std::setw(7) << player.getWinRate() << std::fixed << std::setprecision(1) << " |" << std::endl;
+		std::cout  << "--------------------------------------" << std::endl;
+		player.updateRank(rank);
+		player.saveProfile();
 	}
 }
 

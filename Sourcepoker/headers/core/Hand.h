@@ -1,22 +1,26 @@
 #pragma once
+#include <gameObject.h>
 
 class Hand {
 public:
     Hand();
 
-    //Sort the card according to Rank
+    ///Sort the card according to Rank
     void organize();
 
     //Add card to Hand / Replace all current card. 
     void cardToHand(Deck& deck, int count, bool Shown);
 
+    void replaceCard(Deck& deck);
+
     //Display Cards 
-    void showCards();
+    void showCards() const;
+
+    void clearHand();
 
    //Get vector cards that make up the Hand
-    vector<Card> getHand();
-
+    std::vector<Card> getHand() const ;
 
 private:
-    vector<Card> cards;
+    std::vector<Card> cards;
 };

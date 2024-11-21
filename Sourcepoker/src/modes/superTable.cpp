@@ -3,6 +3,6 @@
 
 superTable::superTable(int numberOfPlayers, int numberOfNPCs) : Table (numberOfPlayers, numberOfNPCs){}
 
-string superTable::getModeName(){
+std::string superTable::getModeName() const{
     return "super";
 }

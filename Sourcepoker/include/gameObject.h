@@ -12,3 +12,4 @@
 #include "../headers/core/Hand.h"
 #include "../headers/game/leaderboard.h"
 #include "../headers/Logic/Evaluator.h"
+#include "../headers/game/SeparateFunction.h"

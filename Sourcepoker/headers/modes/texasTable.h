@@ -5,7 +5,7 @@ class texasTable : public Table{
 public: 
 	texasTable(int numberOfPlayers, int numberOfNPCs);
 	
-	void dealCardtoPlayers() override; 
+	void dealCardsToPlayers() override; 
 	void dealFlop() override;
-	string getModeName() override; 
+	std::string getModeName() const override;
 };

@@ -11,17 +11,36 @@ void Hand::cardToHand(Deck& deck, int count, bool Shown) {
 		const Card& dealtCard = deck.deal(Shown);
 		cards.push_back( dealtCard);
 	}
+	organize();
 }
 
-void Hand::showCards() {
-    organize();
-	for (const Card& card : cards) {
-		if (card.getShowState()) cout << card.getRank() << " of " << card.getSuit() << endl;
-		else cout << "Hidden" << endl;
+void Hand::replaceCard(Deck& deck){
+	std::vector<int> cardToReplace;
+	int i = 0;
+	do {
+		int a; std::cin >> a; 
+		if (a == 0) break;
+		cardToReplace.push_back(a-1);
+	} while (++i && i <= 5);
+	for (const int& i : cardToReplace) {
+		const Card& dealtCard = deck.deal();
+		cards[i] = dealtCard;
 	}
 }
 
-vector<Card> Hand::getHand () {
+void Hand::clearHand() {
+	cards.clear();
+}
+
+void Hand::showCards() const {
+	int i = 0;
+	for (const Card& card : cards) {
+		if (card.getShowState()) std::cout << ++i << ". " << card.getRank() << " of " << card.getSuit() << std::endl;
+		else std::cout << "Hidden" << std::endl;
+	}
+}
+
+std::vector<Card> Hand::getHand () const{
 	return cards;
 }
 

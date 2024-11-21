@@ -1,22 +1,25 @@
-#include <gameObject.h>
+#include "gameObject.h"
 
+// Default constructor: initializes card as the 2 of Hearts.
 Card::Card() : suit(HEARTS), rank(TWO) {}
 
+// Constructor with specified suit and rank.
 Card::Card(Suit s, Rank r) : suit(s), rank(r) {}
 
+// Gets the suit of the card as an enum value.
 Card::Suit Card::getSuitEnum() const { return suit; }
+
+// Gets the rank of the card as an enum value.
 Card::Rank Card::getRankEnum() const { return rank; }
 
-
-
-
-void Card::setShown(bool set) {
-    isShown = set;
-}
-
+// Gets the show state of the card.
 bool Card::getShowState() const { return isShown; }
 
-string Card::getSuit() const {
+// Sets whether the card is shown or hidden.
+void Card::setShown(bool set) { isShown = set; }
+
+// Converts the suit of the card to a string.
+std::string Card::getSuit() const {
     switch (suit) {
     case HEARTS: return "Hearts";
     case DIAMONDS: return "Diamonds";
@@ -26,7 +29,8 @@ string Card::getSuit() const {
     }
 }
 
-string Card::getRank() const {
+// Converts the rank of the card to a string.
+std::string Card::getRank() const {
     switch (rank) {
     case TWO: return "2";
     case THREE: return "3";
@@ -45,18 +49,7 @@ string Card::getRank() const {
     }
 }
 
-// Function to return the card as a string (e.g., "Ace of Spades")
-string Card::toString() const {
+// Converts the card to a string in the format "Rank of Suit".
+std::string Card::toString() const {
     return getRank() + " of " + getSuit();
-}
-
-// Define to_json for Card
-void to_json(nlohmann::json& j, const Card& c) {
-    j = nlohmann::json{ {"Suit",c.suit}, {"Rank", c.rank}};
-}
-
-// Define from_json for Card
-void from_json(const nlohmann::json& j, Card& c) {
-    j.at("suit").get_to(c.suit);
-    j.at("Rank").get_to(c.rank);
 }

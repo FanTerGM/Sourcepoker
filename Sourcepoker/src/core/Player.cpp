@@ -2,120 +2,122 @@
 #include <fstream>
 #include <filesystem>
 #include <nlohmann/json.hpp>
+#include <iostream>
+#include <algorithm> // For std::max_element
 
 using json = nlohmann::json;
 
-/*Defenition for class gameRecord, used for recording player's history*/
+/* --- Definitions for the Player class, representing a user's profile and gameplay statistics --- */
 
-gameRecord::gameRecord(){}
-
-gameRecord::gameRecord(string gameMode, int earning, vector<Card> hand) : gameMode(gameMode), earning(earning), hand(hand) {};
-
-
-void to_json(nlohmann::json& j, const gameRecord& g) {
-	j = nlohmann::json{
-		{"gameMode", g.gameMode},
-		{"earning", g.earning},
-		{"hand", g.hand}
-	};
-}
-
-void from_json(const nlohmann::json& j, gameRecord& g) {
-	j.at("gameMode").get_to(g.gameMode);
-	j.at("earning").get_to(g.earning);
-	j.at("hand").get_to(g.hand);
-}
-
-
-
-/*Defenition for class Player, used to represent the user*/
-
+// Default constructor for an empty player object
 Player::Player() {}
 
-Player::Player(string name) : username(name) {}
+// Constructor for a new player with a username
+Player::Player(const std::string& name) : username(name) {}
 
-Player::Player(string name, double win, vector<gameRecord> gameHistory, double winrate, int money, int rank, vector<Card> favoriteHand)
-	: username(name), gameWon(win), gameHistory(gameHistory), winrate(winrate), money(money), rank(rank), favoriteHand(favoriteHand){}
+// Constructor for a player with existing profile data
+Player::Player(const std::string& username, double gamesWon, double winRate, int balance, int rank, const std::array<int, 10>& handHistory)
+    : username(username), gamesWon(gamesWon), winRate(winRate), balance(balance), rank(rank), handHistory(handHistory) {}
 
 
-int Player::getPlayerRank() const { return rank; }
-string Player::getPlayerUsername() const { return username; }
-vector<Card> Player::getPlayerfavoriteHand() const { return favoriteHand; }
-double Player::getPlayertWinrate() const { return winrate; }
-
-void Player::updateGameHistoryAndWinrate(bool won, const vector<Card>& hand, string gameMode, int earning) {
-	gameHistory.push_back(gameRecord(gameMode, earning, hand));
-	if (won) gameWon++;
-	winrate = gameWon * 100 / gameHistory.size();
-	money += earning;	
+// Returns the player's username
+std::string Player::getUsername() const {
+    return username;
 }
 
-void Player::updateRanking(int newRank) { rank = newRank; }
-
-void Player::recordPlayer(const string & directory) const {
-
-	std::filesystem::create_directories(directory);
-
-	std::ofstream outFile(directory + username + ".json");
-	if (outFile.is_open()) {
-		outFile << json(*this).dump(4);
-		outFile.close();
-	}
+// Displays player's profile information in the console
+void Player::displayInfo() const {
+    std::cout << "Username: " << username << std::endl;
+    std::cout << "Winrate: " << winRate << "%" << std::endl;
+    std::cout << "Current Ranking: " << rank << std::endl;
+    std::cout << "Favorite Hand: " << getFavoriteHand() << std::endl;
 }
 
-
-Player Player::loadPlayer(const string& username, const string& directory) {
-	string filename = directory + username + ".json";
-
-
-	cout << "Loading player ..." << endl;
-	
-
-	if (std::filesystem::exists(filename)) {
-		
-		//Nếu tồn tại thì mở file
-		std::ifstream file(filename);
-		if (file.is_open()) {
-			json playerData;
-			file >> playerData;
-			file.close();
-
-			//Thông báo đã tìm thành công file người chơi 
-			cout << "Player found! Loading ..." << endl;
-			
-			//Trả về thông tin người chơi
-			return playerData.get<Player>();
-		}
-	}
-	//Nếu không tồn tại thì thông báo
-	cout << "Player not found...Creating new player..." << endl;
-	
-	//Tạo người chơi mới với thông tin mặc định
-	Player newPlayer(username);
-	newPlayer.recordPlayer();
-	return newPlayer;
+// Returns the player's rank
+int Player::getRank() const {
+    return rank;
 }
 
-
-
-void to_json(nlohmann::json& j, const Player& p){
-	j = nlohmann::json{
-		{"username", p.username},
-		{"gameWon", p.gameWon},
-		{"gameHistory", p.gameHistory},
-		{"winrate", p.winrate},
-		{"money", p.money},
-		{"rank", p.rank},
-		{"favoriteHand", p.favoriteHand}
-	};
+// Returns the player's win rate
+double Player::getWinRate() const {
+    return winRate;
 }
 
-void from_json(const nlohmann::json& j, Player& p) {
-	j.at("username").get_to(p.username);
-	j.at("gameWon").get_to(p.gameWon);
-	j.at("gameHistory").get_to(p.gameHistory);
-	j.at("winrate").get_to(p.winrate);
-	j.at("money").get_to(p.money);
-	j.at("rank").get_to(p.rank);
-	j.at("favoriteHand").get_to(p.favoriteHand);
+// Returns the total number of games played by the player
+int Player::getGamesPlayed() const {
+    return std::accumulate(handHistory.begin(), handHistory.end(), 0);
 }
+
+// Returns the player's favorite hand based on most frequently played hand
+std::string Player::getFavoriteHand() const {
+    auto maxPlayedHand = std::max_element(handHistory.begin(), handHistory.end());
+    int handId = std::distance(handHistory.begin(), maxPlayedHand);
+    return Evaluator().rankToString(handId); // Convert hand ID to a human-readable name
+}
+
+// Updates the player's ranking
+void Player::updateRank(int newRank) {
+    rank = newRank;
+}
+
+// Updates game history, calculates win rate, and updates balance after a game
+void Player::updateGameHistory(bool won, int earnings) {
+    int handStrengthIndex = static_cast<int>(Evaluator(getHand()).evaluateHandRank());
+    handHistory[handStrengthIndex]++; // Track this hand's occurrence
+
+    if (won) gamesWon++;
+    winRate = (gamesWon * 100) / getGamesPlayed(); // Calculate win rate as a percentage
+    balance += earnings;
+
+    saveProfile(); // Save the updated player profile
+}
+
+// Saves player profile to a JSON file in the specified directory
+void Player::saveProfile(const std::string& directory) const {
+    // Avoid saving profiles of AI players
+    if (username.find("AI_") != std::string::npos) return;
+
+    std::filesystem::create_directories(directory);
+
+    std::ofstream outFile(directory + username + ".json");
+    if (outFile.is_open()) {
+        outFile << json(*this).dump(4); // Pretty-print JSON with indentation
+        outFile.close();
+    }
+}
+
+// Loads an existing player profile from a JSON file or creates a new one if none exists
+Player Player::loadProfile(const std::string& username, const std::string& directory) {
+    std::string filename = directory + username + ".json";
+
+    std::cout << "Loading player..." << std::endl;
+
+    if (std::filesystem::exists(filename)) {
+        std::ifstream file(filename);
+        if (file.is_open()) {
+            json playerData;
+            file >> playerData;
+            file.close();
+
+            std::cout << "Player found! Loading..." << std::endl;
+            return playerData.get<Player>(); // Deserialize JSON to Player
+        }
+    }
+
+    // If profile not found, create a new player profile
+    std::cout << "Player not found...Creating new player..." << std::endl;
+    Player newPlayer(username);
+    newPlayer.saveProfile();
+    return newPlayer;
+}
+
+// Overloaded greater-than operator for comparing player hands
+bool Player::operator>(const Player& other) const {
+    return Evaluator(getHand()) > Evaluator(other.getHand());
+}
+
+// Overloaded equality operator for comparing player hands
+bool Player::operator==(const Player& other) const {
+    return Evaluator(getHand()) == Evaluator(other.getHand());
+}
+

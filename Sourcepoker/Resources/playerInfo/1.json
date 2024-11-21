@@ -1,8 +1,8 @@
 {
-    "balance": 1002,
+    "balance": 1000,
     "gamesWon": 0.0,
     "handHistory": [
-        2,
+        0,
         0,
         0,
         0,
@@ -14,6 +14,6 @@
         0
     ],
     "rank": 0,
-    "username": "Tester",
+    "username": "1",
     "winRate": 0.0
 }

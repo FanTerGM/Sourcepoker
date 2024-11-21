@@ -5,6 +5,7 @@ class drawTable : public Table {
 public:
 	drawTable(int numberOfPlayers, int numberOfNPCs);
 
-	void dealCardtoPlayers() override;
-	string getModeName() override;
+	void dealCardsToPlayers() override;
+	std::string getModeName() const override;
+	void startGame() override; 
 };
