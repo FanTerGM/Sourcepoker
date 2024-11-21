@@ -104,12 +104,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\include;D:\SFML-2.6.1\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>D:\SFML-2.6.1\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-network-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,12 +133,13 @@
   <ItemGroup>
     <ClCompile Include="src\core\Card.cpp" />
     <ClCompile Include="src\core\Deck.cpp" />
+    <ClCompile Include="src\gamewindow\GameWindow.cpp" />
+    <ClCompile Include="src\gamewindow\Menu.cpp" />
     <ClCompile Include="src\game\leaderboard.cpp" />
     <ClCompile Include="src\modes\drawTable.cpp" />
     <ClCompile Include="src\core\Hand.cpp" />
     <ClCompile Include="src\game\House.cpp" />
     <ClCompile Include="src\core\Player.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="src\modes\studTable.cpp" />
     <ClCompile Include="src\modes\superTable.cpp" />
     <ClCompile Include="src\core\Table.cpp" />
@@ -145,6 +148,8 @@
   <ItemGroup>
     <ClInclude Include="headers\core\Card.h" />
     <ClInclude Include="headers\core\Deck.h" />
+    <ClInclude Include="headers\gamewindow\GameWindow.h" />
+    <ClInclude Include="headers\gamewindow\Menu.h" />
     <ClInclude Include="headers\game\leaderboard.h" />
     <ClInclude Include="headers\modes\drawTable.h" />
     <ClInclude Include="headers\core\Hand.h" />

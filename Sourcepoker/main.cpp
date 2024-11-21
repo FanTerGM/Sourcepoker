@@ -29,7 +29,43 @@ void Games() {
 }
 
 int main() {
-    while (true){
+    //window   
+    const int SCREEN_WIDTH = 1080;
+    const int SCREEN_HEIGHT = 720;
+
+    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Poker Game"); //can add ,sf::style::Titlebar | sf::Style::Close
+
+    //Menu menu(SCREEN_WIDTH, SCREEN_HEIGHT);
+    
+    //game loop
+    while (window.isOpen()) {
+        //event polling
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            switch (event.type) {
+                case sf::Event::Closed:
+                    window.close();
+                    break;
+                case sf::Event::KeyPressed:
+                    if (event.key.code == sf::Keyboard::Escape)
+                        window.close();
+                    break;
+                    //case sf::Event::
+            }
+        }
+        //update
+
+        //render
+        window.clear(); // clear old frames
+
+        //draw the game
+
+        window.display(); //tell app that window is done drawing
+    }
+
+    //end of application
+
+ /*   while (true){
         cout << "Welcome to poker!" << endl;
         cout << "Please choose what to do" << endl;
         cout << "1. Play poker" << endl;
@@ -40,5 +76,6 @@ int main() {
         if (choice == 1) Games();
         if (choice == 2) leaderboard().display();
         if (choice == 3) return 0;
-    }   
+    }   */
+    return 0;
 }
