@@ -33,6 +33,13 @@ bool Evaluator::StraightFlush() const {
 }
 
 bool Evaluator::Straight() const {
+    if (hand[0].getRankEnum() == Card::Rank::TWO &&
+        hand[1].getRankEnum() == Card::Rank::THREE &&
+        hand[2].getRankEnum() == Card::Rank::FOUR &&
+        hand[3].getRankEnum() == Card::Rank::FIVE &&
+        hand[4].getRankEnum() == Card::Rank::ACE)
+        return true;
+
     for (int i = 0; i < hand.size() - 1; ++i) {
         if (hand[i].getRankEnum() + 1 != hand[i + 1].getRankEnum()) 
             return false;
@@ -75,19 +82,15 @@ int Evaluator::strengthHand() const {
     case TWO_PAIR:
     case THREE_OF_A_KIND:
     case FOUR_OF_A_KIND:
-        int handId = 0; 
-        for (const Card& card : hand) {
-            handId = handId * 100 + card.getRankEnum();
-        }
-        return handId;
-    case HIGH:
-    case STRAIGHT:
-    case FLUSH:
     case FULL_HOUSE:
+
+    case HIGH:
+    case FLUSH:
+
+    case STRAIGHT:
     case STRAIGHT_FLUSH:
+
     case ROYAL_STRAIGHT_FLUSH:
-        return hand[0].getRankEnum();
-    default:
-        return hand[0].getRankEnum();
+        return 1;
     }
 }
