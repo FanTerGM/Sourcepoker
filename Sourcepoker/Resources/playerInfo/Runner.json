@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "balance": 1123,
     "gamesWon": 44.0,
     "handHistory": [
@@ -14,6 +15,13 @@
         0
     ],
     "rank": 3,
+=======
+    "favoriteHand": [],
+    "gameHistory": [],
+    "gameWon": 0.0,
+    "money": 1000,
+    "rank": 14,
+>>>>>>> Add
     "username": "Runner",
     "winRate": 35.77235772357724
 }

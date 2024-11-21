@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "balance": 1000,
     "gamesWon": 0.0,
     "handHistory": [
@@ -16,4 +17,13 @@
     "rank": 0,
     "username": "1",
     "winRate": 0.0
+=======
+    "favoriteHand": [],
+    "gameHistory": [],
+    "gameWon": 0.0,
+    "money": 1000,
+    "rank": 3,
+    "username": "1",
+    "winrate": 0.0
+>>>>>>> Add
 }

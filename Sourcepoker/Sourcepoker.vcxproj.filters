@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\Card.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -51,10 +48,17 @@
     <ClCompile Include="src\game\leaderboard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="src\Logic\Evaluator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\game\SeparateFunction.cpp">
+=======
+    <ClCompile Include="src\gamewindow\GameWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gamewindow\Menu.cpp">
+>>>>>>> Add
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -233,6 +237,7 @@
     <ClInclude Include="include\nlohmann\thirdparty\hedley\hedley_undef.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="headers\Logic\Evaluator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -242,5 +247,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+=======
+    <ClInclude Include="headers\gamewindow\GameWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\gamewindow\Menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+>>>>>>> Add
   </ItemGroup>
 </Project>
