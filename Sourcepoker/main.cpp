@@ -1,7 +1,6 @@
 #include <gameObject.h>
 #include <gameModes.h>
 
-
 void Games() {
     cout << "0. Default 5 cards" << endl;
     cout << "1. Texas Hold 'em" << endl;
