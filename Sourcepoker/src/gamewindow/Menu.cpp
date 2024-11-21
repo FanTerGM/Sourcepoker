@@ -2,13 +2,13 @@
 #include "iostream"
 
 
-Menu::Menu(float width, float height) {
-    if (!font.loadFromFile("Pangolin.ttf")) { // Đảm bảo tệp font tồn tại
+Menu::Menu(float width, float height, const std::vector<std::string>& options) {
+    if (!font.loadFromFile("Pangolin-Regular.ttf")) { // Đảm bảo tệp font tồn tại
         std::cerr << "Error loading font\n";
     }
 
     // Danh sách tùy chọn menu
-    std::vector<std::string> options = { "Play", "Leaderboard", "Credit", "Exit"};
+    //  std::vector<std::string> options = { "Play", "Leaderboard", "Credit", "Exit"};
     for (size_t i = 0; i < options.size(); ++i) {
         sf::Text text;
         text.setFont(font);
@@ -40,33 +40,32 @@ void Menu::handleMouseHover(sf::Vector2i mousePosition) {
         }
     }
 }
-
-// Lấy mục được chọn
-int Menu::getSelectedItemIndex() {
-    return selectedItemIndex;
+//xử lý sự kiện nhấn chuột
+void Menu::handleMouseClick(sf::Vector2i mousePosition, GameState &currentState) {
+    // find the diffirent between size_t and rsize_t
+    for (size_t i = 0; i < menuOptions.size(); ++i) {
+        sf::FloatRect bounds = menuOptions[i].getGlobalBounds();
+        if (bounds.contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y))) {
+            selectedItemIndex = i;
+            switch (i) {
+            case 0:
+                currentState = PLAY_MENU;  // Chọn chế độ chơi
+                break;
+            case 1:
+                currentState = LEADERBOARD;  // Hiển thị Leaderboard
+                break;
+            case 2:
+                currentState = CREDIT;  // Hiển thị thông tin credit
+                break;
+            case 3:
+                currentState = EXIT;  // Thoát game
+                break;
+            }
+        }
+    }
 }
 
-
-//Menu::Menu(float width, float height) {
-//	if (!font.loadFromFile("Pangolin.ttf")) {
-//		//handle error
-//		std::cerr << "Error loading font\n";
-//	}
-//	menu[0].setFont(font);
-//	menu[0].setFillColor(sf::Color::White);
-//	menu[0].setString("Game Mode");
-//	menu[0].setPosition(sf::Vector2f(width / 4, height / (MAX_ITEMS + 1) * 1));
-//
-//	std::vector<std::string> options = { "Game Mode", "Leaderboard", "Credit", "Exit"};
-//		for (size_t i = 0; i < options.size(); ++i) {
-//			Text text;
-//	        text.setFont(font);
-//	        text.setString(options[i]);
-//	        text.setFillColor(i == 0 ? Color::Red : Color::White); // Đánh dấu mục đầu tiên
-//	        text.setPosition(Vector2f(width / 2.5, height / (options.size() + 1) * (i + 1)));
-//		}
-//Menu::~Menu(){
-//
-//
-//
+//// Lấy mục được chọn
+//int Menu::getSelectedItemIndex() {
+//    return selectedItemIndex;
 //}

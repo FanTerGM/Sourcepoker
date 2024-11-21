@@ -16,5 +16,5 @@
 #include "../headers/core/Table.h"
 #include "../headers/core/Hand.h"
 #include "../headers/game/leaderboard.h"
-#include "../headers/gamewindow/GameWindow.h"
+//#include "../headers/gamewindow/GameWindow.h"
 #include "../headers/gamewindow/Menu.h"

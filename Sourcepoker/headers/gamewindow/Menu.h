@@ -2,15 +2,17 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include <SFML/Graphics.hpp>
+#include <SFML-2.6.1/include/SFML/Graphics.hpp>
 #include <vector>
 #include <string>
 
 
 enum GameState { //quản lý trạng thái game
     MAIN_MENU,
-    MODE_MENU,
-    GAMEPLAY
+    PLAY_MENU, //PLAY_MENU have 3 diffirents game mode
+    LEADERBOARD,
+    CREDIT,
+    EXIT
 };
 
 class Menu {
@@ -20,10 +22,10 @@ private:
     int selectedItemIndex;                   // Chỉ mục của mục được chọn
 
 public:
-    Menu(float width, float height /*, const std::vector<std::string>& options*/ );         // Constructor (find more information about index 3)
+    Menu(float width, float height, const std::vector<std::string>& options ); // Constructor (options: một danh sách chứa các mục trong menu)
     void draw(sf::RenderWindow& window);     // Vẽ menu lên cửa sổ
-    void handleMouseClick(sf::Vector2i mousePosition); // Xử lý sự kiện chuột
     void handleMouseHover(sf::Vector2i mousePosition); // Xử lý di chuột
+    void handleMouseClick(sf::Vector2i mousePosition, GameState& currentState);  // Xử lý sự kiện chuột
     int getSelectedItemIndex();              // Lấy chỉ mục mục được chọn
 };
 

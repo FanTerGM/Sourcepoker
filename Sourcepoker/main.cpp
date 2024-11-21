@@ -1,5 +1,9 @@
-#include <gameObject.h>
+﻿#include <gameObject.h>
 #include <gameModes.h>
+#include "main.h"
+
+void ShowLeaderboard(sf::RenderWindow &window);
+void ShowCredit(sf::RenderWindow &window);
 
 void Games() {
     std::cout << "0. Default 5 cards" << std::endl;
@@ -24,33 +28,71 @@ int main() {
     //window   
     const int SCREEN_WIDTH = 1080;
     const int SCREEN_HEIGHT = 720;
-
+    
+    //add logo game
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Poker Game"); //can add ,sf::style::Titlebar | sf::Style::Close
 
-    //Menu menu(SCREEN_WIDTH, SCREEN_HEIGHT);
+    GameState currentState = MAIN_MENU;
+
+    //main menu
+    Menu mainMenu(SCREEN_WIDTH, SCREEN_HEIGHT, { "Play", "Leaderboard", "Credit", "Exit" });
+    
+    //Play menu
+    Menu playMenu(SCREEN_WIDTH, SCREEN_HEIGHT, { "Default", "Draw Table", "Stud table" });
+
     
     //game loop
     while (window.isOpen()) {
         //event polling
         sf::Event event;
         while (window.pollEvent(event)) {
-            switch (event.type) {
-                case sf::Event::Closed:
-                    window.close();
-                    break;
-                case sf::Event::KeyPressed:
-                    if (event.key.code == sf::Keyboard::Escape)
-                        window.close();
-                    break;
-                    //case sf::Event::
+            if (event.type == sf::Event::Closed)
+                window.close();
+            
+            if (event.type == sf::Event::MouseMoved) {
+                sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+                if (currentState == MAIN_MENU) {
+                    mainMenu.handleMouseHover(mousePosition);
+                }
+                else if (currentState == PLAY_MENU) {
+                    playMenu.handleMouseHover(mousePosition);
+                }
+            }
+
+            if (event.type == sf::Event::MouseButtonPressed) {
+                if (event.mouseButton.button == sf::Mouse::Left) {
+                    sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+                    if (currentState == MAIN_MENU) {
+                        mainMenu.handleMouseClick(mousePosition, currentState);
+                    }
+                    else if (currentState == PLAY_MENU) {
+                        playMenu.handleMouseClick(mousePosition, currentState);
+                    }
+                }
             }
         }
         //update
 
         //render
-        window.clear(); // clear old frames
+        window.clear(sf::Color::Black); // clear old frames
 
-        //draw the game
+        if (currentState == MAIN_MENU) {
+            mainMenu.draw(window);
+        }
+        else if (currentState == PLAY_MENU) {
+            playMenu.draw(window);
+        }
+        //else if (currentState == LEADERBOARD) {
+        //    showLeaderboard(window);
+        //    currentState = MAIN_MENU;  // Quay lại menu chính
+        //}
+        //else if (currentState == CREDIT) {
+        //    showCredit(window);
+        //    currentState = MAIN_MENU;  // Quay lại menu chính
+        //}
+        else if (currentState == EXIT) {
+            window.close();
+        }
 
         window.display(); //tell app that window is done drawing
     }
