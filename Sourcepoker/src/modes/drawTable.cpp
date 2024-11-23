@@ -24,7 +24,7 @@ void drawTable::startGame(){
 			std::cout << player.getUsername() << std::endl;
 			player.showCards();
 			if (player.getUsername().find("AI_") != std::string::npos) continue;
-			std::cout << "Choose cards to replace: " << std::endl;
+			std::cout << "Choose cards to replace: (choose 0 to end)" << std::endl;
 			player.replaceCard(deck);
 			std::cout << "After replacement: " << std::endl;
 			player.showCards();
