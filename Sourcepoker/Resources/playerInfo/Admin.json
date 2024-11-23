@@ -1,19 +1,19 @@
 {
-    "balance": 1037,
-    "gamesWon": 8.0,
+    "balance": 1125,
+    "gamesWon": 39.0,
     "handHistory": [
-        15,
-        18,
-        3,
+        61,
+        48,
+        10,
+        5,
         1,
-        0,
         0,
         0,
         0,
         0,
         0
     ],
-    "rank": 2,
+    "rank": 4,
     "username": "Admin",
-    "winRate": 21.62162162162162
+    "winRate": 31.2
 }
