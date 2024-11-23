@@ -7,7 +7,7 @@
    Manages the poker table, players, and game operations. */
 
    // Default constructor initializes table with one player and one NPC
-Table::Table() : numberOfPlayers(0), numberOfNPCs(1) {
+Table::Table() : numberOfPlayers(1), numberOfNPCs(1) {
     populateTable();
 }
 
@@ -90,9 +90,9 @@ void Table::determineWinner() {
     // Announce the winner
     std::cout << "Winner: " << players[0].getUsername() << std::endl;
     players[0].updateGameHistory(true, 1);
-    int handRank = Evaluator(players[0].getHand()).evaluateHandRank();
+    int handRank = Evaluator(players[0].getHand()).strengthRank();
     std::cout << "Winning hand rank: "
-        << Evaluator().rankToString(handRank) << std::endl;
+        << Evaluator().IntToEnumName(handRank) << std::endl;
 }
 
 // Clears all players' hands for a new round

@@ -52,7 +52,7 @@ int Player::getGamesPlayed() const {
 std::string Player::getFavoriteHand() const {
     auto maxPlayedHand = std::max_element(handHistory.begin(), handHistory.end());
     int handId = std::distance(handHistory.begin(), maxPlayedHand);
-    return Evaluator().rankToString(handId); // Convert hand ID to a human-readable name
+    return Evaluator().IntToEnumName(handId); // Convert hand ID to a human-readable name
 }
 
 // Updates the player's ranking
@@ -62,7 +62,7 @@ void Player::updateRank(int newRank) {
 
 // Updates game history, calculates win rate, and updates balance after a game
 void Player::updateGameHistory(bool won, int earnings) {
-    int handStrengthIndex = static_cast<int>(Evaluator(getHand()).evaluateHandRank());
+    int handStrengthIndex = static_cast<int>(Evaluator(getHand()).strengthRank());
     handHistory[handStrengthIndex]++; // Track this hand's occurrence
 
     if (won) gamesWon++;

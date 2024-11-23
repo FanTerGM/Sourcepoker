@@ -8,5 +8,4 @@ public:
 	void dealFlop() override;
 	void dealCardsToPlayers() override;
 	std::string getModeName() const override; 
-	void startGame() override;
 };

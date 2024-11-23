@@ -1,77 +1,78 @@
 #include <gameObject.h>
-#include <algorithm>
-#include <string>
-#include <vector>
 
-// Constructor Implementations
-Evaluator::Evaluator() {}
+Evaluator::Evaluator(){}
 
 Evaluator::Evaluator(std::vector<Card> hand) : hand(hand) {
-    if (hand.size() > 5) {
-        hand = calculateBestHand();
-    }
-    std::sort(hand.begin(), hand.end(), [](const Card& first, const Card& second) { return first.getRankEnum() > second.getRankEnum();});
-    populateMaps(hand);
-}
-
-// Populate maps for rank and suit counts
-void Evaluator::populateMaps(const std::vector<Card>& cards) {
-    suitMap.clear();
-    rankMap.clear();
-    for (const Card& card : cards) {
+    sort(hand.begin(), hand.end(), [](Card& left, Card& right) {return left.getRank() > right.getRank(); });
+    for (const Card& card : hand) {
         suitMap[card.getSuitEnum()]++;
         rankMap[card.getRankEnum()]++;
     }
 }
 
-// Generate all 5-card combinations from a 7-card hand
-std::vector<std::vector<Card>> Evaluator::generateCombinations() const {
-    std::vector<std::vector<Card>> combinations;
-    std::vector<int> indices(hand.size(), 0);
-    std::fill(indices.begin(), indices.begin() + 5, 1); // First 5 indices set to 1
-
-    do {
-        std::vector<Card> combo;
-        for (size_t i = 0; i < hand.size(); ++i) {
-            if (indices[i] == 1) {
-                combo.push_back(hand[i]);
-            }
-        }
-        combinations.push_back(combo);
-    } while (std::prev_permutation(indices.begin(), indices.end()));
-
-    return combinations;
+std::string Evaluator::IntToEnumName(int rank) {
+    switch (rank) {
+    case 0: return "HIGH";
+    case 1: return "ONE_PAIR";
+    case 2: return "TWO_PAIR";
+    case 3: return "THREE_OF_A_KIND";
+    case 4: return "STRAIGHT";
+    case 5: return "FLUSH";
+    case 6: return "FULL_HOUSE";
+    case 7: return "FOUR_OF_A_KIND";
+    case 8: return "STRAIGHT_FLUSH";
+    case 9: return "ROYAL_STRAIGHT_FLUSH";
+    default:
+        return "UNKNOWN HAND"; 
+    }
 }
 
-// Determine if a hand is a straight
-bool Evaluator::isStraight() const {
-    if (isAceLowStraight()) return true;
-    for (size_t i = 0; i < hand.size() - 1; ++i) {
-        if (hand[i].getRankEnum() + 1 != hand[i + 1].getRankEnum()) return false;
+bool Evaluator::FourOfAKind() const {
+    return any_of(rankMap.begin(), rankMap.end(), [](const auto& p) {return p.second == 4; });
+}
+
+bool Evaluator::ThreeOfAKind() const {
+    return any_of(rankMap.begin(), rankMap.end(), [](const auto& p) {return p.second == 3; });
+}
+
+bool Evaluator::Pair() const {
+    return any_of(rankMap.begin(), rankMap.end(), [](const auto& p) {return p.second == 2; });
+}
+
+bool Evaluator::FullHouse() const {
+    return Pair() && ThreeOfAKind();
+}
+
+bool Evaluator::Flush() const {
+    return any_of(suitMap.begin(), suitMap.end(), [](const auto& p) {return p.second == 5; });
+}
+
+bool Evaluator::StraightFlush() const {
+    return Flush() && Straight();
+}
+
+bool Evaluator::Straight() const {
+    for (int i = 0; i < hand.size() - 1; ++i) {
+        if (hand[i].getRankEnum() + 1 != hand[i + 1].getRankEnum()) 
+            return false;
     }
     return true;
 }
 
-// Check for Ace-Low Straight
-bool Evaluator::isAceLowStraight() const {
-    return hand[0].getRankEnum() == 2 && hand[4].getRankEnum() == 14;
+bool Evaluator::TwoPairs() const {
+    return count_if(rankMap.begin(), rankMap.end(), [](const auto& p) {return p.second == 2; }) == 2 ;
 }
 
-// Evaluate the rank of a 5-card hand
-int Evaluator::evaluateHandRank() const{
-    if (std::any_of(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 4; })) return FOUR_OF_A_KIND;
-    if (std::any_of(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 3; }) &&
-        std::any_of(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 2; }))
-        return FULL_HOUSE;
-    if (std::any_of(suitMap.begin(), suitMap.end(), [](const auto& pair) { return pair.second == 5; })) {
-        if (isStraight()) return hand[0].getRankEnum() == Card::Rank::TEN ? ROYAL_FLUSH : STRAIGHT_FLUSH;
-        return FLUSH;
-    }
-    if (isStraight()) return STRAIGHT;
-    if (std::any_of(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 3; })) return THREE_OF_A_KIND;
-    if (std::count_if(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 2; }) == 2) return TWO_PAIR;
-    if (std::any_of(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 2; })) return ONE_PAIR;
-    return HIGH;
+
+bool Evaluator::RoyalFlush() const {
+    return StraightFlush() && 
+        hand[0].getRankEnum() == Card::Rank::TEN && hand[hand.size() - 1].getRankEnum() == Card::Rank::ACE;
+}
+
+bool Evaluator::operator > (const Evaluator& other) const {
+    int a = strengthRank(), b = other.strengthRank();
+    if (a != b) return a > b;
+    return strengthHand() > other.strengthHand();
 }
 
 // Evaluate the strength string of a 5-card hand
@@ -97,5 +98,35 @@ std::string Evaluator::evaluateHandStrength() const {
         return hand[0].getRankEnum();
     default:
         return hand[0].getRankEnum();
+    }
+// Rank to String Helper
+std::string Evaluator::rankToString(int rank) const {
+    switch (rank) {
+    case HIGH: return "HIGH";
+    case ONE_PAIR: return "ONE_PAIR";
+    case TWO_PAIR: return "TWO_PAIR";
+    case THREE_OF_A_KIND: return "THREE_OF_A_KIND";
+    case STRAIGHT: return "STRAIGHT";
+    case FLUSH: return "FLUSH";
+    case FULL_HOUSE: return "FULL_HOUSE";
+    case FOUR_OF_A_KIND: return "FOUR_OF_A_KIND";
+    case STRAIGHT_FLUSH: return "STRAIGHT_FLUSH";
+    case ROYAL_FLUSH: return "ROYAL_FLUSH";
+    default: return "UNKNOWN";
+    }
+// Rank to String Helper
+std::string Evaluator::rankToString(int rank) const {
+    switch (rank) {
+    case HIGH: return "HIGH";
+    case ONE_PAIR: return "ONE_PAIR";
+    case TWO_PAIR: return "TWO_PAIR";
+    case THREE_OF_A_KIND: return "THREE_OF_A_KIND";
+    case STRAIGHT: return "STRAIGHT";
+    case FLUSH: return "FLUSH";
+    case FULL_HOUSE: return "FULL_HOUSE";
+    case FOUR_OF_A_KIND: return "FOUR_OF_A_KIND";
+    case STRAIGHT_FLUSH: return "STRAIGHT_FLUSH";
+    case ROYAL_FLUSH: return "ROYAL_FLUSH";
+    default: return "UNKNOWN";
     }
 }

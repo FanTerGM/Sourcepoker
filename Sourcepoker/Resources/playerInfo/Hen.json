@@ -1,19 +1,19 @@
 {
-    "balance": 1087,
-    "gamesWon": 31.0,
+    "balance": 1037,
+    "gamesWon": 11.0,
     "handHistory": [
-        39,
-        39,
-        7,
-        0,
+        19,
+        16,
         2,
+        0,
+        0,
         0,
         0,
         0,
         0,
         0
     ],
-    "rank": 2,
+    "rank": 1,
     "username": "Hen",
-    "winRate": 35.632183908045974
+    "winRate": 29.72972972972973
 }

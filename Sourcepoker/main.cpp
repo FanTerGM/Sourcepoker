@@ -14,8 +14,8 @@ static void Games() {
         int numberOfPlayers, numberOfNPCs;
         cout << "Enter the number of humnan players: "; cin >> numberOfPlayers;
         cout << "Enter the amount of NPC: "; cin >> numberOfNPCs;
-        House house(new Table());
-        if (choice == 0) house.setTable(new Table(numberOfPlayers, numberOfNPCs));
+        House house(new Table(numberOfPlayers, numberOfNPCs));
+
         if (choice == 3) house.setTable(new studTable(numberOfPlayers, numberOfNPCs));
         if (choice == 2) house.setTable(new drawTable(numberOfPlayers, numberOfNPCs));
         if (choice == 1) house.setTable(new texasTable(numberOfPlayers, numberOfNPCs));
