@@ -1,259 +1,98 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\game\SeparateFunction.cpp" />
+    <ClCompile Include="src\Logic\Evaluator.cpp" />
+    <ClCompile Include="src\core\Card.cpp" />
+    <ClCompile Include="src\core\Deck.cpp" />
+    <ClCompile Include="src\visual\Menu.cpp" />
+    <ClCompile Include="src\game\leaderboard.cpp" />
+    <ClCompile Include="src\modes\drawTable.cpp" />
+    <ClCompile Include="src\core\Hand.cpp" />
+    <ClCompile Include="src\game\House.cpp" />
+    <ClCompile Include="src\core\Player.cpp" />
+    <ClCompile Include="src\modes\studTable.cpp" />
+    <ClCompile Include="src\modes\superTable.cpp" />
+    <ClCompile Include="src\core\Table.cpp" />
+    <ClCompile Include="src\modes\texasTable.cpp" />
+    <ClCompile Include="ImgCard.cpp" />
+    <ClCompile Include="src\visual\ImgCard.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\Card.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Deck.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Table.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Hand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\modes\texasTable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game\House.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\modes\drawTable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\modes\superTable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\modes\studTable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game\leaderboard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="src\Logic\Evaluator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game\SeparateFunction.cpp">
-=======
-    <ClCompile Include="src\gamewindow\GameWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gamewindow\Menu.cpp">
->>>>>>> Add
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClInclude Include="headers\core\Card.h" />
+    <ClInclude Include="headers\core\Deck.h" />
+    <ClInclude Include="headers\visual\Menu.h" />
+    <ClInclude Include="headers\game\leaderboard.h" />
+    <ClInclude Include="headers\game\SeparateFunction.h" />
+    <ClInclude Include="headers\Logic\Evaluator.h" />
+    <ClInclude Include="headers\modes\drawTable.h" />
+    <ClInclude Include="headers\core\Hand.h" />
+    <ClInclude Include="headers\game\House.h" />
+    <ClInclude Include="headers\core\Player.h" />
+    <ClInclude Include="headers\modes\studTable.h" />
+    <ClInclude Include="headers\modes\superTable.h" />
+    <ClInclude Include="headers\core\Table.h" />
+    <ClInclude Include="headers\modes\texasTable.h" />
+    <ClInclude Include="include\gameModes.h" />
+    <ClInclude Include="include\gameObject.h" />
+    <ClInclude Include="include\nlohmann\adl_serializer.hpp" />
+    <ClInclude Include="include\nlohmann\byte_container_with_subtype.hpp" />
+    <ClInclude Include="include\nlohmann\detail\abi_macros.hpp" />
+    <ClInclude Include="include\nlohmann\detail\conversions\from_json.hpp" />
+    <ClInclude Include="include\nlohmann\detail\conversions\to_chars.hpp" />
+    <ClInclude Include="include\nlohmann\detail\conversions\to_json.hpp" />
+    <ClInclude Include="include\nlohmann\detail\exceptions.hpp" />
+    <ClInclude Include="include\nlohmann\detail\hash.hpp" />
+    <ClInclude Include="include\nlohmann\detail\input\binary_reader.hpp" />
+    <ClInclude Include="include\nlohmann\detail\input\input_adapters.hpp" />
+    <ClInclude Include="include\nlohmann\detail\input\json_sax.hpp" />
+    <ClInclude Include="include\nlohmann\detail\input\lexer.hpp" />
+    <ClInclude Include="include\nlohmann\detail\input\parser.hpp" />
+    <ClInclude Include="include\nlohmann\detail\input\position_t.hpp" />
+    <ClInclude Include="include\nlohmann\detail\iterators\internal_iterator.hpp" />
+    <ClInclude Include="include\nlohmann\detail\iterators\iteration_proxy.hpp" />
+    <ClInclude Include="include\nlohmann\detail\iterators\iterator_traits.hpp" />
+    <ClInclude Include="include\nlohmann\detail\iterators\iter_impl.hpp" />
+    <ClInclude Include="include\nlohmann\detail\iterators\json_reverse_iterator.hpp" />
+    <ClInclude Include="include\nlohmann\detail\iterators\primitive_iterator.hpp" />
+    <ClInclude Include="include\nlohmann\detail\json_custom_base_class.hpp" />
+    <ClInclude Include="include\nlohmann\detail\json_pointer.hpp" />
+    <ClInclude Include="include\nlohmann\detail\json_ref.hpp" />
+    <ClInclude Include="include\nlohmann\detail\macro_scope.hpp" />
+    <ClInclude Include="include\nlohmann\detail\macro_unscope.hpp" />
+    <ClInclude Include="include\nlohmann\detail\meta\call_std\begin.hpp" />
+    <ClInclude Include="include\nlohmann\detail\meta\call_std\end.hpp" />
+    <ClInclude Include="include\nlohmann\detail\meta\cpp_future.hpp" />
+    <ClInclude Include="include\nlohmann\detail\meta\detected.hpp" />
+    <ClInclude Include="include\nlohmann\detail\meta\identity_tag.hpp" />
+    <ClInclude Include="include\nlohmann\detail\meta\is_sax.hpp" />
+    <ClInclude Include="include\nlohmann\detail\meta\std_fs.hpp" />
+    <ClInclude Include="include\nlohmann\detail\meta\type_traits.hpp" />
+    <ClInclude Include="include\nlohmann\detail\meta\void_t.hpp" />
+    <ClInclude Include="include\nlohmann\detail\output\binary_writer.hpp" />
+    <ClInclude Include="include\nlohmann\detail\output\output_adapters.hpp" />
+    <ClInclude Include="include\nlohmann\detail\output\serializer.hpp" />
+    <ClInclude Include="include\nlohmann\detail\string_concat.hpp" />
+    <ClInclude Include="include\nlohmann\detail\string_escape.hpp" />
+    <ClInclude Include="include\nlohmann\detail\value_t.hpp" />
+    <ClInclude Include="include\nlohmann\json.hpp" />
+    <ClInclude Include="include\nlohmann\json_fwd.hpp" />
+    <ClInclude Include="include\nlohmann\ordered_map.hpp" />
+    <ClInclude Include="include\nlohmann\thirdparty\hedley\hedley.hpp" />
+    <ClInclude Include="include\nlohmann\thirdparty\hedley\hedley_undef.hpp" />
+    <ClInclude Include="headers\visual\ImgCard.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="headers\core\Card.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\core\Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\core\Table.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\core\Deck.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\core\Hand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\game\House.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\modes\texasTable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\modes\studTable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\modes\drawTable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\modes\superTable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\game\leaderboard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gameModes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\adl_serializer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\byte_container_with_subtype.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\abi_macros.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\conversions\from_json.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\conversions\to_chars.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\conversions\to_json.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\exceptions.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\hash.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\input\binary_reader.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\input\input_adapters.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\input\json_sax.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\input\lexer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\input\parser.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\input\position_t.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\iterators\internal_iterator.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\iterators\iteration_proxy.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\iterators\iterator_traits.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\iterators\iter_impl.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\iterators\json_reverse_iterator.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\iterators\primitive_iterator.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\json_custom_base_class.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\json_pointer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\json_ref.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\macro_scope.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\macro_unscope.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\meta\call_std\begin.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\meta\call_std\end.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\meta\cpp_future.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\meta\detected.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\meta\identity_tag.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\meta\is_sax.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\meta\std_fs.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\meta\type_traits.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\meta\void_t.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\output\binary_writer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\output\output_adapters.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\output\serializer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\string_concat.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\string_escape.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\detail\value_t.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\json.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\json_fwd.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\ordered_map.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\thirdparty\hedley\hedley.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\thirdparty\hedley\hedley_undef.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="headers\Logic\Evaluator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\game\SeparateFunction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <Font Include="Resources\Font\arial.ttf" />
+    <Font Include="Resources\Font\Pangolin-Regular.ttf" />
+    <Font Include="Pangolin-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
-=======
-    <ClInclude Include="headers\gamewindow\GameWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\gamewindow\Menu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
->>>>>>> Add
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\images\icon.png" />
+    <Image Include="Resources\images\logo.png" />
   </ItemGroup>
 </Project>

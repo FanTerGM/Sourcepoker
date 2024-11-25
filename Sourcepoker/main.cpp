@@ -2,8 +2,6 @@
 #include <gameModes.h>
 #include "main.h"
 
-void ShowLeaderboard(sf::RenderWindow &window);
-void ShowCredit(sf::RenderWindow &window);
 
 void Games() {
     std::cout << "0. Default 5 cards" << std::endl;
@@ -28,19 +26,43 @@ int main() {
     //window   
     const int SCREEN_WIDTH = 1080;
     const int SCREEN_HEIGHT = 720;
-    
-    //add logo game
-    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Poker Game"); //can add ,sf::style::Titlebar | sf::Style::Close
+
+    //title bar
+    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Poker Game"/*, sf::style::Titlebar | sf::Style::Close*/);
+    sf::Image icon; //icon at title bar
+    if (!icon.loadFromFile("Resources/images/icon.png")) {
+        std::cerr << "Error loading icon image\n";
+        return -1;
+    }
+    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+
+    //font 
+    sf::Font font;
+    if (!font.loadFromFile("Pangolin-Regular.ttf")) { // load font 
+        std::cerr << "Error loading font\n";
+    }
+
+    //upload logo (at main menu)
+    sf::Texture logoTexture;
+    if (!logoTexture.loadFromFile("Resources/images/logo.png")) {
+        std::cerr << "Error loading logo image\n";
+        return -1;
+    }
+
+    sf::Sprite logoSprite;
+    logoSprite.setTexture(logoTexture);
+    //logoSprite.setScale(0.5f, 0.5f); // Giảm kích thước logo xuống 50%
+    logoSprite.setPosition(SCREEN_WIDTH - logoTexture.getSize().x - 20, 50);
 
     GameState currentState = MAIN_MENU;
 
     //main menu
     Menu mainMenu(SCREEN_WIDTH, SCREEN_HEIGHT, { "Play", "Leaderboard", "Credit", "Exit" });
-    
+
     //Play menu
     Menu playMenu(SCREEN_WIDTH, SCREEN_HEIGHT, { "Default", "Draw Table", "Stud table" });
 
-    
+
     //game loop
     while (window.isOpen()) {
         //event polling
@@ -48,7 +70,7 @@ int main() {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
-            
+
             if (event.type == sf::Event::MouseMoved) {
                 sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
                 if (currentState == MAIN_MENU) {
@@ -81,11 +103,14 @@ int main() {
         }
         else if (currentState == PLAY_MENU) {
             playMenu.draw(window);
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                currentState = MAIN_MENU; // return to main menu (when press esc)
         }
-        //else if (currentState == LEADERBOARD) {
-        //    showLeaderboard(window);
-        //    currentState = MAIN_MENU;  // Quay lại menu chính
-        //}
+        else if (currentState == LEADERBOARD) {
+            leaderboard().displaySFML(window, font);
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                currentState = MAIN_MENU;
+        }
         //else if (currentState == CREDIT) {
         //    showCredit(window);
         //    currentState = MAIN_MENU;  // Quay lại menu chính
@@ -93,23 +118,24 @@ int main() {
         else if (currentState == EXIT) {
             window.close();
         }
-
+        if (currentState == MAIN_MENU || currentState == PLAY_MENU)
+            window.draw(logoSprite); // draw the logo only at main and play menu
         window.display(); //tell app that window is done drawing
     }
 
     //end of application
 
- /*   while (true){
-        std::cout << "Welcome to poker!" << std::endl;
-        std::cout << "Please choose what to do" << std::endl;
-        std::cout << "1. Play poker" << std::endl;
-        std::cout << "2. view Leaderboard" << std::endl;
-        std::cout << "3. Exit program" << std::endl;
-        int choice; std::cout << "Enter a number to choose what to do: ";  std::cin >> choice;
+    /*   while (true){
+    std::cout << "Welcome to poker!" << std::endl;
+    std::cout << "Please choose what to do" << std::endl;
+    std::cout << "1. Play poker" << std::endl;
+    std::cout << "2. view Leaderboard" << std::endl;
+    std::cout << "3. Exit program" << std::endl;
+    int choice; std::cout << "Enter a number to choose what to do: ";  std::cin >> choice;
 
-        if (choice == 1) Games();
-        if (choice == 2) leaderboard().display();
-        if (choice == 3) return 0;
+    if (choice == 1) Games();
+    if (choice == 2) leaderboard().display();
+    if (choice == 3) return 0;
     }   */
     return 0;
 }

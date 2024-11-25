@@ -8,6 +8,8 @@
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Network.hpp>
+#include <filesystem>
+#include <fstream>
 
 
 #include "../headers/core/Card.h"
@@ -16,5 +18,5 @@
 #include "../headers/core/Table.h"
 #include "../headers/core/Hand.h"
 #include "../headers/game/leaderboard.h"
-//#include "../headers/gamewindow/GameWindow.h"
-#include "../headers/gamewindow/Menu.h"
+#include "../headers/visual/Menu.h"
+#include "../headers/visual/ImgCard.h"

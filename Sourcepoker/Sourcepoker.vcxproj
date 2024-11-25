@@ -131,12 +131,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ImgCard.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\visual\ImgCard.cpp" />
     <ClCompile Include="src\game\SeparateFunction.cpp" />
     <ClCompile Include="src\Logic\Evaluator.cpp" />
     <ClCompile Include="src\core\Card.cpp" />
     <ClCompile Include="src\core\Deck.cpp" />
-    <ClCompile Include="src\gamewindow\Menu.cpp" />
+    <ClCompile Include="src\visual\Menu.cpp" />
     <ClCompile Include="src\game\leaderboard.cpp" />
     <ClCompile Include="src\modes\drawTable.cpp" />
     <ClCompile Include="src\core\Hand.cpp" />
@@ -150,8 +152,7 @@
   <ItemGroup>
     <ClInclude Include="headers\core\Card.h" />
     <ClInclude Include="headers\core\Deck.h" />
-    <ClInclude Include="headers\gamewindow\GameWindow.h" />
-    <ClInclude Include="headers\gamewindow\Menu.h" />
+    <ClInclude Include="headers\visual\Menu.h" />
     <ClInclude Include="headers\game\leaderboard.h" />
     <ClInclude Include="headers\game\SeparateFunction.h" />
     <ClInclude Include="headers\Logic\Evaluator.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="headers\modes\superTable.h" />
     <ClInclude Include="headers\core\Table.h" />
     <ClInclude Include="headers\modes\texasTable.h" />
+    <ClInclude Include="headers\visual\ImgCard.h" />
     <ClInclude Include="include\gameModes.h" />
     <ClInclude Include="include\gameObject.h" />
     <ClInclude Include="include\nlohmann\adl_serializer.hpp" />
@@ -215,8 +217,13 @@
     <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
+    <Font Include="Pangolin-Regular.ttf" />
     <Font Include="Resources\Font\arial.ttf" />
     <Font Include="Resources\Font\Pangolin-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\images\icon.png" />
+    <Image Include="Resources\images\logo.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

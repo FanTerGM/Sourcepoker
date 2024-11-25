@@ -1,6 +1,4 @@
 ﻿#pragma once
-#ifndef MENU_H
-#define MENU_H
 
 #include <SFML-2.6.1/include/SFML/Graphics.hpp>
 #include <vector>
@@ -29,4 +27,3 @@ public:
     int getSelectedItemIndex();              // Lấy chỉ mục mục được chọn
 };
 
-#endif // MENU_H

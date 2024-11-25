@@ -3,18 +3,18 @@
 
 
 Menu::Menu(float width, float height, const std::vector<std::string>& options) {
-    if (!font.loadFromFile("Pangolin-Regular.ttf")) { // Đảm bảo tệp font tồn tại
+    if (!font.loadFromFile("Pangolin-Regular.ttf")) { // load font 
         std::cerr << "Error loading font\n";
     }
 
-    // Danh sách tùy chọn menu
+    // Main menu option
     //  std::vector<std::string> options = { "Play", "Leaderboard", "Credit", "Exit"};
     for (size_t i = 0; i < options.size(); ++i) {
         sf::Text text;
         text.setFont(font);
         text.setString(options[i]); //get the text
         text.setFillColor(sf::Color::White); //coulor of the text
-        text.setPosition(sf::Vector2f(width / 2.5, height / (options.size() + 1) * (i + 1)));
+        text.setPosition(sf::Vector2f(width / 10, height / (options.size() + 1) * (i + 1))); 
         menuOptions.push_back(text);
     }
 
