@@ -8,6 +8,10 @@
 enum GameState { //quản lý trạng thái game
     MAIN_MENU,
     PLAY_MENU, //PLAY_MENU have 3 diffirents game mode
+    GAME_DEFAULT,
+    GAME_STUD,
+    GAME_SUPER,
+    //GAME_TEXAS,
     LEADERBOARD,
     CREDIT,
     EXIT

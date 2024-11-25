@@ -4,11 +4,11 @@
 
 
 void Games() {
-    std::cout << "0. Default 5 cards" << std::endl;
-    std::cout << "1. Texas Hold 'em" << std::endl;
-    std::cout << "2. Draw 5 Poker" << std::endl;
-    std::cout << "3. Stud Poker" << std::endl;
-    int choice; std::cout << "Enter a number to choose what to do: ";  std::cin >> choice;
+    ///*std::cout << "0. Default 5 cards" << std::endl;
+    //std::cout << "1. Texas Hold 'em" << std::endl;
+    //std::cout << "2. Draw 5 Poker" << std::endl;
+    //std::cout << "3. Stud Poker" << std::endl;*/
+    //int choice; std::cout << "Enter a number to choose what to do: ";  std::cin >> choice;
 
     int numberOfPlayers, numberOfNPCs;
     std::cout << "Enter the totabl number of players (Humans & AIs): "; std::cin >> numberOfPlayers;
@@ -20,6 +20,26 @@ void Games() {
     if (choice == 1) house.setTable(new texasTable(numberOfPlayers, numberOfNPCs));
     
     house.StartGame();
+}
+void Menu::handleMouseClick(sf::Vector2i mousePosition, GameState& currentState) {
+    for (size_t i = 0; i < menuOptions.size(); ++i) {
+        sf::FloatRect bounds = menuOptions[i].getGlobalBounds();
+        if (bounds.contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y))) {
+            if (currentState == PLAY_MENU) {
+                switch (i) {
+                case 0:
+                    currentState = GAME_DEFAULT; // Chế độ Default 5 cards
+                    break;
+                case 1:
+                    currentState = GAME_STUD; // Chế độ Stud Poker
+                    break;
+                case 2:
+                    currentState = GAME_SUPER; // Chế độ Super Poker
+                    break;
+                }
+            }
+        }
+    }
 }
 
 int main() {
@@ -60,7 +80,7 @@ int main() {
     Menu mainMenu(SCREEN_WIDTH, SCREEN_HEIGHT, { "Play", "Leaderboard", "Credit", "Exit" });
 
     //Play menu
-    Menu playMenu(SCREEN_WIDTH, SCREEN_HEIGHT, { "Default", "Draw Table", "Stud table" });
+    Menu playMenu(SCREEN_WIDTH, SCREEN_HEIGHT, { "Default", "Stud table", "Super table(x)" });
 
 
     //game loop
@@ -89,6 +109,33 @@ int main() {
                     }
                     else if (currentState == PLAY_MENU) {
                         playMenu.handleMouseClick(mousePosition, currentState);
+                    }
+                    else if (currentState == GAME_DEFAULT) {
+                        sf::Text text("Playing Default Poker", font, 30);
+                        text.setFillColor(sf::Color::White);
+                        text.setPosition(50, 50);
+                        window.draw(text);
+
+                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                            currentState = PLAY_MENU; // Quay lại Play Menu
+                    }
+                    else if (currentState == GAME_STUD) {
+                        sf::Text text("Playing Stud Poker", font, 30);
+                        text.setFillColor(sf::Color::White);
+                        text.setPosition(50, 50);
+                        window.draw(text);
+
+                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                            currentState = PLAY_MENU; // Quay lại Play Menu
+                    }
+                    else if (currentState == GAME_SUPER) {
+                        sf::Text text("Playing Super Poker", font, 30);
+                        text.setFillColor(sf::Color::White);
+                        text.setPosition(50, 50);
+                        window.draw(text);
+
+                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                            currentState = PLAY_MENU; // Quay lại Play Menu
                     }
                 }
             }
