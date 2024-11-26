@@ -3,44 +3,24 @@
 #include "main.h"
 
 
-void Games() {
+//void Games() {
     ///*std::cout << "0. Default 5 cards" << std::endl;
     //std::cout << "1. Texas Hold 'em" << std::endl;
     //std::cout << "2. Draw 5 Poker" << std::endl;
     //std::cout << "3. Stud Poker" << std::endl;*/
     //int choice; std::cout << "Enter a number to choose what to do: ";  std::cin >> choice;
-
-    int numberOfPlayers, numberOfNPCs;
-    std::cout << "Enter the totabl number of players (Humans & AIs): "; std::cin >> numberOfPlayers;
-    std::cout << "Enter the amount of NPC: "; std::cin >> numberOfNPCs;
-    House house = new Table();
-    if (choice == 0) house.setTable(new Table(numberOfPlayers, numberOfNPCs));
-    if (choice == 3) house.setTable(new studTable(numberOfPlayers, numberOfNPCs));
-    if (choice == 2) house.setTable(new drawTable(numberOfPlayers, numberOfNPCs));
-    if (choice == 1) house.setTable(new texasTable(numberOfPlayers, numberOfNPCs));
-    
-    house.StartGame();
-}
-void Menu::handleMouseClick(sf::Vector2i mousePosition, GameState& currentState) {
-    for (size_t i = 0; i < menuOptions.size(); ++i) {
-        sf::FloatRect bounds = menuOptions[i].getGlobalBounds();
-        if (bounds.contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y))) {
-            if (currentState == PLAY_MENU) {
-                switch (i) {
-                case 0:
-                    currentState = GAME_DEFAULT; // Chế độ Default 5 cards
-                    break;
-                case 1:
-                    currentState = GAME_STUD; // Chế độ Stud Poker
-                    break;
-                case 2:
-                    currentState = GAME_SUPER; // Chế độ Super Poker
-                    break;
-                }
-            }
-        }
-    }
-}
+//    int choice;
+//    int numberOfPlayers, numberOfNPCs;
+//    std::cout << "Enter the total number of players (Humans & AIs): "; std::cin >> numberOfPlayers;
+//    std::cout << "Enter the amount of NPC: "; std::cin >> numberOfNPCs;
+//    House house = new Table();
+//    if (choice == 0) house.setTable(new Table(numberOfPlayers, numberOfNPCs));
+//    if (choice == 3) house.setTable(new studTable(numberOfPlayers, numberOfNPCs));
+//    if (choice == 2) house.setTable(new drawTable(numberOfPlayers, numberOfNPCs));
+//    if (choice == 1) house.setTable(new texasTable(numberOfPlayers, numberOfNPCs));
+//    
+//    house.StartGame();
+//}
 
 int main() {
     //window   
@@ -82,6 +62,7 @@ int main() {
     //Play menu
     Menu playMenu(SCREEN_WIDTH, SCREEN_HEIGHT, { "Default", "Stud table", "Super table(x)" });
 
+    PlayerSelection playerSelection(SCREEN_WIDTH, SCREEN_HEIGHT);
 
     //game loop
     while (window.isOpen()) {
@@ -106,16 +87,23 @@ int main() {
                     sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
                     if (currentState == MAIN_MENU) {
                         mainMenu.handleMouseClick(mousePosition, currentState);
+                        if (mainMenu.isOptionClicked("Play"))
+                            currentState = PLAYER_SELECTION;
                     }
                     else if (currentState == PLAY_MENU) {
                         playMenu.handleMouseClick(mousePosition, currentState);
+                    }
+                    else if (currentState == PLAYER_SELECTION) {
+                        playerSelection.handleMouseClick(mousePosition, currentState);
+                        if (playerSelection.isReadyToStart())
+                            currentState = PLAY_MENU;
                     }
                     else if (currentState == GAME_DEFAULT) {
                         sf::Text text("Playing Default Poker", font, 30);
                         text.setFillColor(sf::Color::White);
                         text.setPosition(50, 50);
                         window.draw(text);
-
+                        //add logic game here
                         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                             currentState = PLAY_MENU; // Quay lại Play Menu
                     }
@@ -153,6 +141,26 @@ int main() {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 currentState = MAIN_MENU; // return to main menu (when press esc)
         }
+        else if (currentState == PLAYER_SELECTION) {
+            playerSelection.render(window);
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed) {
+                    window.close();
+                }
+                else if (event.type == sf::Event::TextEntered) {
+                    playerSelection.handleTextInput(event);
+                }
+                else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+                    sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+                    playerSelection.handleMouseClick(mousePosition, currentState);
+                }
+            }
+        }
+        else if (currentState == GAME_DEFAULT) {
+            //logic game here
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                currentState = PLAYER_SELECTION;
+        }
         else if (currentState == LEADERBOARD) {
             leaderboard().displaySFML(window, font);
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
@@ -172,17 +180,17 @@ int main() {
 
     //end of application
 
-    /*   while (true){
-    std::cout << "Welcome to poker!" << std::endl;
-    std::cout << "Please choose what to do" << std::endl;
-    std::cout << "1. Play poker" << std::endl;
-    std::cout << "2. view Leaderboard" << std::endl;
-    std::cout << "3. Exit program" << std::endl;
-    int choice; std::cout << "Enter a number to choose what to do: ";  std::cin >> choice;
+    /*while (true){
+        std::cout << "Welcome to poker!" << std::endl;
+        std::cout << "Please choose what to do" << std::endl;
+        std::cout << "1. Play poker" << std::endl;
+        std::cout << "2. view Leaderboard" << std::endl;
+        std::cout << "3. Exit program" << std::endl;
+        int choice; std::cout << "Enter a number to choose what to do: ";  std::cin >> choice;
 
-    if (choice == 1) Games();
-    if (choice == 2) leaderboard().display();
-    if (choice == 3) return 0;
-    }   */
+        if (choice == 1) Games();
+        if (choice == 2) leaderboard().display();
+        if (choice == 3) return 0;
+    }  */ 
     return 0;
 }

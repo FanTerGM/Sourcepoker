@@ -16,8 +16,8 @@
     <ClCompile Include="src\modes\superTable.cpp" />
     <ClCompile Include="src\core\Table.cpp" />
     <ClCompile Include="src\modes\texasTable.cpp" />
-    <ClCompile Include="ImgCard.cpp" />
     <ClCompile Include="src\visual\ImgCard.cpp" />
+    <ClCompile Include="src\core\PlayerSelection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\core\Card.h" />
@@ -82,6 +82,8 @@
     <ClInclude Include="include\nlohmann\thirdparty\hedley\hedley.hpp" />
     <ClInclude Include="include\nlohmann\thirdparty\hedley\hedley_undef.hpp" />
     <ClInclude Include="headers\visual\ImgCard.h" />
+    <ClInclude Include="headers\core\PlayerSelection.h" />
+    <ClInclude Include="headers\game\GameState.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resources\Font\arial.ttf" />

@@ -131,8 +131,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ImgCard.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\core\PlayerSelection.cpp" />
     <ClCompile Include="src\visual\ImgCard.cpp" />
     <ClCompile Include="src\game\SeparateFunction.cpp" />
     <ClCompile Include="src\Logic\Evaluator.cpp" />
@@ -152,6 +152,8 @@
   <ItemGroup>
     <ClInclude Include="headers\core\Card.h" />
     <ClInclude Include="headers\core\Deck.h" />
+    <ClInclude Include="headers\core\PlayerSelection.h" />
+    <ClInclude Include="headers\game\GameState.h" />
     <ClInclude Include="headers\visual\Menu.h" />
     <ClInclude Include="headers\game\leaderboard.h" />
     <ClInclude Include="headers\game\SeparateFunction.h" />

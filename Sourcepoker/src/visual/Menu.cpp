@@ -1,8 +1,8 @@
-﻿#include "../headers/gamewindow/Menu.h"
+﻿#include "../headers/visual/Menu.h"
 #include "iostream"
 
 
-Menu::Menu(float width, float height, const std::vector<std::string>& options) {
+Menu::Menu(int width, int height, const std::vector<std::string>& options) {
     if (!font.loadFromFile("Pangolin-Regular.ttf")) { // load font 
         std::cerr << "Error loading font\n";
     }
@@ -18,7 +18,7 @@ Menu::Menu(float width, float height, const std::vector<std::string>& options) {
         menuOptions.push_back(text);
     }
 
-    selectedItemIndex = -1; // if no option
+    selectedItemIndex = 0; // if no option
 }
 
 // draw menu
@@ -40,16 +40,17 @@ void Menu::handleMouseHover(sf::Vector2i mousePosition) {
         }
     }
 }
+
 //xử lý sự kiện nhấn chuột
-void Menu::handleMouseClick(sf::Vector2i mousePosition, GameState &currentState) {
-    // find the diffirent between size_t and rsize_t
-    for (size_t i = 0; i < menuOptions.size(); ++i) {
+void Menu::handleMouseClick(sf::Vector2i mousePosition, GameState& currentState) {
+    // duyệt qua các thư mục trong menu
+    for (int i = 0; i < menuOptions.size(); ++i) {
         sf::FloatRect bounds = menuOptions[i].getGlobalBounds();
         if (bounds.contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y))) {
             selectedItemIndex = i;
             switch (i) {
             case 0:
-                currentState = PLAY_MENU;  // Chọn chế độ chơi
+                currentState = PLAYER_SELECTION;  // nhập số lượng ng chơi và npc
                 break;
             case 1:
                 currentState = LEADERBOARD;  // Hiển thị Leaderboard
@@ -64,6 +65,15 @@ void Menu::handleMouseClick(sf::Vector2i mousePosition, GameState &currentState)
         }
     }
 }
+
+//bool Menu::isOptionClicked(const std::string& option) {
+//    for (int i = 0; i < menuOptions.size(); ++i) {
+//        if (menuOptions[i].getString() == option && menuOptions[i].getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition()))) {
+//            return true;
+//        }
+//    }
+//    return false;
+//}
 
 //// Lấy mục được chọn
 //int Menu::getSelectedItemIndex() {

@@ -20,3 +20,7 @@
 #include "../headers/game/leaderboard.h"
 #include "../headers/visual/Menu.h"
 #include "../headers/visual/ImgCard.h"
+#include "../headers/game/GameState.h"
+#include "../headers/core/PlayerSelection.h"
+
+extern GameState currentState;
