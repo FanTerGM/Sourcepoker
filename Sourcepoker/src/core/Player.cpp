@@ -62,10 +62,11 @@ void Player::updateRank(int newRank) {
 
 // Updates game history, calculates win rate, and updates balance after a game
 void Player::updateGameHistory(bool won, int earnings) {
-    int handStrengthIndex = static_cast<int>(Evaluator(getHand()).evaluateHandRank());
-    handHistory[handStrengthIndex]++; // Track this hand's occurrence
-
-    if (won) gamesWon++;
+    if (won){
+        int handStrengthIndex = static_cast<int>(Evaluator(getHand()).evaluateHandRank());
+        handHistory[handStrengthIndex]++; // Track this hand's occurrence
+        gamesWon++;
+    }
     winRate = (gamesWon * 100) / getGamesPlayed(); // Calculate win rate as a percentage
     balance += earnings;
 
