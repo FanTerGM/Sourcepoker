@@ -1,116 +1,114 @@
 ﻿#include "../headers/core/PlayerSelection.h"
-#include "SFML/Window.hpp"
-#include "SFML/Graphics.hpp"
 #include "iostream"
 
-PlayerSelection::PlayerSelection(float width, float height) {
-	if (!font.loadFromFile("Pangolin-Regular.ttf"))
-		std::cerr << "Errror loading font for player selection\n";
+PlayerSelection::PlayerSelection(int width, int height) {
+    font.loadFromFile("Pangolin-Regular.ttf");
+    //setup text fields
+    playerCountText.setFont(font);
+    playerCountText.setString("Number of Players: ");
+    playerCountText.setCharacterSize(30);
+    playerCountText.setFillColor(sf::Color::White);
+    playerCountText.setPosition(100, 150);
 
-    //label text
-    labelText.setFont(font);
-    labelText.setString("Enter number of players and NPCs:");
-    labelText.setCharacterSize(30);
-    labelText.setFillColor(sf::Color::White);
-    labelText.setPosition(width / 2 - 200, height / 4);
+    npcCountText.setFont(font);
+    npcCountText.setString("Number of NPCs: ");
+    npcCountText.setCharacterSize(30);
+    npcCountText.setFillColor(sf::Color::White);
+    npcCountText.setPosition(100, 250);
+    
+    //setup text box
+    playerTextBox.setSize(sf::Vector2f(200, 40));
+    playerTextBox.setPosition(400, 150);
+    playerTextBox.setFillColor(sf::Color(50, 50, 50));
 
-	playerCountText.setFont(font);
-	playerCountText.setString("Enter number of player (human & AI): ");
-	playerCountText.setCharacterSize(24);
-	playerCountText.setFillColor(sf::Color::White);
-	playerCountText.setPosition(width / 2 - 150, height / 2);
+    npcTextBox.setSize(sf::Vector2f(200, 40));
+    npcTextBox.setPosition(400, 250);
+    npcTextBox.setFillColor(sf::Color(50, 50, 50));
 
-	npcCountText.setFont(font);
-	npcCountText.setString("Enter the amount of NPC: ");
-	npcCountText.setCharacterSize(24);
-	npcCountText.setFillColor(sf::Color::White);
-	npcCountText.setPosition(width / 2 - 150, height / 1.5);
+    //setup continue button
+    continueButton.setSize(sf::Vector2f(200, 50));
+    continueButton.setPosition(400, 350);
+    continueButton.setFillColor(sf::Color(0, 150, 0));
 
-	playerCount = 1;
-	npcCount = 0;
+    continueButtonText.setFont(font);
+    continueButtonText.setString("Continue");
+    continueButtonText.setCharacterSize(30);
+    continueButtonText.setFillColor(sf::Color::White);
+    continueButtonText.setPosition(420, 360);
 
-	isInputtingPlayerCount = true;
-	isInputtingNpcCount = false;
+    playerCount = "";
+    npcCount = "";
 }
 
 void PlayerSelection::handleTextInput(sf::Event& event) {
     if (event.type == sf::Event::TextEntered) {
-        //handle digit input 0->9
-        if (event.text.unicode >= '0' && event.text.unicode <= '9') {
-            char enteredChar = static_cast<char>(event.text.unicode);
-            if (isInputtingPlayerCount) {
-                playerCountInput += enteredChar;
-                playerCountText.setString("Players: " + playerCountInput);
+        if (event.text.unicode < 128) {
+            if (event.text.unicode == 8) { //back space
+                // Nếu người dùng nhấn backspace, xóa ký tự cuối trong text box hiện tại
+                if (isPlayerTextBoxSelected && !playerCount.empty()) {
+                    playerCount.pop_back();  // Xóa ký tự cuối cùng trong playerCount
+                }else if (isNpcTextBoxSelected && !npcCount.empty()) {
+                    npcCount.pop_back();  // Xóa ký tự cuối cùng trong npcCount
+                }
             }
-            else if (isInputtingNpcCount) {
-                npcCountInput += enteredChar;
-                npcCountText.setString("NPCs: " + npcCountInput);
-            }
-        }
-        // Handle backspace to remove last character
-        else if (event.text.unicode == 8) {  // Backspace
-            if (isInputtingPlayerCount && !playerCountInput.empty()) {
-                playerCountInput.pop_back();
-                playerCountText.setString("Players: " + playerCountInput);
-            }
-            if (isInputtingNpcCount && !npcCountInput.empty()) {
-                npcCountInput.pop_back();
-                npcCountText.setString("NPCs: " + npcCountInput);
+            else if (event.text.unicode >=48 && event.text.unicode <= 57) {
+                char inputChar = static_cast<char>(event.text.unicode);
+                if (isPlayerTextBoxSelected) {
+                    playerCount += inputChar;
+                }
+                else if (isNpcTextBoxSelected) {
+                    npcCount += inputChar;
+                }
             }
         }
     }
 }
 
-void PlayerSelection::handleMouseClick(sf::Vector2i mousePosition, GameState& currentState) {
-    // Switch from player input to NPC input
-    if (isInputtingPlayerCount) {
-        if (!playerCountInput.empty()) {
-            playerCount = std::stoi(playerCountInput);
-        }
-        else {
-            playerCount = 1; // Default to 1 if no input
-        }
-        isInputtingPlayerCount = false;
-        isInputtingNpcCount = true;
+void PlayerSelection::handleMouseClick(const sf::Vector2i& mousePosition, GameState& currentState) {
+    if (playerTextBox.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
+        isPlayerTextBoxSelected = true;
+        isNpcTextBoxSelected = false;
     }
-    // Finish NPC input and go to Play Menu
-    else if (isInputtingNpcCount) {
-        if (!npcCountInput.empty()) {
-            npcCount = std::stoi(npcCountInput);
-        }
-        else {
-            npcCount = 0; // Default to 0 if no input
-        }
-        currentState = PLAY_MENU; // Transition to Play Menu
+    if (npcTextBox.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
+        isPlayerTextBoxSelected = false;
+        isNpcTextBoxSelected = true;
+    }
+    if (continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
+        std::cout << "Continue Button clicked!" << std::endl;
+        currentState = INPUT_PLAYER_INFO;
     }
 }
 
+bool PlayerSelection::isContinueClicked(const sf::Vector2i& mousePosition) {
+    return continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition));
+}
+
+int PlayerSelection::getNumPlayers() const {
+    return std::stoi(playerCount);
+}
+
+int PlayerSelection::getNumNPCs() const {
+    return std::stoi(npcCount);
+}
 
 void PlayerSelection::render(sf::RenderWindow& window) {
-    window.clear();
-
+    // Draw the text boxes, labels, and continue button
     window.draw(playerCountText);
     window.draw(npcCountText);
+    window.draw(playerTextBox);
+    window.draw(npcTextBox);
+    window.draw(continueButton);
+    window.draw(continueButtonText);
 
-    // Hiển thị số lượng người chơi và NPC đã nhập
-    if (isInputtingPlayerCount) {
-        sf::Text playerCountInputText;
-        playerCountInputText.setFont(font);
-        playerCountInputText.setString(playerCountInput);
-        playerCountInputText.setCharacterSize(24);
-        playerCountInputText.setFillColor(sf::Color::White);
-        playerCountInputText.setPosition(400, 100);
-        window.draw(playerCountInputText);
-    }
-    else if (isInputtingNpcCount) {
-        sf::Text npcCountInputText;
-        npcCountInputText.setFont(font);
-        npcCountInputText.setString(npcCountInput);
-        npcCountInputText.setCharacterSize(24);
-        npcCountInputText.setFillColor(sf::Color::White);
-        npcCountInputText.setPosition(400, 150);
-        window.draw(npcCountInputText);
-    }
 
-    window.display();
+    // Vẽ lại văn bản đã nhập
+    sf::Text playerCountDisplay(playerCount, font, 30);
+    playerCountDisplay.setFillColor(sf::Color::Red);
+    playerCountDisplay.setPosition(410, 160);  // Vị trí của text box người chơi
+    window.draw(playerCountDisplay);
+
+    sf::Text npcCountDisplay(npcCount, font, 30);
+    npcCountDisplay.setFillColor(sf::Color::Red);
+    npcCountDisplay.setPosition(410, 260);  // Vị trí của text box NPC
+    window.draw(npcCountDisplay);
 }

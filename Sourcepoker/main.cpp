@@ -51,7 +51,6 @@ int main() {
 
     sf::Sprite logoSprite;
     logoSprite.setTexture(logoTexture);
-    //logoSprite.setScale(0.5f, 0.5f); // Giảm kích thước logo xuống 50%
     logoSprite.setPosition(SCREEN_WIDTH - logoTexture.getSize().x - 20, 50);
 
     GameState currentState = MAIN_MENU;
@@ -72,7 +71,7 @@ int main() {
             if (event.type == sf::Event::Closed)
                 window.close();
 
-            if (event.type == sf::Event::MouseMoved) {
+            else if (event.type == sf::Event::MouseMoved) {
                 sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
                 if (currentState == MAIN_MENU) {
                     mainMenu.handleMouseHover(mousePosition);
@@ -82,21 +81,17 @@ int main() {
                 }
             }
 
-            if (event.type == sf::Event::MouseButtonPressed) {
+            else if (event.type == sf::Event::MouseButtonPressed) {
                 if (event.mouseButton.button == sf::Mouse::Left) {
                     sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
                     if (currentState == MAIN_MENU) {
                         mainMenu.handleMouseClick(mousePosition, currentState);
-                        if (mainMenu.isOptionClicked("Play"))
-                            currentState = PLAYER_SELECTION;
                     }
                     else if (currentState == PLAY_MENU) {
                         playMenu.handleMouseClick(mousePosition, currentState);
                     }
                     else if (currentState == PLAYER_SELECTION) {
                         playerSelection.handleMouseClick(mousePosition, currentState);
-                        if (playerSelection.isReadyToStart())
-                            currentState = PLAY_MENU;
                     }
                     else if (currentState == GAME_DEFAULT) {
                         sf::Text text("Playing Default Poker", font, 30);
@@ -127,6 +122,9 @@ int main() {
                     }
                 }
             }
+            else if (event.type == sf::Event::TextEntered) {
+                playerSelection.handleTextInput(event);
+            }
         }
         //update
 
@@ -143,23 +141,24 @@ int main() {
         }
         else if (currentState == PLAYER_SELECTION) {
             playerSelection.render(window);
-            while (window.pollEvent(event)) {
-                if (event.type == sf::Event::Closed) {
-                    window.close();
-                }
-                else if (event.type == sf::Event::TextEntered) {
-                    playerSelection.handleTextInput(event);
-                }
-                else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-                    sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-                    playerSelection.handleMouseClick(mousePosition, currentState);
-                }
-            }
+            //sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+
+            ////// Kiểm tra TextBox khi chuột di chuyển
+            ////if (playerSelection.playerTextBox.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
+            ////    std::cout << "Player count TextBox is hovered!" << std::endl;
+            ////}
+            ////if (playerSelection.npcTextBox.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
+            ////    std::cout << "NPC count TextBox is hovered!" << std::endl;
+            ////}
+            //// Kiểm tra khi nhấn chuột
+            //if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+            //    playerSelection.handleMouseClick(mousePosition, currentState);  // Xử lý nhấn chuột
+            //}
         }
         else if (currentState == GAME_DEFAULT) {
             //logic game here
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                currentState = PLAYER_SELECTION;
+                currentState = MAIN_MENU;
         }
         else if (currentState == LEADERBOARD) {
             leaderboard().displaySFML(window, font);
