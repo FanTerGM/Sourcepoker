@@ -51,7 +51,7 @@ int Player::getGamesPlayed() const {
 // Returns the player's favorite hand based on most frequently played hand
 std::string Player::getFavoriteHand() const {
     auto maxPlayedHand = std::max_element(handHistory.begin(), handHistory.end());
-    int handId = std::distance(handHistory.begin(), maxPlayedHand);
+    int handId = static_cast<int>(std::distance(handHistory.begin(), maxPlayedHand));
     return Evaluator().rankToString(handId); // Convert hand ID to a human-readable name
 }
 

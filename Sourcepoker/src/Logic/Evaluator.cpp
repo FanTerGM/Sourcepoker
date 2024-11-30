@@ -77,17 +77,17 @@ int Evaluator::evaluateHandRank() const {
 // Evaluate the strength string of a 5-card hand
 std::string Evaluator::evaluateHandStrength() const {
     switch (evaluateHandRank()) {
-    case ONE_PAIR:
-    case TWO_PAIR:
-    case THREE_OF_A_KIND:
+    case ONE_PAIR: [[fallthrough]];  // Intentional fallthrough
+    case TWO_PAIR: [[fallthrough]];  // Intentional fallthrough
+    case THREE_OF_A_KIND: [[fallthrough]];  // Intentional fallthrough
     case FOUR_OF_A_KIND:
         return formatMult();
-    case HIGH:
+    case HIGH: [[fallthrough]];  // Intentional fallthrough
     case FLUSH:
         return formatHigh();
     case FULL_HOUSE:
         return formatFullHouse();
-    case STRAIGHT:
+    case STRAIGHT: [[fallthrough]];  // Intentional fallthrough
     case STRAIGHT_FLUSH:
         return hand[0].getRankEnum() == 1 && hand[4].getRankEnum() ? "f" : std::string(1, 'a' + hand[0].getRankEnum());
     case ROYAL_FLUSH:
