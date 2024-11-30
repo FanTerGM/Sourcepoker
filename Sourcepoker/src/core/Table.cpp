@@ -109,6 +109,23 @@ void Table::startGame() {
         clearTable();           // Clear previous hands
         dealCardsToPlayers();    // Deal new hands
 
+        int index = 0, highestBet = 10;
+        bool raised = false;
+        do {
+            if (players[index].folded) continue;
+            int choice; std::cin >> choice;
+            switch(choice) {
+                case 1:
+                    break;
+                case 2: 
+                    players[index].folded = true;
+                    break;
+                case 3:
+                    break;
+            }
+            index = (index + 1) % (numberOfPlayers + numberOfNPCs);
+        } while (players[index] == players[index+1]);
+
         // Display each player's hand
         std::cout << "Players' hands:" << std::endl;
         showPlayersHands();

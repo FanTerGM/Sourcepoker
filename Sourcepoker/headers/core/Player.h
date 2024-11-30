@@ -8,6 +8,7 @@
 /// @brief Represents a player in the game, with unique statistics, game history, and profile management.
 class Player : public Hand {
 public:
+
     /// @brief Default constructor for a placeholder player.
     Player();
 
@@ -30,6 +31,10 @@ public:
     /// @brief Displays the player's statistics.
     void displayInfo() const;
 
+    bool folded = false;
+    int bet = 0;
+    void changeBet(); 
+ 
     /// @brief Returns the player's ranking.
     int getRank() const;
 
@@ -70,7 +75,7 @@ public:
     /// @brief JSON serialization function for Player.
     friend void to_json(nlohmann::json& j, const Player& p);
 
-    /// @brief JSON deserialization function for Player.
+    ///  @brief JSON deserialization function for Player.
     friend void from_json(const nlohmann::json& j, Player& p);
 
 private:
