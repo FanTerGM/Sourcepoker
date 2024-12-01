@@ -1,4 +1,5 @@
 ﻿#include "../headers/visual/PlayerInfoInput.h"
+
 //PlayerInfoInput::PlayerInfoInput(int screenWidth, int screenHeight, int playerCount)
 //    : screenWidth(screenWidth), screenHeight(screenHeight), playerCount(playerCount) {
 
