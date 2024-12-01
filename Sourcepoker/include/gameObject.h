@@ -24,4 +24,4 @@
 #include "../headers/visual/PlayerSelection.h"
 #include "../headers/visual/PlayerInfoInput.h"
 
-extern GameState currentState;
+//extern GameState currentState;

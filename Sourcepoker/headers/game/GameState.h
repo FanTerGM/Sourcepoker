@@ -11,3 +11,5 @@ enum GameState { //quản lý trạng thái game
     CREDIT,
     EXIT
 };
+
+extern GameState currentState;
