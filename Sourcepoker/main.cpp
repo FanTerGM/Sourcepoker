@@ -59,9 +59,10 @@ int main() {
     Menu mainMenu(SCREEN_WIDTH, SCREEN_HEIGHT, { "Play", "Leaderboard", "Credit", "Exit" });
 
     //Play menu
-    Menu playMenu(SCREEN_WIDTH, SCREEN_HEIGHT, { "Default", "Stud table", "Super table(x)" });
+    Menu playMenu(SCREEN_WIDTH, SCREEN_HEIGHT, { "Default", "Stud table" });
 
     PlayerSelection playerSelection(SCREEN_WIDTH, SCREEN_HEIGHT);
+    PlayerInfoInput playerInfoInput(SCREEN_WIDTH, SCREEN_HEIGHT, 3); // Giả sử có 3 người chơi
 
     //game loop
     while (window.isOpen()) {
@@ -92,6 +93,15 @@ int main() {
                     }
                     else if (currentState == PLAYER_SELECTION) {
                         playerSelection.handleMouseClick(mousePosition, currentState);
+                        if (playerSelection.isContinueButtonPressed(mousePosition)) {
+                            playerSelection.handleContinueButton(currentState);
+                        }
+                    }
+                    else if (currentState == INPUT_PLAYER_INFO) {
+                        playerInfoInput.handleMouseClick(mousePosition);
+                        if (event.type == sf::Event::TextEntered) {
+                            playerInfoInput.handleTextInput(event);
+                        }
                     }
                     else if (currentState == GAME_DEFAULT) {
                         sf::Text text("Playing Default Poker", font, 30);
@@ -111,18 +121,9 @@ int main() {
                         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                             currentState = PLAY_MENU; // Quay lại Play Menu
                     }
-                    else if (currentState == GAME_SUPER) {
-                        sf::Text text("Playing Super Poker", font, 30);
-                        text.setFillColor(sf::Color::White);
-                        text.setPosition(50, 50);
-                        window.draw(text);
-
-                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                            currentState = PLAY_MENU; // Quay lại Play Menu
-                    }
                 }
             }
-            else if (event.type == sf::Event::TextEntered) {
+            if (event.type == sf::Event::TextEntered && currentState == PLAYER_SELECTION) {
                 playerSelection.handleTextInput(event);
             }
         }
@@ -141,19 +142,9 @@ int main() {
         }
         else if (currentState == PLAYER_SELECTION) {
             playerSelection.render(window);
-            //sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-
-            ////// Kiểm tra TextBox khi chuột di chuyển
-            ////if (playerSelection.playerTextBox.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
-            ////    std::cout << "Player count TextBox is hovered!" << std::endl;
-            ////}
-            ////if (playerSelection.npcTextBox.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
-            ////    std::cout << "NPC count TextBox is hovered!" << std::endl;
-            ////}
-            //// Kiểm tra khi nhấn chuột
-            //if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-            //    playerSelection.handleMouseClick(mousePosition, currentState);  // Xử lý nhấn chuột
-            //}
+        }
+        else if (currentState == INPUT_PLAYER_INFO) {
+            playerSelection.render(window);
         }
         else if (currentState == GAME_DEFAULT) {
             //logic game here
