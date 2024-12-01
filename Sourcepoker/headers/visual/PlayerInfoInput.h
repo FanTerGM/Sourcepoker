@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <vector>
-#include "../headers/core/Player.h"
+#include <gameObject.h>
 
 class PlayerInfoInput {
 public:
