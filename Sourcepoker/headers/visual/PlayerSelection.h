@@ -14,18 +14,21 @@ private:
 	sf::Text playerCountText;
 	sf::Text npcCountText;
 
-
+	sf::Text continueText;
 	sf::Text continueButtonText;
-	sf::RectangleShape playerTextBox;
-	sf::RectangleShape npcTextBox;
 	sf::RectangleShape continueButton;
 
+	sf::RectangleShape playerTextBox;  // Text box cho số lượng người chơi
+	sf::RectangleShape npcTextBox;     // Text box cho số lượng NPC
 	
 	std::string playerCount;
 	std::string npcCount;
 
+
 	bool isPlayerTextBoxSelected = false;
 	bool isNpcTextBoxSelected = false;
+
+	bool continueButtonPressed;
 
 public:
 
@@ -38,5 +41,8 @@ public:
 	int getNumPlayers() const;
 	int getNumNPCs() const;
 
-	
+	// Xử lý sự kiện bấm nút "Continue"
+	void handleContinueButton(GameState& currentState);
+
+	bool isContinueButtonPressed(const sf::Vector2i& mousePosition);
 };
