@@ -102,29 +102,63 @@ void Table::clearTable() {
     }
 }
 
+void Table::processPlayerAction(int& highestBet, int currentPlayerIndex){
+    int choice;
+    std::cout << "Player " << currentPlayerIndex + 1 << ", choose your action (1=Check/Call, 2=Fold, 3=Raise): ";
+    std::cin >> choice;
+
+    switch (choice) {
+    case 1: // Check/Call
+        if (players[currentPlayerIndex].bet < highestBet) {
+            players[currentPlayerIndex].bet = highestBet;  // Player calls
+        }
+        break;
+
+    case 2: // Fold
+        players[currentPlayerIndex].folded = true; // Player folds
+        break;
+
+    case 3: // Raise
+        int raiseAmount;
+        std::cout << "Enter raise amount: ";
+        std::cin >> raiseAmount;
+        if (raiseAmount > highestBet) {
+            players[currentPlayerIndex].bet = highestBet + raiseAmount;  // Player raises
+            highestBet = players[currentPlayerIndex].bet;  // Update the highest bet
+        }
+        else {
+            std::cout << "Raise amount must be higher than the current bet.\n";
+        }
+        break;
+
+    default:
+        std::cout << "Invalid choice. Try again.\n";
+        processPlayerAction(highestBet, currentPlayerIndex);  // Retry on invalid input
+        break;
+    }
+}
+
 // Runs the game loop, dealing cards, displaying hands, and determining the winner
 void Table::startGame() {
     do {
         createDeck();           // Prepare a new deck
         clearTable();           // Clear previous hands
-        dealCardsToPlayers();    // Deal new hands
+        dealCardsToPlayers();    // Deal new hand
 
-        int index = 0, highestBet = 10;
-        bool raised = false;
+        int index = 0, folded = 0, highestBet = 10, raisedIndex = 0;
+        bool allCalled = false;
         do {
-            if (players[index].folded) continue;
-            int choice; std::cin >> choice;
-            switch(choice) {
-                case 1:
-                    break;
-                case 2: 
-                    players[index].folded = true;
-                    break;
-                case 3:
-                    break;
+            if (players[index].folded) {
+                index = (index + 1) % (players.size());
+                continue; // Skip the current player if they have folded
             }
-            index = (index + 1) % (numberOfPlayers + numberOfNPCs);
-        } while (players[index] == players[index+1]);
+            players[index].showCards(); 
+
+            // Move to the next player
+            index = (index + 1) % (players.size());
+
+            // End loop when all players have folded or if everyone except one player has folded
+        } while (allCalled && raisedIndex == index); // This condition will stop when only one active player remains
 
         // Display each player's hand
         std::cout << "Players' hands:" << std::endl;

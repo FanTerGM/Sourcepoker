@@ -61,6 +61,8 @@ public:
      */
     void clearTable();
 
+    void processPlayerAction(int& highestBet, int currentPlayerIndex);
+
     /**
      * @brief Handles the game start, manages rounds, and controls game flow.
      */
