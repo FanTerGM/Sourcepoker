@@ -28,7 +28,7 @@ private:
 	bool isPlayerTextBoxSelected = false;
 	bool isNpcTextBoxSelected = false;
 
-	bool continueButtonPressed;
+	//bool continueButtonPressed;
 
 public:
 

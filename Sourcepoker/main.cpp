@@ -61,9 +61,11 @@ int main() {
     //Play menu
     Menu playMenu(SCREEN_WIDTH, SCREEN_HEIGHT, { "Default", "Stud table" });
 
-    PlayerSelection playerSelection(SCREEN_WIDTH, SCREEN_HEIGHT);
-    PlayerInfoInput playerInfoInput(SCREEN_WIDTH, SCREEN_HEIGHT, 3); // Giả sử có 3 người chơi
+    PlayerSelection playerSelection(SCREEN_WIDTH, SCREEN_HEIGHT); 
 
+    int numPlayers = 2;  // Thay đổi số lượng người chơi
+    int numNPCs = 1;     // Số lượng NPC, có thể thay đổi tùy theo yêu cầu
+    PlayerInfoInput playerInfo(numPlayers, numNPCs);
     //game loop
     while (window.isOpen()) {
         //event polling
@@ -98,9 +100,9 @@ int main() {
                         }
                     }
                     else if (currentState == INPUT_PLAYER_INFO) {
-                        playerInfoInput.handleMouseClick(mousePosition);
+                        playerInfo.handleMouseClick(mousePosition);
                         if (event.type == sf::Event::TextEntered) {
-                            playerInfoInput.handleTextInput(event);
+                            playerInfo.handleTextInput(event);
                         }
                     }
                     else if (currentState == GAME_DEFAULT) {
@@ -128,7 +130,7 @@ int main() {
                     playerSelection.handleTextInput(event);
                 }
                 else if (currentState == INPUT_PLAYER_INFO) {
-                    playerInfoInput.handleTextInput(event);
+                    playerInfo.handleTextInput(event);
                 }
             }
         }
@@ -147,9 +149,16 @@ int main() {
         }
         else if (currentState == PLAYER_SELECTION) {
             playerSelection.render(window);
+            if (playerSelection.isContinueButtonPressed(sf::Mouse::getPosition(window))) {
+                // Giả sử playerSelection có hàm để lấy số lượng người chơi
+                int numPlayers = playerSelection.getNumPlayers();  // Lấy số lượng người chơi từ PlayerSelection
+                int npcPlayers = playerSelection.getNumNPCs(); 
+                playerInfo = PlayerInfoInput(numPlayers, numNPCs);  // Khởi tạo PlayerInfoInput với số lượng người chơi
+                currentState = INPUT_PLAYER_INFO;  // Chuyển sang màn hình nhập thông tin người chơi
+            }
         }
         else if (currentState == INPUT_PLAYER_INFO) {
-            playerInfoInput.render(window);
+            playerInfo.render(window);
         }
         else if (currentState == GAME_DEFAULT) {
             //logic game here
