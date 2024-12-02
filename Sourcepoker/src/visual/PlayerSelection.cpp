@@ -73,10 +73,13 @@ void PlayerSelection::handleMouseClick(const sf::Vector2i& mousePosition, GameSt
         isPlayerTextBoxSelected = false;
         isNpcTextBoxSelected = true;
     }
-    //if (continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
-    //    currentState = INPUT_PLAYER_INFO;
+    if (continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
+        currentState = INPUT_PLAYER_INFO;
+        std::cout << "pressed button - " << currentState<< std::endl;
+    }
     else if (isContinueButtonPressed(mousePosition)){
         handleContinueButton(currentState);
+        std::cout << "pressed button - X" << std::endl;
     }
 }
 

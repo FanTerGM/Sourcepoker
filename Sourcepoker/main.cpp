@@ -123,8 +123,13 @@ int main() {
                     }
                 }
             }
-            if (event.type == sf::Event::TextEntered && currentState == PLAYER_SELECTION) {
-                playerSelection.handleTextInput(event);
+            if (event.type == sf::Event::TextEntered) {
+                if (currentState == PLAYER_SELECTION) {
+                    playerSelection.handleTextInput(event);
+                }
+                else if (currentState == INPUT_PLAYER_INFO) {
+                    playerInfoInput.handleTextInput(event);
+                }
             }
         }
         //update
@@ -144,7 +149,7 @@ int main() {
             playerSelection.render(window);
         }
         else if (currentState == INPUT_PLAYER_INFO) {
-            playerSelection.render(window);
+            playerInfoInput.render(window);
         }
         else if (currentState == GAME_DEFAULT) {
             //logic game here

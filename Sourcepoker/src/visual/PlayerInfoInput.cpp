@@ -1,12 +1,18 @@
 ﻿#include "../headers/visual/PlayerInfoInput.h"
 #include "../headers/game/GameState.h"
 
+GameState currentState = INPUT_PLAYER_INFO;
+
 PlayerInfoInput::PlayerInfoInput(float width, float height, int numPlayers) : activePlayerIndex(-1), numPlayers(numPlayers) {
     font.loadFromFile("Pangolin-Regular.ttf");
 
+    float inputBoxHeight = 50;  // Chiều cao của ô nhập liệu
+    float margin = 10;  // Khoảng cách giữa các phần tử
+    float startY = height / 2 - (numPlayers * (inputBoxHeight + margin)) / 2;  // Vị trí bắt đầu theo trục Y (căn giữa)
+
     for (int i = 0; i < numPlayers; ++i) {
         sf::RectangleShape inputBox(sf::Vector2f(200, 50));
-        inputBox.setPosition(width / 2 + 100, height / 2 + (i * 60));  // Cách nhau 40px cho mỗi ô nhập
+        inputBox.setPosition(width / 2 + 100, startY + i * (inputBoxHeight + margin));  // Cách nhau 40px cho mỗi ô nhập
         nameInputBoxes.push_back(inputBox);
 
         sf::Text inputText;
@@ -14,7 +20,7 @@ PlayerInfoInput::PlayerInfoInput(float width, float height, int numPlayers) : ac
         inputText.setString("Player " + std::to_string(i + 1) + ": ");
         inputText.setCharacterSize(20);
         inputText.setFillColor(sf::Color::White);
-        inputText.setPosition(width / 2 - 120, height / 2 + (i * 60) - 20);  // Vị trí text cho mỗi người chơi
+        inputText.setPosition(width / 2 - 120, startY + i * (inputBoxHeight + margin) - 20);  // Vị trí text cho mỗi người chơi
         playerNames.push_back(inputText);
 
         isActive.push_back(false); // Ban đầu không có ô nào đang được chọn
@@ -23,6 +29,16 @@ PlayerInfoInput::PlayerInfoInput(float width, float height, int numPlayers) : ac
         continueButton.setSize(sf::Vector2f(200, 50));  // Kích thước của nút
         continueButton.setPosition(100, 300);  // Vị trí của nút
         continueButton.setFillColor(sf::Color::Green);  // Màu nền của nút
+
+        continueText.setFont(font);
+        continueText.setString("Game Mode");
+        continueText.setCharacterSize(20);
+        continueText.setFillColor(sf::Color::Black);  // Màu chữ
+        // Căn giữa văn bản "Game Mode" trên nút
+        sf::FloatRect textRect = continueText.getLocalBounds();
+        continueText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
+        continueText.setPosition(continueButton.getPosition().x + continueButton.getSize().x / 2.0f,
+            continueButton.getPosition().y + continueButton.getSize().y / 2.0f);
     }
 }
 
@@ -50,6 +66,7 @@ void PlayerInfoInput::render(sf::RenderWindow& window) {
         window.draw(playerInputText);
     }
     window.draw(continueButton);
+    window.draw(continueText);
 }
 
 void PlayerInfoInput::handleMouseClick(const sf::Vector2i& mousePosition) {
@@ -64,6 +81,7 @@ void PlayerInfoInput::handleMouseClick(const sf::Vector2i& mousePosition) {
         }
         if (continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition))) {
             // Lấy tên người chơi từ text box (ví dụ playerCountTextField)
+
             std::string playerName = playerInputs[activePlayerIndex];  // Giả sử bạn lấy tên từ text box
 
             if (!playerName.empty()) {
@@ -77,9 +95,16 @@ void PlayerInfoInput::handleMouseClick(const sf::Vector2i& mousePosition) {
                 newPlayer.saveProfile("playerProfiles/");
 
                 // Cập nhật trạng thái trò chơi
-                currentState = INPUT_PLAYER_INFO;  // Chuyển sang màn hình nhập thông tin người chơi 
+                //if (activePlayerIndex == numPlayers - 1) {
+                //    currentState = PLAY_MENU;
+                //} else {
+                //    activePlayerIndex = (activePlayerIndex + 1) % numPlayers;
             }
         }
+    }
+    if (continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition))) {
+        std::cout << "button pressed" << std::endl;
+        currentState = PLAY_MENU;
     }
 }
 

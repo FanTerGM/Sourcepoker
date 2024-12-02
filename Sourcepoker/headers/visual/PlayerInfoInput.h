@@ -27,4 +27,5 @@ private:
     int activePlayerIndex; // Chỉ số người chơi đang nhập tên
     std::vector<std::string> playerInputs; // Lưu tên người chơi
     sf::RectangleShape continueButton;
+    sf::Text continueText;
 };
