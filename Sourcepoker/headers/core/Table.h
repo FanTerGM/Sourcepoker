@@ -15,6 +15,7 @@ class Table : public Hand {
 protected:
     int numberOfPlayers;      ///< Number of human players at the table.
     int numberOfNPCs;         ///< Number of AI (NPC) players at the table.
+    int pot;
     Deck deck;                ///< Deck of cards used in the game.
     std::vector<Player> players; ///< Collection of players in the game (both human and AI).
 
@@ -61,7 +62,14 @@ public:
      */
     void clearTable();
 
-    void processPlayerAction(int& highestBet, int currentPlayerIndex);
+
+    /**
+    * @brief Process the action of checking/calling, folding and raising
+    * @param highestBet Take the current highest betting value
+    * @param currentPlayerIndex The player who in play
+    * @param raiseIndex Note the most recent raise
+    */
+    void processPlayerAction(int& highestBet, int currentPlayerIndex, int& raiseIndex);
 
     /**
      * @brief Handles the game start, manages rounds, and controls game flow.
@@ -72,17 +80,6 @@ public:
      * @brief Determines and displays the winner of the current round.
      */
     virtual void determineWinner();
-
-    /**
-     * @brief Handles cases of ties among players and updates their records.
-     * @return Number of players involved in the tie.
-     */
-    int handleTie();
-
-    /**
-     * @brief Placeholder for raising bets, to be implemented in betting-enabled games.
-     */
-    void raiseBet();
 
     /**
      * @brief Gets the name of the current game mode.

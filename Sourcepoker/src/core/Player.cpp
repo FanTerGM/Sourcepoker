@@ -29,6 +29,7 @@ std::string Player::getUsername() const {
 void Player::displayInfo() const {
     std::cout << "Username: " << username << std::endl;
     std::cout << "Winrate: " << winRate << "%" << std::endl;
+    std::cout << "Current balance: " << balance << std::endl;
     std::cout << "Current Ranking: " << rank << std::endl;
     std::cout << "Favorite Hand: " << getFavoriteHand() << std::endl;
 }
@@ -36,6 +37,10 @@ void Player::displayInfo() const {
 // Returns the player's rank
 int Player::getRank() const {
     return rank;
+}
+
+int Player::getBalance() const {
+    return balance; 
 }
 
 // Returns the player's win rate
@@ -61,14 +66,16 @@ void Player::updateRank(int newRank) {
 }
 
 // Updates game history, calculates win rate, and updates balance after a game
-void Player::updateGameHistory(bool won, int earnings) {
-    if (won){
+void Player::updateGameHistory(bool won, int earning) {
+    if (won) {
         int handStrengthIndex = static_cast<int>(Evaluator(getHand()).evaluateHandRank());
         handHistory[handStrengthIndex]++; // Track this hand's occurrence
         gamesWon++;
+        balance += earning;
     }
+    else if (!folded) balance -= bet;
+    bet = 0;
     winRate = (gamesWon * 100) / getGamesPlayed(); // Calculate win rate as a percentage
-    balance += earnings;
 
     saveProfile(); // Save the updated player profile
 }

@@ -64,32 +64,41 @@ void Table::createDeck() {
     deck = Deck();
 }
 
-// Handles a tie situation, updating game history for tied players
-int Table::handleTie() {
-    int i = 0;
-    while (players[0] == players[++i]) {  // Increment through tied players
-        players[i].updateGameHistory(true, 1);  // Update game history for tied players
-        std::cout << players[i].getUsername() << " tied!" << std::endl;
-    }
-    return i;
-}
-
 // Determines the winner among players and updates game history
 void Table::determineWinner() {
     // Sort players by hand strength in descending order
     std::sort(players.begin(), players.end(), std::greater<Player>());
 
-    // Handle ties if there are multiple players
-    int i = (players.size() > 1) ? handleTie() : 0;
+    int count = players.size();
 
+    std::vector<int> winnersIndexes; 
+    std::vector<int> losersIndexes;
+
+    for (int i = 0; i < count; ++i) {
+        if (players[i].folded) losersIndexes.push_back(i);
+        else {
+            winnersIndexes.push_back(i);
+            for (int j = i + 1; j < count; ++j) {
+                if (!players[j].folded && players[j] == players[i]) winnersIndexes.push_back(j);
+                else losersIndexes.push_back(j);
+            }
+            break;
+        }
+    }
+    std::cout << "Loser: " << std::endl;
     // Update game history for non-winning players
-    for (; i < players.size(); i++) {
-        players[i].updateGameHistory(false, 1);
+    for (const int& i : losersIndexes) {
+        std::cout << players[i].getUsername() << std::endl;
+        players[i].updateGameHistory();
+    }
+
+    std::cout << "Winner: " << std::endl;
+    for (const int& i : winnersIndexes) {
+        std::cout << players[i].getUsername() << std::endl;
+        players[i].updateGameHistory(true, pot * losersIndexes.size() / winnersIndexes.size());
     }
 
     // Announce the winner
-    std::cout << "Winner: " << players[0].getUsername() << std::endl;
-    players[0].updateGameHistory(true, 1);
     int handRank = Evaluator(players[0].getHand()).evaluateHandRank();
     std::cout << "Winning hand rank: "
         << Evaluator().rankToString(handRank) << std::endl;
@@ -102,10 +111,15 @@ void Table::clearTable() {
     }
 }
 
-void Table::processPlayerAction(int& highestBet, int currentPlayerIndex){
+void Table::processPlayerAction(int& highestBet, int currentPlayerIndex, int& raiseIndex){
+    players[currentPlayerIndex].showCards();
+
     int choice;
-    std::cout << "Player " << currentPlayerIndex + 1 << ", choose your action (1=Check/Call, 2=Fold, 3=Raise): ";
+    std::cout << "Player " << players[currentPlayerIndex].getUsername() << ", choose your action (1=Check/Call, 2=Fold, 3=Raise): ";
     std::cin >> choice;
+
+    std::cout << "Current blind: " << highestBet << std::endl;
+    std::cout << "Your current bet: " << players[currentPlayerIndex].bet << std::endl;
 
     switch (choice) {
     case 1: // Check/Call
@@ -120,11 +134,12 @@ void Table::processPlayerAction(int& highestBet, int currentPlayerIndex){
 
     case 3: // Raise
         int raiseAmount;
-        std::cout << "Enter raise amount: ";
+        std::cout << "Enter raise amount: " << std::endl;
         std::cin >> raiseAmount;
         if (raiseAmount > highestBet) {
-            players[currentPlayerIndex].bet = highestBet + raiseAmount;  // Player raises
-            highestBet = players[currentPlayerIndex].bet;  // Update the highest bet
+            players[currentPlayerIndex].bet += raiseAmount;  // Player raises
+            highestBet = players[currentPlayerIndex].bet;
+            raiseIndex = currentPlayerIndex;// Update the highest bet
         }
         else {
             std::cout << "Raise amount must be higher than the current bet.\n";
@@ -133,7 +148,7 @@ void Table::processPlayerAction(int& highestBet, int currentPlayerIndex){
 
     default:
         std::cout << "Invalid choice. Try again.\n";
-        processPlayerAction(highestBet, currentPlayerIndex);  // Retry on invalid input
+        processPlayerAction(highestBet, currentPlayerIndex, raiseIndex);  // Retry on invalid input
         break;
     }
 }
@@ -145,20 +160,17 @@ void Table::startGame() {
         clearTable();           // Clear previous hands
         dealCardsToPlayers();    // Deal new hand
 
-        int index = 0, folded = 0, highestBet = 10, raisedIndex = 0;
-        bool allCalled = false;
+        int index = 0, raiseAt = 0;
+        int highestBet = 10;
         do {
-            if (players[index].folded) {
-                index = (index + 1) % (players.size());
-                continue; // Skip the current player if they have folded
-            }
-            players[index].showCards(); 
+            while (players[index].folded)
+                index = (index + 1) % players.size();
+       
+            processPlayerAction(highestBet, index, raiseAt);
 
-            // Move to the next player
-            index = (index + 1) % (players.size());
+            index = (index + 1) % players.size();
 
-            // End loop when all players have folded or if everyone except one player has folded
-        } while (allCalled && raisedIndex == index); // This condition will stop when only one active player remains
+        } while (index != raiseAt);
 
         // Display each player's hand
         std::cout << "Players' hands:" << std::endl;
@@ -173,9 +185,4 @@ void Table::startGame() {
         std::cin.ignore(1000, '\n');
 
     } while (std::cin.get() == '1');
-}
-
-// Placeholder for a betting feature
-void Table::raiseBet() {
-    std::cout << "Betting feature is currently unavailable." << std::endl;
 }

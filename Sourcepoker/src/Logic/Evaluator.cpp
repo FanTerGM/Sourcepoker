@@ -60,8 +60,8 @@ bool Evaluator::isAceLowStraight() const {
 // Evaluate the rank of a 5-card hand
 int Evaluator::evaluateHandRank() const {
     if (std::any_of(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 4; })) return FOUR_OF_A_KIND;
-    if (std::any_of(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 3; }) &&
-        std::any_of(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 2; }))
+    if (std::any_of(suitMap.begin(), suitMap.end(), [](const auto& pair) { return pair.second == 3; }) &&
+        std::any_of(suitMap.begin(), suitMap.end(), [](const auto& pair) { return pair.second == 2; }))
         return FULL_HOUSE;
     if (std::any_of(suitMap.begin(), suitMap.end(), [](const auto& pair) { return pair.second == 5; })) {
         if (isStraight()) return hand[0].getRankEnum() == Card::Rank::TEN ? ROYAL_FLUSH : STRAIGHT_FLUSH;
