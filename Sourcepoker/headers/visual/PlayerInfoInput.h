@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <gameObject.h>
+#include <../headers/core/Player.h>
 
 class PlayerInfoInput {
 public:
@@ -40,9 +41,6 @@ private:
 
     int numPlayers;
     int numNPCs;
-
-    //sf::Text infoText;
-    //std::string playerName; // Tên người chơi
 
     bool isPlayerNameTextBoxSelected = false;
  
