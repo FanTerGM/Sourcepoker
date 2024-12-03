@@ -44,7 +44,7 @@ public:
     /**
      * @brief Deals cards to all players at the table.
      */
-    virtual void dealCardsToPlayers();
+    virtual void dealCardsToPlayers();//sf::RenderWindow& window) = 0;
 
     /**
      * @brief Displays the hands of all players at the table.

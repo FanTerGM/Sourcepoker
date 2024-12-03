@@ -1,10 +1,23 @@
-#include <gameObject.h>
+﻿#include <gameObject.h>
 #include <gameModes.h>
 
 drawTable::drawTable(int numberOfPlayers, int numberOfNPCs) : Table(numberOfPlayers,numberOfNPCs) {}
 
-void drawTable::dealCardsToPlayers() {
-	for (Player& player: players) {
+void drawTable::dealCardsToPlayers() {//sf::RenderWindow& window) {
+	//float xOffset = 50.0f;
+	//float yOffset = 50.0f;
+	for (Player& player : players) {
+
+		//	// Vẽ tay bài lên cửa sổ
+		//	for (size_t i = 0; i < player.getHand().size(); ++i) {
+		//		std::string suit = player.getHand()[i].getSuit();
+		//		int rank = player.getHand()[i].getRank();
+
+		//		// Tạo đường dẫn đến hình ảnh của lá bài
+		//		std::string imgPath = "Resources/images/cards/" + std::to_string(rank) + "_of_" + suit + ".png";
+		//		ImgCard imgCard(suit, rank, imgPath);  // Tạo đối tượng ImgCard cho mỗi lá bài
+		//		imgCard.draw(window, xOffset + (i * 100), yOffset);  // Vẽ lá bài lên cửa sổ
+		//	}
 		player.cardToHand(deck, 5, true);
 	}
 }

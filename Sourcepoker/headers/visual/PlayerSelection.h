@@ -36,7 +36,6 @@ public:
 	void render(sf::RenderWindow& window);
 	void handleTextInput(sf::Event& event);
 	void handleMouseClick(const sf::Vector2i& mousePosition, GameState& currentState);
-	bool isContinueClicked(const sf::Vector2i& mousePosition);
 
 	int getNumPlayers() const;
 	int getNumNPCs() const;

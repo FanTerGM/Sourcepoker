@@ -9,11 +9,7 @@
 GameState currentState = INPUT_PLAYER_INFO;
 
 PlayerInfoInput::PlayerInfoInput(int playerCount, int npcCount) : numPlayers(playerCount), numNPCs(npcCount), activePlayerIndex(-1){
-    this->numPlayers = numPlayers;
-    this->numNPCs = numNPCs;
     font.loadFromFile("Pangolin-Regular.ttf");
-
-//    isActive.resize(numPlayers, false);
 
     //Khởi tạo văn bản yêu cầu nhập tên người chơi
     playerNameText.setFont(font);
@@ -24,6 +20,7 @@ PlayerInfoInput::PlayerInfoInput(int playerCount, int npcCount) : numPlayers(pla
 
     // Tạo các ô nhập tên người chơi
     playerNameBoxes.push_back(sf::RectangleShape(sf::Vector2f(200.f, 40.f)));
+    initializePlayerList();
     playerNameBoxes[0].setPosition(50.f, 100.f);
     playerNameBoxes[0].setFillColor(sf::Color::Transparent);
     playerNameBoxes[0].setOutlineThickness(2.f);
@@ -85,7 +82,7 @@ void PlayerInfoInput::render(sf::RenderWindow& window) {
         // Vẽ Text cho tên người chơi
         playerNameText.setString("Player " + std::to_string(i + 1) + ": ");
         playerNameText.setPosition(100, 100 + i * 80);
-        std::cout << "playerNameText string: " << playerNameText.getString().toAnsiString() << std::endl;
+        //std::cout << "playerNameText string: " << playerNameText.getString().toAnsiString() << std::endl;
         window.draw(playerNameText);
 
         // Vẽ Text Box để nhập tên

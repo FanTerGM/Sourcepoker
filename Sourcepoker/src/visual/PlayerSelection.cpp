@@ -75,6 +75,9 @@ void PlayerSelection::handleMouseClick(const sf::Vector2i& mousePosition, GameSt
         isNpcTextBoxSelected = true;
     }
     else if (continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
+        int numPlayers = static_cast<int>(getNumPlayers());
+        int npcPlayers = static_cast<int>(getNumNPCs());
+        PlayerInfoInput playerInfo(numPlayers, npcPlayers);
         currentState = INPUT_PLAYER_INFO;
     }
 }
@@ -82,15 +85,11 @@ void PlayerSelection::handleMouseClick(const sf::Vector2i& mousePosition, GameSt
 void PlayerSelection::handleContinueButton(GameState& currentState) {
     // Nếu nhấn nút "Continue", chuyển sang trạng thái INPUT_PLAYER_INFO
     if (currentState == PLAYER_SELECTION) {
-        int numPlayers = getNumPlayers();
-        int npcPlayers = getNumNPCs();
+        int numPlayers = static_cast<int>(getNumPlayers());
+        int npcPlayers = static_cast<int>(getNumNPCs());
         PlayerInfoInput playerInfo(numPlayers, npcPlayers);
         currentState = INPUT_PLAYER_INFO;
     }
-}
-
-bool PlayerSelection::isContinueClicked(const sf::Vector2i& mousePosition) {
-    return continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition));
 }
 
 int PlayerSelection::getNumPlayers() const {
@@ -104,6 +103,7 @@ int PlayerSelection::getNumNPCs() const {
 bool PlayerSelection::isContinueButtonPressed(const sf::Vector2i& mousePosition) {
     // Kiểm tra xem có bấm vào nút Continue hay không
     return continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition));
+    std::cout << "yes" << std::endl;
 }
 
 

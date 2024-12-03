@@ -106,11 +106,7 @@ int main() {
                         }
                     }
                     else if (currentState == GAME_DEFAULT) {
-                        sf::Text text("Playing Default Poker", font, 30);
-                        text.setFillColor(sf::Color::White);
-                        text.setPosition(50, 50);
-                        window.draw(text);
-                        //add logic game here
+                        //house.startGame(window);
                         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                             currentState = PLAY_MENU; // Quay lại Play Menu
                     }
@@ -149,19 +145,42 @@ int main() {
         }
         else if (currentState == PLAYER_SELECTION) {
             playerSelection.render(window);
-            if (playerSelection.isContinueButtonPressed(sf::Mouse::getPosition(window))) {
-                // Giả sử playerSelection có hàm để lấy số lượng người chơi
-                int numPlayers = playerSelection.getNumPlayers();  // Lấy số lượng người chơi từ PlayerSelection
-                int npcPlayers = playerSelection.getNumNPCs(); 
-                playerInfo = PlayerInfoInput(numPlayers, numNPCs);  // Khởi tạo PlayerInfoInput với số lượng người chơi
-                currentState = INPUT_PLAYER_INFO;  // Chuyển sang màn hình nhập thông tin người chơi
-            }
         }
         else if (currentState == INPUT_PLAYER_INFO) {
             playerInfo.render(window);
         }
         else if (currentState == GAME_DEFAULT) {
-            //logic game here
+            //// Khởi tạo bàn chơi với số người chơi đã nhập
+            ////c1
+            //House house = new Table();
+            //house.setTable(new Table(numPlayers, numNPCs));
+            ////c2:
+            //Table* table = new drawTable(numPlayers, numNPCs); // Sử dụng số lượng người chơi và NPC từ PlayerInfoInput
+            //table->startGame();  // Bắt đầu trò chơi
+
+            //// Vẽ bài của người chơi lên cửa sổ
+            //for (int i = 0; i < numPlayers + numNPCs; i++) {
+            //    // Lấy tay bài của từng người chơi
+            //    Player& player = table->getPlayers()[i];
+            //    int cardOffset = 0;  // Để di chuyển các lá bài trên cửa sổ
+
+            //    for (int j = 0; j < player.getHand().size(); j++) {
+            //        // Tạo texture và sprite cho lá bài
+            //        sf::Texture cardTexture;
+            //        if (!cardTexture.loadFromFile("Resources/cards/" + player.getHand()[j].getCardName() + ".png")) {
+            //            std::cerr << "Error loading card image: " << player.getHand()[j].getCardName() << std::endl;
+            //            continue;
+            //        }
+
+            //        sf::Sprite cardSprite(cardTexture);
+            //        cardSprite.setPosition(50 + cardOffset, 200 + i * 150);  // Vị trí của bài, có thể thay đổi
+
+            //        // Vẽ lên cửa sổ
+            //        window.draw(cardSprite);
+            //        cardOffset += 60;  // Dịch chuyển bài tiếp theo
+            //    }
+            //}
+
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 currentState = MAIN_MENU;
         }
