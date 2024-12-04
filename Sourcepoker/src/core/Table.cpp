@@ -1,4 +1,4 @@
-#include <gameObject.h>
+﻿#include <gameObject.h>
 #include <iostream>
 #include <algorithm> // For std::sort and std::greater
 #include <numeric>   // For std::accumulate

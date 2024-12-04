@@ -1,8 +1,5 @@
-#pragma once
+﻿#pragma once
 #include <gameObject.h>
-#include <vector>
-#include <string>
-#include <iostream>
 
 /**
  * @class Table
@@ -44,7 +41,7 @@ public:
     /**
      * @brief Deals cards to all players at the table.
      */
-    virtual void dealCardsToPlayers();
+    virtual void dealCardsToPlayers();//sf::RenderWindow& window) = 0;
 
     /**
      * @brief Displays the hands of all players at the table.
@@ -83,5 +80,7 @@ public:
      * @brief Virtual destructor for safe inheritance.
      */
     virtual ~Table() {}
+
+    void addPlayer(const std::string& playerName);
 };
 

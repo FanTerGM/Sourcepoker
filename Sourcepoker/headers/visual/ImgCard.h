@@ -1,6 +1,6 @@
 #pragma once
-#include "string"
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
+#include <gameObject.h>
 
 class ImgCard {
 private:
@@ -18,5 +18,8 @@ public:
 	void draw(sf::RenderWindow& window, int x, int y); //draw a method to render card
 
 	std::string toString() const; // convert card information to a string
+
+	static void renderCards(sf::RenderWindow& window, const Player& player, int xPos, int yPos);
+
 };
 

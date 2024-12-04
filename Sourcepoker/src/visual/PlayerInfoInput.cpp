@@ -1,123 +1,224 @@
 ﻿#include "../headers/visual/PlayerInfoInput.h"
 #include "../headers/game/GameState.h"
+#include <iostream>
+#include <filesystem>
+#include <nlohmann/json.hpp>
+#include <algorithm> //for std::max_element
+
 
 GameState currentState = INPUT_PLAYER_INFO;
 
-PlayerInfoInput::PlayerInfoInput(float width, float height, int numPlayers) : activePlayerIndex(-1), numPlayers(numPlayers) {
+PlayerInfoInput::PlayerInfoInput(int numPlayers, int numNPCs) : numPlayers(numPlayers), numNPCs(numNPCs), activePlayerIndex(-1) {}
+
+void PlayerInfoInput::setPlayerNPCs(int _numPlayers, int _numNPCs){
+    numPlayers = _numPlayers;
+    numNPCs = _numNPCs;
+
     font.loadFromFile("Pangolin-Regular.ttf");
 
-    float inputBoxHeight = 50;  // Chiều cao của ô nhập liệu
-    float margin = 10;  // Khoảng cách giữa các phần tử
-    float startY = height / 2 - (numPlayers * (inputBoxHeight + margin)) / 2;  // Vị trí bắt đầu theo trục Y (căn giữa)
+    //Khởi tạo văn bản yêu cầu nhập tên người chơi
+    playerNameText.setFont(font);
+    playerNameText.setString("Enter Player Names:");
+    playerNameText.setCharacterSize(30);
+    playerNameText.setFillColor(sf::Color::White);
+    playerNameText.setPosition(50.f, 50.f);
 
+    // Tạo các ô nhập tên người chơi
+    playerNameBoxes.push_back(sf::RectangleShape(sf::Vector2f(200.f, 40.f)));
+    initializePlayerList();
+    
+
+    // Khởi tạo nút "Continue"
+    continueButton.setSize(sf::Vector2f(200.f, 50.f));
+    continueButton.setPosition(50.f, 300.f);
+    continueButton.setFillColor(sf::Color::Green);
+
+    // Nút "Continue" - Văn bản
+    continueText.setFont(font);
+    continueText.setString("Continue");
+    continueText.setCharacterSize(24);
+    continueText.setFillColor(sf::Color::White);
+    continueText.setPosition(110.f, 310.f);
+
+    // Khởi tạo thông báo lỗi (nếu có)
+    errorText.setFont(font);
+    errorText.setCharacterSize(24);
+    errorText.setFillColor(sf::Color::Red);
+    errorText.setPosition(50.f, 250.f);
+
+    // Căn giữa chữ "Play Menu" trong nút
+    sf::FloatRect textRect = continueText.getLocalBounds();
+    continueText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
+    continueText.setPosition(continueButton.getPosition().x + continueButton.getSize().x / 2.0f,
+    continueButton.getPosition().y + continueButton.getSize().y / 2.0f);
+}
+
+void PlayerInfoInput::loadPlayerListFromFile(const std::string& directory) {
+    std::filesystem::create_directory(directory);
+    for (const auto& entry : std::filesystem::directory_iterator(directory)) {
+        if (entry.path().extension() == ".json") {
+            std::string playerName = entry.path().stem().string();
+            playerList.push_back(playerName); // Lưu các tên người chơi vào danh sách
+        }
+    }
+}
+
+void PlayerInfoInput::savePlayerNameToFile(const std::string& playerName, const std::string& directory) {
+    Player newPlayer(playerName);
+    newPlayer.saveProfile(directory);  // Lưu profile người chơi vào file
+}
+
+void PlayerInfoInput::initializePlayerList() {
+    // Khi bắt đầu, yêu cầu người dùng nhập tên người chơi
     for (int i = 0; i < numPlayers; ++i) {
-        sf::RectangleShape inputBox(sf::Vector2f(200, 50));
-        inputBox.setPosition(width / 2 + 100, startY + i * (inputBoxHeight + margin));  // Cách nhau 40px cho mỗi ô nhập
-        nameInputBoxes.push_back(inputBox);
-
-        sf::Text inputText;
-        inputText.setFont(font);
-        inputText.setString("Player " + std::to_string(i + 1) + ": ");
-        inputText.setCharacterSize(20);
-        inputText.setFillColor(sf::Color::White);
-        inputText.setPosition(width / 2 - 120, startY + i * (inputBoxHeight + margin) - 20);  // Vị trí text cho mỗi người chơi
-        playerNames.push_back(inputText);
-
-        isActive.push_back(false); // Ban đầu không có ô nào đang được chọn
-        playerInputs.push_back(""); // Mảng lưu trữ tên người chơi, ban đầu trống
-
-        continueButton.setSize(sf::Vector2f(200, 50));  // Kích thước của nút
-        continueButton.setPosition(100, 300);  // Vị trí của nút
-        continueButton.setFillColor(sf::Color::Green);  // Màu nền của nút
-
-        continueText.setFont(font);
-        continueText.setString("Game Mode");
-        continueText.setCharacterSize(20);
-        continueText.setFillColor(sf::Color::Black);  // Màu chữ
-        // Căn giữa văn bản "Game Mode" trên nút
-        sf::FloatRect textRect = continueText.getLocalBounds();
-        continueText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-        continueText.setPosition(continueButton.getPosition().x + continueButton.getSize().x / 2.0f,
-            continueButton.getPosition().y + continueButton.getSize().y / 2.0f);
+        playerInputs.push_back("");  // Khởi tạo một ô nhập tên cho mỗi người chơi
+        playerNameBoxes.push_back(sf::RectangleShape(sf::Vector2f(200.f, 40.f))); // Tạo thêm ô nhập tên cho người chơi
+        playerNameBoxes[i].setPosition(70.f, 100.f + i * 60.f);  // Cập nhật vị trí của các ô nhập tên
+        playerNameBoxes[i].setFillColor(sf::Color::White);
+        playerNameBoxes[i].setOutlineThickness(2.f);
+        playerNameBoxes[i].setOutlineColor(sf::Color::White);
     }
 }
 
 void PlayerInfoInput::render(sf::RenderWindow& window) {
-    //render input box and lable player's name
+    // Hiển thị tên người chơi, thông báo lỗi nếu cần
     for (int i = 0; i < numPlayers; ++i) {
-        window.draw(nameInputBoxes[i]);
-        window.draw(playerNames[i]);
+        // Vẽ Text cho tên người chơi
+        playerNameText.setString("Player " + std::to_string(i + 1) + ": ");
+        playerNameText.setPosition(100, 100 + i * 80);
+        window.draw(playerNameText);
 
-        // Nếu ô đang được chọn, hiển thị màu khác
-        if (isActive[i]) {
-            nameInputBoxes[i].setFillColor(sf::Color(100, 100, 255));  // Màu nền ô được chọn
-        }
-        else {
-            nameInputBoxes[i].setFillColor(sf::Color(200, 200, 200));  // Màu nền ô chưa được chọn
-        }
+        // Vẽ Text Box để nhập tên
+        playerNameBoxes[i].setPosition(250, 100 + i * 80);
+        window.draw(playerNameBoxes[i]);
 
-        // Hiển thị tên người chơi đã nhập
-        sf::Text playerInputText;
-        playerInputText.setFont(font);
-        playerInputText.setString(playerInputs[i]);
-        playerInputText.setCharacterSize(20);
-        playerInputText.setFillColor(sf::Color::Black);
-        playerInputText.setPosition(nameInputBoxes[i].getPosition().x + 10, nameInputBoxes[i].getPosition().y + 10);
-        window.draw(playerInputText);
+        // Hiển thị tên người chơi đã nhập (hoặc ô trống nếu chưa nhập)
+        std::cout << "playerInputs: "<< i << " = " << playerInputs[i] << std::endl;
+        sf::Text playerNameDisplay(playerInputs[i], font, 30);
+        playerNameDisplay.setFillColor(sf::Color::Black);
+        playerNameDisplay.setPosition(260, 100 + i * 80);
+        window.draw(playerNameDisplay);
     }
+
     window.draw(continueButton);
     window.draw(continueText);
+
+    if (!errorText.getString().isEmpty()) {
+        window.draw(errorText);
+    }
 }
 
-void PlayerInfoInput::handleMouseClick(const sf::Vector2i& mousePosition) {
-    // Xác định xem người dùng có nhấn vào ô nào không
-    for (int i = 0; i < numPlayers; ++i) {
-        if (nameInputBoxes[i].getGlobalBounds().contains(sf::Vector2f(mousePosition))) {
-            activePlayerIndex = i;  // Cập nhật chỉ số người chơi đang nhập
-            isActive[i] = true;  // Đánh dấu ô này là đang nhập
+void PlayerInfoInput::handleEvents(sf::RenderWindow& window) {
+    sf::Event event;
+    while (window.pollEvent(event)) {
+        if (event.type == sf::Event::TextEntered) {
+            // Chỉ xử lý khi có người chơi đang nhập tên
+            if (activePlayerIndex >= 0 && activePlayerIndex < numPlayers) {
+                std::string& playerName = playerInputs[activePlayerIndex];
+
+                // Xử lý phím Backspace (xóa ký tự cuối cùng)
+                if (event.text.unicode == '\b' && !playerName.empty()) {
+                    playerName.pop_back();
+                }
+                // Thêm ký tự nhập vào tên người chơi nếu là ký tự hợp lệ
+                else if (event.text.unicode < 128 && event.text.unicode != '\b') {
+                    playerName += static_cast<char>(event.text.unicode);
+                }
+            }
         }
-        else {
-            isActive[i] = false;  // Nếu không phải ô này, đánh dấu là không nhập
+
+        // Kiểm tra sự kiện phím Enter để xác nhận tên người chơi
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
+            if (activePlayerIndex >= 0 && activePlayerIndex < numPlayers) {
+                // Kiểm tra tên người chơi có hợp lệ không
+                std::string playerName = playerInputs[activePlayerIndex];
+                if (playerName.empty()) {
+                    errorText.setString("Player name cannot be empty.");
+                    errorText.setPosition(100, 200 + activePlayerIndex * 60);
+                }
+                else {
+                    // Kiểm tra xem tên đã tồn tại chưa
+                    Player player = Player::loadProfile(playerName, "Resources/playerInfo");
+
+                    // Nếu profile người chơi đã tồn tại, sẽ không tạo thêm player mới
+                    if (player.getUsername() == playerName) {
+                        errorText.setString("Name already exists! Try another.");
+                        errorText.setPosition(100, 200 + activePlayerIndex * 60);
+                    }
+                    else {
+                        players.push_back(player);  // Lưu người chơi vào danh sách
+                        activePlayerIndex++;  // Chuyển đến người chơi tiếp theo
+                    }
+                }
+            }
         }
-        if (continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition))) {
-            // Lấy tên người chơi từ text box (ví dụ playerCountTextField)
 
-            std::string playerName = playerInputs[activePlayerIndex];  // Giả sử bạn lấy tên từ text box
+        // Kiểm tra sự kiện chuột để chọn các ô nhập liệu hoặc nút "Continue"
+        if (event.type == sf::Event::MouseButtonPressed) {
+            // Kiểm tra xem người dùng có nhấn vào ô nhập liệu nào không
+            for (int i = 0; i < numPlayers; ++i) {
+                if (nameInputBoxes[i].getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y))) {
+                    activePlayerIndex = i;  // Cập nhật chỉ số người chơi đang nhập
+                }
+            }
 
-            if (!playerName.empty()) {
-                // Tạo đối tượng Player mới
-                Player newPlayer(playerName);
+            // Kiểm tra xem người dùng có nhấn vào nút "Continue" không
+            if (continueButton.getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y))) {
+                // Kiểm tra xem tất cả người chơi đã nhập tên chưa
+                if (players.size() == numPlayers && std::all_of(playerInputs.begin(), playerInputs.end(), [](const std::string& name) { return !name.empty(); })) {
+                    std::cout << "Game started!" << std::endl;
 
-                // Lưu lại thông tin người chơi (có thể lưu trong một danh sách hoặc cơ sở dữ liệu)
-                // Ví dụ: players.push_back(newPlayer);
+                    //truyền danh sách dữ liệu vào table
+                    Table table;
+                    populateTable(table);
 
-                // Lưu profile vào file (nếu cần)
-                newPlayer.saveProfile("playerProfiles/");
-
-                // Cập nhật trạng thái trò chơi
-                //if (activePlayerIndex == numPlayers - 1) {
-                //    currentState = PLAY_MENU;
-                //} else {
-                //    activePlayerIndex = (activePlayerIndex + 1) % numPlayers;
+                    currentState = PLAY_MENU;  // Chuyển đến menu chọn chế độ chơi
+                }
+                else {
+                    errorText.setString("Please enter names for all players.");
+                    errorText.setPosition(100, 200 + numPlayers * 60);  // Hiển thị thông báo lỗi
+                }
             }
         }
     }
-    if (continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition))) {
-        std::cout << "button pressed" << std::endl;
-        currentState = PLAY_MENU;
+}
+
+void PlayerInfoInput::handleMouseClick(const sf::Vector2i& mousePosition) {
+    for (int i = 0; i < playerNameBoxes.size(); ++i) {
+        if (playerNameBoxes[i].getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
+            isPlayerNameTextBoxSelected = true;  // Đánh dấu là chọn ô nhập liệu
+            activePlayerIndex = i;  // Lưu lại chỉ mục của người chơi được chọn
+        }
     }
 }
 
 void PlayerInfoInput::handleTextInput(sf::Event& event) {
-    if (activePlayerIndex >= 0 && activePlayerIndex < numPlayers) {
-        // Chỉ xử lý nhập liệu khi có một ô đang được chọn
-        if (event.text.unicode == '\b' && playerInputs[activePlayerIndex].size() > 0) {
-            // Nếu nhấn phím backspace, xóa ký tự cuối cùng
-            playerInputs[activePlayerIndex].pop_back();
+    if (event.type == sf::Event::TextEntered) {
+        if (event.text.unicode < 128) {  // Kiểm tra xem ký tự có hợp lệ không
+
+            // Kiểm tra nếu là phím Backspace (mã 8)
+            if (event.text.unicode == 8) {
+                if (isPlayerNameTextBoxSelected && !playerInputs[activePlayerIndex].empty()) {
+                    playerInputs[activePlayerIndex].pop_back();  // Xóa ký tự cuối cùng
+                }
+            }
+            // Chỉ chấp nhận ký tự chữ 
+            else if (event.text.unicode >= 64 && event.text.unicode <= 122) {
+                char inputChar = static_cast<char>(event.text.unicode);
+                if (isPlayerNameTextBoxSelected) {
+                    playerInputs[activePlayerIndex] += inputChar;  // Thêm ký tự vào tên của người chơi đã chọn
+                }
+            }
         }
-        else if (event.text.unicode < 128) {
-            // Nếu là ký tự hợp lệ, thêm vào chuỗi nhập
-            playerInputs[activePlayerIndex] += static_cast<char>(event.text.unicode);
+    }
+}
+
+void PlayerInfoInput::populateTable(Table& table) {
+    //chuyển danh sách người chơi đã nhập vào logic game
+    for (int i = 0; i < numPlayers; ++i) {
+        std::string playerName = playerInputs[i];
+        if (!playerName.empty()) {
+            table.addPlayer(playerName);
         }
     }
 }

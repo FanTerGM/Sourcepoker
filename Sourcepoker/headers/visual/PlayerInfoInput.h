@@ -2,30 +2,48 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include <string>
-#include <vector>
 #include <gameObject.h>
 
 class PlayerInfoInput {
 public:
-    PlayerInfoInput(float width, float height, int numPlayers);
+    PlayerInfoInput(int numPlayers, int numNPCs);
 
-    void render(sf::RenderWindow& window);
+    void setPlayerNPCs(int _numPlayers, int _numNPCs);
+
+    void render(sf::RenderWindow& window);  // Function to render the UI
     void handleMouseClick(const sf::Vector2i& mousePosition);
     void handleTextInput(sf::Event& event);
+    void handleEvents(sf::RenderWindow& window);  // Function to handle events like mouse and keyboard input
+
+    void loadPlayerListFromFile(const std::string& directory);
+    void savePlayerNameToFile(const std::string& playerName, const std::string& directory);
+    void initializePlayerList();
+    void setNumberOfPlayers(int count) { numberOfPlayers = count; }
+    const std::vector<std::string>& getPlayerNames() const { return playerInputs; }
+    const std::vector<Player>& getPlayers() const { return players; }
+
+    void populateTable(Table& table);
 
 private:
-    std::vector<sf::Text> playerNames; // Lưu trữ tên người chơi
-    std::vector<sf::RectangleShape> nameInputBoxes; // Các hộp nhập tên người chơi
-    int numPlayers;
 
+    int numberOfPlayers;
+    std::vector<std::string> playerInputs;
+    std::vector<Player> players;
+    std::vector<std::string> playerList;
+    int activePlayerIndex = -1;  // Khai báo biến lưu chỉ số người chơi hiện đang nhập (mặc định là không có ai)
+    std::vector<sf::RectangleShape> nameInputBoxes;
+
+    //ui elements
     sf::Font font;
-    sf::RectangleShape inputBox;    // Ô nhập thông tin người chơi
-    sf::Text inputText;             // Text nhập
-
-    std::vector<bool> isActive; // Mảng kiểm tra ô nhập hiện tại có đang được chọn hay không
-    int activePlayerIndex; // Chỉ số người chơi đang nhập tên
-    std::vector<std::string> playerInputs; // Lưu tên người chơi
+    sf::Text playerNameText;
+    std::vector<sf::RectangleShape> playerNameBoxes;
     sf::RectangleShape continueButton;
     sf::Text continueText;
+    sf::Text errorText;
+
+    int numPlayers;
+    int numNPCs;
+
+    bool isPlayerNameTextBoxSelected = false;
+ 
 };

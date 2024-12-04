@@ -18,10 +18,8 @@
 #include "../headers/core/Table.h"
 #include "../headers/core/Hand.h"
 #include "../headers/game/leaderboard.h"
-#include "../headers/visual/Menu.h"
-#include "../headers/visual/ImgCard.h"
 #include "../headers/game/GameState.h"
+#include "../headers/visual/Menu.h"
 #include "../headers/visual/PlayerSelection.h"
 #include "../headers/visual/PlayerInfoInput.h"
-
-//extern GameState currentState;
+#include "../headers/visual/ImgCard.h"

@@ -61,9 +61,11 @@ int main() {
     //Play menu
     Menu playMenu(SCREEN_WIDTH, SCREEN_HEIGHT, { "Default", "Stud table" });
 
-    PlayerSelection playerSelection(SCREEN_WIDTH, SCREEN_HEIGHT);
-    PlayerInfoInput playerInfoInput(SCREEN_WIDTH, SCREEN_HEIGHT, 3); // Giả sử có 3 người chơi
+    PlayerSelection playerSelection(SCREEN_WIDTH, SCREEN_HEIGHT); 
 
+    int numPlayers = 2;  // Thay đổi số lượng người chơi
+    int numNPCs = 1;     // Số lượng NPC, có thể thay đổi tùy theo yêu cầu
+    PlayerInfoInput playerInfo(numPlayers, numNPCs);
     //game loop
     while (window.isOpen()) {
         //event polling
@@ -94,32 +96,24 @@ int main() {
                     else if (currentState == PLAYER_SELECTION) {
                         playerSelection.handleMouseClick(mousePosition, currentState);
                         if (playerSelection.isContinueButtonPressed(mousePosition)) {
+                            numPlayers = playerSelection.getNumPlayers();
+                            numNPCs = playerSelection.getNumNPCs();
                             playerSelection.handleContinueButton(currentState);
                         }
                     }
                     else if (currentState == INPUT_PLAYER_INFO) {
-                        playerInfoInput.handleMouseClick(mousePosition);
+                        playerInfo.handleMouseClick(mousePosition);
                         if (event.type == sf::Event::TextEntered) {
-                            playerInfoInput.handleTextInput(event);
+                            playerInfo.handleTextInput(event);
                         }
                     }
                     else if (currentState == GAME_DEFAULT) {
-                        sf::Text text("Playing Default Poker", font, 30);
-                        text.setFillColor(sf::Color::White);
-                        text.setPosition(50, 50);
-                        window.draw(text);
-                        //add logic game here
-                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                            currentState = PLAY_MENU; // Quay lại Play Menu
+                        //House house= new Table(numPlayers, numNPCs);
+                        //house->populateTable();
+
                     }
                     else if (currentState == GAME_STUD) {
-                        sf::Text text("Playing Stud Poker", font, 30);
-                        text.setFillColor(sf::Color::White);
-                        text.setPosition(50, 50);
-                        window.draw(text);
-
-                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                            currentState = PLAY_MENU; // Quay lại Play Menu
+                        //Table* table = new studTable(numPlayers, numNPCs);
                     }
                 }
             }
@@ -128,7 +122,7 @@ int main() {
                     playerSelection.handleTextInput(event);
                 }
                 else if (currentState == INPUT_PLAYER_INFO) {
-                    playerInfoInput.handleTextInput(event);
+                    playerInfo.handleTextInput(event);
                 }
             }
         }
@@ -149,10 +143,35 @@ int main() {
             playerSelection.render(window);
         }
         else if (currentState == INPUT_PLAYER_INFO) {
-            playerInfoInput.render(window);
+            playerInfo.setPlayerNPCs(numPlayers, numNPCs);
+            playerInfo.render(window);
         }
-        else if (currentState == GAME_DEFAULT) {
-            //logic game here
+        else if (currentState == GAME_PLAYING) {
+            
+            //// Vẽ bài của người chơi lên cửa sổ
+            //for (int i = 0; i < numPlayers + numNPCs; i++) {
+            //    // Lấy tay bài của từng người chơi
+            //    //Player& player = getPlayers()[i];
+            //    int cardOffset = 0;  // Để di chuyển các lá bài trên cửa sổ
+            //
+            //    for (int j = 0; j < player.getHand().size(); j++) {
+            //        // Tạo texture và sprite cho lá bài
+            //        sf::Texture cardTexture;
+            //        if (!cardTexture.loadFromFile("Resources/cards/" + player.getHand()[j].toString() + ".png")) {
+            //            std::cerr << "Error loading card image: " << player.getHand()[j].toString() << std::endl;
+            //            continue;
+            //        }
+            //
+            //        sf::Sprite cardSprite(cardTexture);
+            //        cardSprite.setPosition(50 + cardOffset, 200 + i * 150);  // Vị trí của bài, có thể thay đổi
+            //
+            //        // Vẽ lên cửa sổ
+            //        window.draw(cardSprite);
+            //        cardOffset += 60;  // Dịch chuyển bài tiếp theo
+
+            //    }
+            //}
+
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 currentState = MAIN_MENU;
         }

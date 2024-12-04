@@ -1,11 +1,12 @@
 ﻿#include "../headers/visual/PlayerSelection.h"
 #include "iostream"
+#include "../headers/visual/PlayerInfoInput.h"
 
 PlayerSelection::PlayerSelection(int width, int height) {
     font.loadFromFile("Pangolin-Regular.ttf");
     //setup text fields
     playerCountText.setFont(font);
-    playerCountText.setString("Number of Players (human & AI): ");
+    playerCountText.setString("Number of Players: ");
     playerCountText.setCharacterSize(30);
     playerCountText.setFillColor(sf::Color::White);
     playerCountText.setPosition(100, 150);
@@ -73,28 +74,13 @@ void PlayerSelection::handleMouseClick(const sf::Vector2i& mousePosition, GameSt
         isPlayerTextBoxSelected = false;
         isNpcTextBoxSelected = true;
     }
-    if (continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
-        currentState = INPUT_PLAYER_INFO;
-        std::cout << "pressed button - " << currentState<< std::endl;
-    }
-    else if (isContinueButtonPressed(mousePosition)){
-        handleContinueButton(currentState);
-        std::cout << "pressed button - X" << std::endl;
+    else if (continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
+       currentState = INPUT_PLAYER_INFO;
     }
 }
 
 void PlayerSelection::handleContinueButton(GameState& currentState) {
-    // Nếu nhấn nút "Continue", chuyển sang trạng thái INPUT_PLAYER_INFO
     currentState = INPUT_PLAYER_INFO;
-    // Ẩn phần nhập số lượng người chơi
-    //playerCount.clear();
-    //npcCount.clear();
-    // Cập nhật các thành phần khác của giao diện nếu cần
-    // Ví dụ: tạo các ô nhập thông tin cho từng người chơi ở INPUT_PLAYER_INFO
-}
-
-bool PlayerSelection::isContinueClicked(const sf::Vector2i& mousePosition) {
-    return continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition));
 }
 
 int PlayerSelection::getNumPlayers() const {
@@ -107,10 +93,8 @@ int PlayerSelection::getNumNPCs() const {
 
 bool PlayerSelection::isContinueButtonPressed(const sf::Vector2i& mousePosition) {
     // Kiểm tra xem có bấm vào nút Continue hay không
-    if (continueText.getGlobalBounds().contains(sf::Vector2f(mousePosition))) {
-        return true;
-    }
-    return false;
+    return continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition));
+    std::cout << "yes" << std::endl;
 }
 
 
@@ -118,8 +102,9 @@ bool PlayerSelection::isContinueButtonPressed(const sf::Vector2i& mousePosition)
 void PlayerSelection::render(sf::RenderWindow& window) {
 
     window.draw(playerCountText);
-    window.draw(npcCountText);
     window.draw(playerTextBox);
+
+    window.draw(npcCountText);
     window.draw(npcTextBox);
 
 

@@ -4,6 +4,7 @@
 #include "../Logic/Evaluator.h"
 #include <nlohmann/json.hpp>
 
+
 /// @class Player
 /// @brief Represents a player in the game, with unique statistics, game history, and profile management.
 class Player : public Hand {
