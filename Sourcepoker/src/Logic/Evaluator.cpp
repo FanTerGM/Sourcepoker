@@ -10,7 +10,7 @@ Evaluator::Evaluator(std::vector<Card> hand) : hand(hand) {
     if (hand.size() > 5) {
         hand = calculateBestHand();
     }
-    std::sort(hand.begin(), hand.end(), [](const Card& first, const Card& second) { return first.getRankEnum() > second.getRankEnum();});
+    std::sort(hand.begin(), hand.end(), [](const Card& first, const Card& second) { return first.getRankEnum() > second.getRankEnum(); });
     populateMaps(hand);
 }
 
@@ -58,10 +58,10 @@ bool Evaluator::isAceLowStraight() const {
 }
 
 // Evaluate the rank of a 5-card hand
-int Evaluator::evaluateHandRank() const{
+int Evaluator::evaluateHandRank() const {
     if (std::any_of(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 4; })) return FOUR_OF_A_KIND;
-    if (std::any_of(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 3; }) &&
-        std::any_of(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 2; }))
+    if (std::any_of(suitMap.begin(), suitMap.end(), [](const auto& pair) { return pair.second == 3; }) &&
+        std::any_of(suitMap.begin(), suitMap.end(), [](const auto& pair) { return pair.second == 2; }))
         return FULL_HOUSE;
     if (std::any_of(suitMap.begin(), suitMap.end(), [](const auto& pair) { return pair.second == 5; })) {
         if (isStraight()) return hand[0].getRankEnum() == Card::Rank::TEN ? ROYAL_FLUSH : STRAIGHT_FLUSH;
@@ -77,17 +77,17 @@ int Evaluator::evaluateHandRank() const{
 // Evaluate the strength string of a 5-card hand
 std::string Evaluator::evaluateHandStrength() const {
     switch (evaluateHandRank()) {
-    case ONE_PAIR:
-    case TWO_PAIR:
-    case THREE_OF_A_KIND:
+    case ONE_PAIR: [[fallthrough]];  // Intentional fallthrough
+    case TWO_PAIR: [[fallthrough]];  // Intentional fallthrough
+    case THREE_OF_A_KIND: [[fallthrough]];  // Intentional fallthrough
     case FOUR_OF_A_KIND:
         return formatMult();
-    case HIGH:
+    case HIGH: [[fallthrough]];  // Intentional fallthrough
     case FLUSH:
-        return formatHigh(); 
+        return formatHigh();
     case FULL_HOUSE:
         return formatFullHouse();
-    case STRAIGHT:
+    case STRAIGHT: [[fallthrough]];  // Intentional fallthrough
     case STRAIGHT_FLUSH:
         return hand[0].getRankEnum() == 1 && hand[4].getRankEnum() ? "f" : std::string(1, 'a' + hand[0].getRankEnum());
     case ROYAL_FLUSH:
@@ -97,7 +97,7 @@ std::string Evaluator::evaluateHandStrength() const {
     }
 }
 
-std::string Evaluator::formatMult() const{
+std::string Evaluator::formatMult() const {
     std::string multiples, others;
     for (const auto& [rank, count] : rankMap) {
         if (count >= 2) multiples += ('a' + rank);
@@ -116,11 +116,11 @@ std::string Evaluator::formatHigh() const {
 
 std::string Evaluator::formatFullHouse() const {
     std::string threeRank, pairRank;
-        for (const auto& [rank, count] : rankMap) {
-            if (count == 3) threeRank += ('a' + rank);
-            else if (count == 2) pairRank += ('a' + rank);
-        }
-        return threeRank + pairRank;
+    for (const auto& [rank, count] : rankMap) {
+        if (count == 3) threeRank += ('a' + rank);
+        else if (count == 2) pairRank += ('a' + rank);
+    }
+    return threeRank + pairRank;
 }
 
 // Evaluate the best hand rank from all combinations

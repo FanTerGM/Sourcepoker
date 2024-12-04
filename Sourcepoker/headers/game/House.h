@@ -9,7 +9,7 @@ public:
 
     void setTable(Table* table);
 
-    void raiseBet();
+    void processPlayerAction(int& highestBet, int currentPlayerIndex, int& raiseIndex);
     void populateTable();
     void showPlayersHand();
     void showCards();

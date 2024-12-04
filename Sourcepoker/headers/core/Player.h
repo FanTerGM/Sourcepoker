@@ -8,6 +8,9 @@
 /// @brief Represents a player in the game, with unique statistics, game history, and profile management.
 class Player : public Hand {
 public:
+    bool folded = false;
+    int bet = 0;
+
     /// @brief Default constructor for a placeholder player.
     Player();
 
@@ -33,6 +36,8 @@ public:
     /// @brief Returns the player's ranking.
     int getRank() const;
 
+    int getBalance() const;
+
     /// @brief Returns the player's win rate as a percentage.
     double getWinRate() const;
 
@@ -49,7 +54,7 @@ public:
     /// @brief Updates the player's game history, win rate, and balance after a game.
     /// @param won True if the player won; otherwise, false.
     /// @param earnings The amount of money gained or lost in the game.
-    void updateGameHistory(bool won, int earnings);
+    void updateGameHistory(bool won = false, int earnings = 0);
 
     /// @brief Saves the player's profile as a JSON file.
     /// @param directory Directory path to save the profile file. Default is "Resources/playerInfo".

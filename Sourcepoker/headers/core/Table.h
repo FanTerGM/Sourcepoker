@@ -71,16 +71,7 @@ public:
      */
     virtual void determineWinner();
 
-    /**
-     * @brief Handles cases of ties among players and updates their records.
-     * @return Number of players involved in the tie.
-     */
-    int handleTie();
-
-    /**
-     * @brief Placeholder for raising bets, to be implemented in betting-enabled games.
-     */
-    void raiseBet();
+    void processPlayerAction(int& highestBet, int currentPlayerIndex, int& raiseIndex);
 
     /**
      * @brief Gets the name of the current game mode.
