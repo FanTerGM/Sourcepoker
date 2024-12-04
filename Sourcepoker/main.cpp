@@ -96,6 +96,8 @@ int main() {
                     else if (currentState == PLAYER_SELECTION) {
                         playerSelection.handleMouseClick(mousePosition, currentState);
                         if (playerSelection.isContinueButtonPressed(mousePosition)) {
+                            numPlayers = playerSelection.getNumPlayers();
+                            numNPCs = playerSelection.getNumNPCs();
                             playerSelection.handleContinueButton(currentState);
                         }
                     }
@@ -106,18 +108,12 @@ int main() {
                         }
                     }
                     else if (currentState == GAME_DEFAULT) {
-                        //house.startGame(window);
-                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                            currentState = PLAY_MENU; // Quay lại Play Menu
+                        //House house= new Table(numPlayers, numNPCs);
+                        //house->populateTable();
+
                     }
                     else if (currentState == GAME_STUD) {
-                        sf::Text text("Playing Stud Poker", font, 30);
-                        text.setFillColor(sf::Color::White);
-                        text.setPosition(50, 50);
-                        window.draw(text);
-
-                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                            currentState = PLAY_MENU; // Quay lại Play Menu
+                        //Table* table = new studTable(numPlayers, numNPCs);
                     }
                 }
             }
@@ -147,37 +143,32 @@ int main() {
             playerSelection.render(window);
         }
         else if (currentState == INPUT_PLAYER_INFO) {
+            playerInfo.setPlayerNPCs(numPlayers, numNPCs);
             playerInfo.render(window);
         }
-        else if (currentState == GAME_DEFAULT) {
-            //// Khởi tạo bàn chơi với số người chơi đã nhập
-            ////c1
-            //House house = new Table();
-            //house.setTable(new Table(numPlayers, numNPCs));
-            ////c2:
-            //Table* table = new drawTable(numPlayers, numNPCs); // Sử dụng số lượng người chơi và NPC từ PlayerInfoInput
-            //table->startGame();  // Bắt đầu trò chơi
-
+        else if (currentState == GAME_PLAYING) {
+            
             //// Vẽ bài của người chơi lên cửa sổ
             //for (int i = 0; i < numPlayers + numNPCs; i++) {
             //    // Lấy tay bài của từng người chơi
-            //    Player& player = table->getPlayers()[i];
+            //    //Player& player = getPlayers()[i];
             //    int cardOffset = 0;  // Để di chuyển các lá bài trên cửa sổ
-
+            //
             //    for (int j = 0; j < player.getHand().size(); j++) {
             //        // Tạo texture và sprite cho lá bài
             //        sf::Texture cardTexture;
-            //        if (!cardTexture.loadFromFile("Resources/cards/" + player.getHand()[j].getCardName() + ".png")) {
-            //            std::cerr << "Error loading card image: " << player.getHand()[j].getCardName() << std::endl;
+            //        if (!cardTexture.loadFromFile("Resources/cards/" + player.getHand()[j].toString() + ".png")) {
+            //            std::cerr << "Error loading card image: " << player.getHand()[j].toString() << std::endl;
             //            continue;
             //        }
-
+            //
             //        sf::Sprite cardSprite(cardTexture);
             //        cardSprite.setPosition(50 + cardOffset, 200 + i * 150);  // Vị trí của bài, có thể thay đổi
-
+            //
             //        // Vẽ lên cửa sổ
             //        window.draw(cardSprite);
             //        cardOffset += 60;  // Dịch chuyển bài tiếp theo
+
             //    }
             //}
 

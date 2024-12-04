@@ -2,14 +2,13 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include <string>
-#include <vector>
 #include <gameObject.h>
-#include <../headers/core/Player.h>
 
 class PlayerInfoInput {
 public:
-    PlayerInfoInput(int playerCount, int npcCount);
+    PlayerInfoInput(int numPlayers, int numNPCs);
+
+    void setPlayerNPCs(int _numPlayers, int _numNPCs);
 
     void render(sf::RenderWindow& window);  // Function to render the UI
     void handleMouseClick(const sf::Vector2i& mousePosition);
@@ -22,6 +21,9 @@ public:
     void setNumberOfPlayers(int count) { numberOfPlayers = count; }
     const std::vector<std::string>& getPlayerNames() const { return playerInputs; }
     const std::vector<Player>& getPlayers() const { return players; }
+
+    void populateTable(Table& table);
+
 private:
 
     int numberOfPlayers;

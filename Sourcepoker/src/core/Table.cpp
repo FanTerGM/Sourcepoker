@@ -1,4 +1,4 @@
-#include <gameObject.h>
+﻿#include <gameObject.h>
 #include <iostream>
 #include <algorithm> // For std::sort and std::greater
 #include <numeric>   // For std::accumulate
@@ -127,4 +127,9 @@ void Table::startGame() {
 // Placeholder for a betting feature
 void Table::raiseBet() {
     std::cout << "Betting feature is currently unavailable." << std::endl;
+}
+
+
+void Table::addPlayer(const std::string& playerName) {
+    players.push_back(Player(playerName));  // Giả sử Player có constructor nhận tên người chơi
 }

@@ -6,7 +6,7 @@ PlayerSelection::PlayerSelection(int width, int height) {
     font.loadFromFile("Pangolin-Regular.ttf");
     //setup text fields
     playerCountText.setFont(font);
-    playerCountText.setString("Number of Players (human & AI): ");
+    playerCountText.setString("Number of Players: ");
     playerCountText.setCharacterSize(30);
     playerCountText.setFillColor(sf::Color::White);
     playerCountText.setPosition(100, 150);
@@ -75,21 +75,12 @@ void PlayerSelection::handleMouseClick(const sf::Vector2i& mousePosition, GameSt
         isNpcTextBoxSelected = true;
     }
     else if (continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
-        int numPlayers = static_cast<int>(getNumPlayers());
-        int npcPlayers = static_cast<int>(getNumNPCs());
-        PlayerInfoInput playerInfo(numPlayers, npcPlayers);
-        currentState = INPUT_PLAYER_INFO;
+       currentState = INPUT_PLAYER_INFO;
     }
 }
 
 void PlayerSelection::handleContinueButton(GameState& currentState) {
-    // Nếu nhấn nút "Continue", chuyển sang trạng thái INPUT_PLAYER_INFO
-    if (currentState == PLAYER_SELECTION) {
-        int numPlayers = static_cast<int>(getNumPlayers());
-        int npcPlayers = static_cast<int>(getNumNPCs());
-        PlayerInfoInput playerInfo(numPlayers, npcPlayers);
-        currentState = INPUT_PLAYER_INFO;
-    }
+    currentState = INPUT_PLAYER_INFO;
 }
 
 int PlayerSelection::getNumPlayers() const {
@@ -111,8 +102,9 @@ bool PlayerSelection::isContinueButtonPressed(const sf::Vector2i& mousePosition)
 void PlayerSelection::render(sf::RenderWindow& window) {
 
     window.draw(playerCountText);
-    window.draw(npcCountText);
     window.draw(playerTextBox);
+
+    window.draw(npcCountText);
     window.draw(npcTextBox);
 
 

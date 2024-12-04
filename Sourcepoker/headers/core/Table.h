@@ -1,8 +1,5 @@
-#pragma once
+﻿#pragma once
 #include <gameObject.h>
-#include <vector>
-#include <string>
-#include <iostream>
 
 /**
  * @class Table
@@ -92,5 +89,7 @@ public:
      * @brief Virtual destructor for safe inheritance.
      */
     virtual ~Table() {}
+
+    void addPlayer(const std::string& playerName);
 };
 
