@@ -213,12 +213,3 @@ void PlayerInfoInput::handleTextInput(sf::Event& event) {
     }
 }
 
-void PlayerInfoInput::populateTable(Table& table) const {
-    //chuyển danh sách người chơi đã nhập vào logic game
-    for (int i = 0; i < numPlayers; ++i) {
-        std::string playerName = playerInputs[i];
-        if (!playerName.empty()) {
-            table.addPlayer(playerName);
-        }
-    }
-}
