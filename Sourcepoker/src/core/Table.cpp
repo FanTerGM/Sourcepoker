@@ -196,3 +196,7 @@ void Table::startGame() {
 
     } while (std::cin.get() == '1');
 }
+
+void Table::addPlayer(const std::string& playerName) {
+    players.push_back(Player(playerName));  // Giả sử Player có constructor nhận tên người chơi
+}

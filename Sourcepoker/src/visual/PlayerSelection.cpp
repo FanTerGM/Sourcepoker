@@ -16,7 +16,7 @@ PlayerSelection::PlayerSelection(int width, int height) {
     npcCountText.setCharacterSize(30);
     npcCountText.setFillColor(sf::Color::White);
     npcCountText.setPosition(100, 250);
-    
+
     //setup text box
     playerTextBox.setSize(sf::Vector2f(200, 40));
     playerTextBox.setPosition(600, 150);
@@ -48,11 +48,12 @@ void PlayerSelection::handleTextInput(sf::Event& event) {
                 // Nếu người dùng nhấn backspace, xóa ký tự cuối trong text box hiện tại
                 if (isPlayerTextBoxSelected && !playerCount.empty()) {
                     playerCount.pop_back();
-                }else if (isNpcTextBoxSelected && !npcCount.empty()) {
+                }
+                else if (isNpcTextBoxSelected && !npcCount.empty()) {
                     npcCount.pop_back();
                 }
             }
-            else if (event.text.unicode >=48 && event.text.unicode <= 57) {
+            else if (event.text.unicode >= 48 && event.text.unicode <= 57) {
                 char inputChar = static_cast<char>(event.text.unicode);
                 if (isPlayerTextBoxSelected) {
                     playerCount += inputChar;
@@ -75,7 +76,7 @@ void PlayerSelection::handleMouseClick(const sf::Vector2i& mousePosition, GameSt
         isNpcTextBoxSelected = true;
     }
     else if (continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
-       currentState = INPUT_PLAYER_INFO;
+        currentState = INPUT_PLAYER_INFO;
     }
 }
 
