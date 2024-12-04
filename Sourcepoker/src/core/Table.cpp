@@ -70,15 +70,18 @@ void Table::determineWinner() {
     std::sort(players.begin(), players.end(), std::greater<Player>());
 
     int count = players.size();
+    int pot = 0;
 
     std::vector<int> winnersIndexes; 
     std::vector<int> losersIndexes;
 
     for (int i = 0; i < count; ++i) {
+        pot += players[i].bet;
         if (players[i].folded) losersIndexes.push_back(i);
         else {
             winnersIndexes.push_back(i);
             for (int j = i + 1; j < count; ++j) {
+                pot += players[j].bet;
                 if (!players[j].folded && players[j] == players[i]) winnersIndexes.push_back(j);
                 else losersIndexes.push_back(j);
             }
@@ -95,7 +98,7 @@ void Table::determineWinner() {
     std::cout << "Winner: " << std::endl;
     for (const int& i : winnersIndexes) {
         std::cout << players[i].getUsername() << std::endl;
-        players[i].updateGameHistory(true, pot * losersIndexes.size() / winnersIndexes.size());
+        players[i].updateGameHistory(true, pot / winnersIndexes.size());
     }
 
     // Announce the winner
@@ -162,6 +165,11 @@ void Table::startGame() {
 
         int index = 0, raiseAt = 0;
         int highestBet = 10;
+
+        for (Player& player : players) {
+            player.bet = highestBet;
+        }
+
         do {
             while (players[index].folded)
                 index = (index + 1) % players.size();

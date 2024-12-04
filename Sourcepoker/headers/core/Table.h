@@ -15,7 +15,6 @@ class Table : public Hand {
 protected:
     int numberOfPlayers;      ///< Number of human players at the table.
     int numberOfNPCs;         ///< Number of AI (NPC) players at the table.
-    int pot;
     Deck deck;                ///< Deck of cards used in the game.
     std::vector<Player> players; ///< Collection of players in the game (both human and AI).
 

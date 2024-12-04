@@ -8,7 +8,7 @@ void House::setTable(Table* table) {
 	currentTable = table;
 }
 
-void House::raiseBet() { currentTable->raiseBet(); }
+void House::processPlayerAction(int& highestBet, int currentPlayerIndex, int& raiseIndex) { currentTable->processPlayerAction( highestBet, currentPlayerIndex, raiseIndex); }
 void House::populateTable() { currentTable->populateTable(); }
 void House::showPlayersHand() { currentTable->showPlayersHands(); }
 void House::showCards() { currentTable -> showCards(); }
