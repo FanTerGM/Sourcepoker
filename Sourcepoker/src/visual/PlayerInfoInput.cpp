@@ -89,7 +89,7 @@ void PlayerInfoInput::render(sf::RenderWindow& window) {
         window.draw(playerNameText);
 
         // Vẽ Text Box để nhập tên
-        playerNameBoxes[i].setPosition(250, 100 + i * 80);
+        playerNameBoxes[i].setPosition(260, 100 + i * 80);
         window.draw(playerNameBoxes[i]);
 
         // Hiển thị tên người chơi đã nhập (hoặc ô trống nếu chưa nhập)
@@ -213,7 +213,7 @@ void PlayerInfoInput::handleTextInput(sf::Event& event) {
     }
 }
 
-void PlayerInfoInput::populateTable(Table& table) {
+void PlayerInfoInput::populateTable(Table& table) const {
     //chuyển danh sách người chơi đã nhập vào logic game
     for (int i = 0; i < numPlayers; ++i) {
         std::string playerName = playerInputs[i];

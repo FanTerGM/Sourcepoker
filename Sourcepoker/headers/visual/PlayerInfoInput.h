@@ -22,7 +22,7 @@ public:
     const std::vector<std::string>& getPlayerNames() const { return playerInputs; }
     const std::vector<Player>& getPlayers() const { return players; }
 
-    void populateTable(Table& table);
+    void populateTable(Table& table) const;
 
 private:
 
