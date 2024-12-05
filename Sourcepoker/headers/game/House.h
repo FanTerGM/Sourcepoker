@@ -26,7 +26,7 @@ public:
     /**
     * @brief Displays community cards.
     */
-    void showCards();
+    void showCards(sf::RenderWindow& window);
 
     /**
      * @brief Clears all players' hands to prepare for a new round.
@@ -58,5 +58,5 @@ public:
     ~House();
 private:
     Table* currentTable;
-    sf::RenderWindow& window;
+    //sf::RenderWindow& window;
 };

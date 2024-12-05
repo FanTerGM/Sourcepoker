@@ -1,7 +1,9 @@
 ﻿#include <gameObject.h>
 #include <gameModes.h>
 
-drawTable::drawTable(int numberOfPlayers, int numberOfNPCs) : Table(window, font) {}
+drawTable::drawTable(sf::RenderWindow& window, int numberOfPlayers, int numberOfNPCs) :
+	window(window), Table(window, numberOfPlayers, numberOfNPCs) {}
+drawTable::drawTable(sf::RenderWindow& window, sf::Font& font): Table(window, font) {}
 
 void drawTable::dealCardsToPlayers() {//sf::RenderWindow& window) {
 	//float xOffset = 50.0f;

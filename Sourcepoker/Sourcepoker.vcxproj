@@ -145,14 +145,10 @@
     <ClCompile Include="src\core\Deck.cpp" />
     <ClCompile Include="src\visual\Menu.cpp" />
     <ClCompile Include="src\game\leaderboard.cpp" />
-    <ClCompile Include="src\modes\drawTable.cpp" />
     <ClCompile Include="src\core\Hand.cpp" />
     <ClCompile Include="src\game\House.cpp" />
     <ClCompile Include="src\core\Player.cpp" />
-    <ClCompile Include="src\modes\studTable.cpp" />
-    <ClCompile Include="src\modes\superTable.cpp" />
     <ClCompile Include="src\core\Table.cpp" />
-    <ClCompile Include="src\modes\texasTable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\core\Card.h" />

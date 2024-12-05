@@ -13,7 +13,6 @@ public:
     void render(sf::RenderWindow& window);  // Function to render the UI
     void handleMouseClick(const sf::Vector2i& mousePosition);
     void handleTextInput(sf::Event& event);
-    void handleEvents(sf::RenderWindow& window);  // Function to handle events like mouse and keyboard input
 
     void loadPlayerListFromFile(const std::string& directory);
     void savePlayerNameToFile(const std::string& playerName, const std::string& directory);

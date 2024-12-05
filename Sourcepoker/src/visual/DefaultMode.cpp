@@ -11,8 +11,8 @@ DefaultMode::DefaultMode(int numPlayers, int numNPCs)
 //render all 
 void DefaultMode::renderGame(sf::RenderWindow& window) {
 	drawTable(window);	//draw table
-	drawPlayer(window);	//draw player
-	drawCard(window);	//draw player's cards
+	//drawPlayer(window);	//draw player
+	//drawCard(window);	//draw player's cards
 }
 
 //draw table

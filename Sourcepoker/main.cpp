@@ -102,10 +102,7 @@ int main() {
                         }
                     }
                     else if (currentState == INPUT_PLAYER_INFO) {
-                        playerInfo.handleMouseClick(mousePosition);
-                        if (event.type == sf::Event::TextEntered) {
-                            playerInfo.handleTextInput(event);
-                        }
+                        playerInfo.handleMouseClick(mousePosition);                      
                     }
                     else if (currentState == GAME_DEFAULT) {
                         House house = new Table(window, font);
@@ -125,6 +122,7 @@ int main() {
                     playerInfo.handleTextInput(event);
                 }
             }
+            
         }
         //update
 

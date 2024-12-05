@@ -14,7 +14,7 @@ leaderboard::leaderboard() {
 					file >> playerData;
 					file.close();
 
-					std::cout << "Player found! Loading..." << std::endl;
+					std::cout <<"player found! Loading..." << std::endl;
 					playerLeaderboard.push_back(playerData.get<Player>()); // Deserialize JSON to Player
 				}
 			}

@@ -11,7 +11,7 @@ void House::setTable(Table* table) {
 void House::populateTable() { currentTable->populateTable(); }
 void House::showPlayersHand() { currentTable->showPlayersHands(); }
 void House::showCards(sf::RenderWindow& window) { currentTable -> showCards(window); }
-void House::createDeck() { currentTable->createDeck(); }
+//void House::createDeck() { currentTable->createDeck(); }
 void House::clearTable() { currentTable->clearTable();}
 
 void House::dealFlop() { currentTable->dealFlop(); }

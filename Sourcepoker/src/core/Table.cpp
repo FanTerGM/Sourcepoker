@@ -263,7 +263,6 @@ void Table::startGame() {
 
         bettingRound(highestBet);
 
-        window.draw(tableSprite);
         // Draw each player's hand
         std::cout << "Players' hands:" << std::endl;
         showPlayersHands();
