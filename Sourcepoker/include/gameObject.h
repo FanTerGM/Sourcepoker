@@ -22,4 +22,5 @@
 #include "../headers/visual/Menu.h"
 #include "../headers/visual/PlayerSelection.h"
 #include "../headers/visual/PlayerInfoInput.h"
-#include "../headers/visual/ImgCard.h"
+//#include "../headers/visual/ImgCard.h" // can delete
+#include "../headers/visual/DefaultMode.h"

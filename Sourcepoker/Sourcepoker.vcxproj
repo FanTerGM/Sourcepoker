@@ -135,6 +135,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\visual\DefaultMode.cpp" />
     <ClCompile Include="src\visual\PlayerInfoInput.cpp" />
     <ClCompile Include="src\visual\PlayerSelection.cpp" />
     <ClCompile Include="src\visual\ImgCard.cpp" />
@@ -156,6 +157,8 @@
   <ItemGroup>
     <ClInclude Include="headers\core\Card.h" />
     <ClInclude Include="headers\core\Deck.h" />
+    <ClInclude Include="headers\visual\DefaultMode.h" />
+    <ClInclude Include="headers\visual\DialogBox.h" />
     <ClInclude Include="headers\visual\PlayerInfoInput.h" />
     <ClInclude Include="headers\visual\PlayerSelection.h" />
     <ClInclude Include="headers\game\GameState.h" />
@@ -284,6 +287,7 @@
     <Image Include="Resources\cards\QS.png" />
     <Image Include="Resources\images\icon.png" />
     <Image Include="Resources\images\logo.png" />
+    <Image Include="Resources\images\table.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

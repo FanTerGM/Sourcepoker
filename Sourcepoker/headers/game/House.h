@@ -12,7 +12,7 @@ public:
     void processPlayerAction(int& highestBet, int currentPlayerIndex, int& raiseIndex);
     void populateTable();
     void showPlayersHand();
-    void showCards();
+    void showCards(sf::RenderWindow& window);
 
     void createDeck();
     void clearTable();
@@ -24,4 +24,5 @@ public:
     ~House();
 private:
     Table* currentTable;
+    sf::RenderWindow& window;
 };

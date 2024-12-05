@@ -8,11 +8,11 @@
 
 GameState currentState = INPUT_PLAYER_INFO;
 
-PlayerInfoInput::PlayerInfoInput(int numPlayers, int numNPCs) : numPlayers(numPlayers), numNPCs(numNPCs), activePlayerIndex(-1) {}
+PlayerInfoInput::PlayerInfoInput() : numPlayers(1), numNPCs(1), activePlayerIndex(-1) {}
 
 void PlayerInfoInput::setPlayerNPCs(int _numPlayers, int _numNPCs){
-    numPlayers = _numPlayers;
-    numNPCs = _numNPCs;
+    this->numPlayers = _numPlayers;
+    this->numNPCs = _numNPCs;
 
     font.loadFromFile("Pangolin-Regular.ttf");
 
@@ -157,7 +157,7 @@ void PlayerInfoInput::handleEvents(sf::RenderWindow& window) {
         if (event.type == sf::Event::MouseButtonPressed) {
             // Kiểm tra xem người dùng có nhấn vào ô nhập liệu nào không
             for (int i = 0; i < numPlayers; ++i) {
-                if (nameInputBoxes[i].getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y))) {
+                if (playerNameBoxes[i].getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y))) {
                     activePlayerIndex = i;  // Cập nhật chỉ số người chơi đang nhập
                 }
             }
@@ -169,8 +169,8 @@ void PlayerInfoInput::handleEvents(sf::RenderWindow& window) {
                     std::cout << "Game started!" << std::endl;
 
                     //truyền danh sách dữ liệu vào table
-                    Table table;
-                    populateTable(table);
+                   /* Table table;
+                    populateTable(table);*/
 
                     currentState = PLAY_MENU;  // Chuyển đến menu chọn chế độ chơi
                 }

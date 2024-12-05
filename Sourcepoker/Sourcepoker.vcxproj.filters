@@ -19,6 +19,7 @@
     <ClCompile Include="src\visual\ImgCard.cpp" />
     <ClCompile Include="src\visual\PlayerSelection.cpp" />
     <ClCompile Include="src\visual\PlayerInfoInput.cpp" />
+    <ClCompile Include="src\visual\DefaultMode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\core\Card.h" />
@@ -86,6 +87,8 @@
     <ClInclude Include="headers\visual\PlayerSelection.h" />
     <ClInclude Include="headers\game\GameState.h" />
     <ClInclude Include="headers\visual\PlayerInfoInput.h" />
+    <ClInclude Include="headers\visual\DefaultMode.h" />
+    <ClInclude Include="headers\visual\DialogBox.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resources\Font\arial.ttf" />
@@ -151,5 +154,6 @@
     <Image Include="Resources\cards\QD.png" />
     <Image Include="Resources\cards\QH.png" />
     <Image Include="Resources\cards\QS.png" />
+    <Image Include="Resources\images\table.jpg" />
   </ItemGroup>
 </Project>

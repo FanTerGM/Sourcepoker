@@ -11,7 +11,7 @@ void House::setTable(Table* table) {
 void House::processPlayerAction(int& highestBet, int currentPlayerIndex, int& raiseIndex) { currentTable->processPlayerAction(highestBet, currentPlayerIndex, raiseIndex); }
 void House::populateTable() { currentTable->populateTable(); }
 void House::showPlayersHand() { currentTable->showPlayersHands(); }
-void House::showCards() { currentTable -> showCards(); }
+void House::showCards(sf::RenderWindow& window) { currentTable -> showCards(window); }
 void House::createDeck() { currentTable->createDeck(); }
 void House::clearTable() { currentTable->clearTable();}
 

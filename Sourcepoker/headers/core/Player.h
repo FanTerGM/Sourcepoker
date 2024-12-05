@@ -86,6 +86,7 @@ private:
     double winRate = 0;             ///< Player's win rate as a percentage.
     int rank = 0;                   ///< Player's ranking.
     std::array<int, 10> handHistory{}; ///< Frequency of different hands played by the player.
+
 };
 
 // JSON serialization for Player

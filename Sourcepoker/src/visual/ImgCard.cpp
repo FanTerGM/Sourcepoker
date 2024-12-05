@@ -30,23 +30,23 @@ std::string ImgCard::toString() const {
 	return suit + " " + std::to_string(rank);
 }
 
-//void ImgCard::renderCards(sf::RenderWindow& window, const Player& player, int xPos, int yPos) {
-//    int cardOffset = 0;
-//
-//    // Lặp qua từng lá bài trong tay người chơi và vẽ chúng
-//    for (int i = 0; i < player.getHand().size(); ++i) {
-//        sf::Texture cardTexture;
-//        const std::string cardName = player.getHand()[i].toString(); // Lấy tên lá bài
-//
-//        // Tải ảnh của lá bài
-//        if (!cardTexture.loadFromFile("Resources/cards/" + cardName + ".png")) {
-//            std::cerr << "Error loading card image: " << cardName << std::endl;
-//            continue;
-//        }
-//
-//        sf::Sprite cardSprite(cardTexture);
-//        cardSprite.setPosition(xPos + cardOffset, yPos);  // Điều chỉnh vị trí của bài
-//        window.draw(cardSprite);  // Vẽ lá bài lên cửa sổ
-//        cardOffset += 60;  // Tăng offset để vẽ các lá bài cách nhau
-//    }
-//}
+void ImgCard::renderCards(sf::RenderWindow& window, const Player& player, int xPos, int yPos) {
+    int cardOffset = 0;
+
+    // Lặp qua từng lá bài trong tay người chơi và vẽ chúng
+    for (int i = 0; i < player.getHand().size(); ++i) {
+        sf::Texture cardTexture;
+        const std::string cardName = player.getHand()[i].toString(); // Lấy tên lá bài
+
+        // Tải ảnh của lá bài
+        if (!cardTexture.loadFromFile("Resources/cards/" + cardName + ".png")) {
+            std::cerr << "Error loading card image: " << cardName << std::endl;
+            continue;
+        }
+
+        sf::Sprite cardSprite(cardTexture);
+        cardSprite.setPosition(xPos + cardOffset, yPos);  // Điều chỉnh vị trí của bài
+        window.draw(cardSprite);  // Vẽ lá bài lên cửa sổ
+        cardOffset += 60;  // Tăng offset để vẽ các lá bài cách nhau
+    }
+}

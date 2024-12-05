@@ -1,7 +1,7 @@
 ﻿#include <gameObject.h>
 #include <gameModes.h>
 
-drawTable::drawTable(int numberOfPlayers, int numberOfNPCs) : Table(numberOfPlayers,numberOfNPCs) {}
+drawTable::drawTable(int numberOfPlayers, int numberOfNPCs) : Table(window, font) {}
 
 void drawTable::dealCardsToPlayers() {//sf::RenderWindow& window) {
 	//float xOffset = 50.0f;
@@ -35,12 +35,12 @@ void drawTable::startGame(){
 		std::cout << "Player hand:\n";
 		for (Player& player : players) {
 			std::cout << player.getUsername() << std::endl;
-			player.showCards();
+			player.showCards(window);
 			if (player.getUsername().find("AI_") != std::string::npos) continue;
 			std::cout << "Choose cards to replace: " << std::endl;
 			player.replaceCard(deck);
 			std::cout << "After replacement: " << std::endl;
-			player.showCards();
+			player.showCards(window);
 		}
 		determineWinner();
 		std::cout << "Another round? (Press 1 to continue)" << std::endl;

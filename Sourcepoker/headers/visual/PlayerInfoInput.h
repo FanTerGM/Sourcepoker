@@ -6,7 +6,7 @@
 
 class PlayerInfoInput {
 public:
-    PlayerInfoInput(int numPlayers, int numNPCs);
+    PlayerInfoInput();
 
     void setPlayerNPCs(int _numPlayers, int _numNPCs);
 
@@ -21,8 +21,7 @@ public:
     void setNumberOfPlayers(int count) { numberOfPlayers = count; }
     const std::vector<std::string>& getPlayerNames() const { return playerInputs; }
     const std::vector<Player>& getPlayers() const { return players; }
-
-    void populateTable(Table& table) const;
+    const sf::Font& getFont() const { return font; }
 
 private:
 

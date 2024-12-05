@@ -32,10 +32,25 @@ void Hand::clearHand() {
 	cards.clear();
 }
 
-void Hand::showCards() const {
+void Hand::showCards(sf::RenderWindow& window) const {
 	int i = 0;
+	int cardOffset = 0;
 	for (const Card& card : cards) {
-		if (card.getShowState()) std::cout << ++i << ". " << card.getRank() << " of " << card.getSuit() << std::endl;
+		if (card.getShowState()) {
+			std::cout << ++i << ". " << card.getRank() << " of " << card.getSuit() << std::endl;
+			std::string cardName = card.toString();
+			sf::Texture cardTexture;
+			if (!cardTexture.loadFromFile("Resources/cards/" + cardName + ".png")) {
+				std::cerr << "Error loading card image: " << cardName << std::endl;
+				continue;
+			}
+
+			sf::Sprite cardSprite(cardTexture);
+			cardSprite.setPosition(50 + cardOffset, 200 + i * 150); // position of card;
+
+			window.draw(cardSprite);
+			cardOffset += 60;
+		}
 		else std::cout << "Hidden" << std::endl;
 	}
 }

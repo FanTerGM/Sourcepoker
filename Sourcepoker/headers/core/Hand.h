@@ -14,7 +14,7 @@ public:
     void replaceCard(Deck& deck);
 
     //Display Cards 
-    void showCards() const;
+    void showCards(sf::RenderWindow& window) const;
 
     void clearHand();
 

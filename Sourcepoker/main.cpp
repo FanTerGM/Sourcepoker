@@ -65,7 +65,7 @@ int main() {
 
     int numPlayers = 2;  // Thay đổi số lượng người chơi
     int numNPCs = 1;     // Số lượng NPC, có thể thay đổi tùy theo yêu cầu
-    PlayerInfoInput playerInfo(numPlayers, numNPCs);
+    PlayerInfoInput playerInfo;
     //game loop
     while (window.isOpen()) {
         //event polling
@@ -108,9 +108,9 @@ int main() {
                         }
                     }
                     else if (currentState == GAME_DEFAULT) {
-                        //House house= new Table(numPlayers, numNPCs);
-                        //house->populateTable();
-
+                        House house = new Table(window, font);
+                        house.setTable(new Table(window, numPlayers, numNPCs));
+                        house.StartGame(); // == table.Startgame()
                     }
                     else if (currentState == GAME_STUD) {
                         //Table* table = new studTable(numPlayers, numNPCs);
@@ -146,34 +146,17 @@ int main() {
             playerInfo.setPlayerNPCs(numPlayers, numNPCs);
             playerInfo.render(window);
         }
-        else if (currentState == GAME_PLAYING) {
+        else if (currentState == GAME_DEFAULT) {
+             
+            //vẽ bàn chơi
+            //sắp người chơi vào vị trí đều nhau
+            //vẽ bài của từng người chơi + tên để phân biệt
+
+            DefaultMode defaultMode(numPlayers, numNPCs);
+            defaultMode.renderGame(window);
+            //thông báo kết quả (giữa màn hình) dạng hộp thoại nền đen viền trắng thông báo tên người thắng, kiểu bài, 2 nút: 1 nút chơi tiếp , 1 nút thoát
             
-            //// Vẽ bài của người chơi lên cửa sổ
-            //for (int i = 0; i < numPlayers + numNPCs; i++) {
-            //    // Lấy tay bài của từng người chơi
-            //    //Player& player = getPlayers()[i];
-            //    int cardOffset = 0;  // Để di chuyển các lá bài trên cửa sổ
-            //
-            //    for (int j = 0; j < player.getHand().size(); j++) {
-            //        // Tạo texture và sprite cho lá bài
-            //        sf::Texture cardTexture;
-            //        if (!cardTexture.loadFromFile("Resources/cards/" + player.getHand()[j].toString() + ".png")) {
-            //            std::cerr << "Error loading card image: " << player.getHand()[j].toString() << std::endl;
-            //            continue;
-            //        }
-            //
-            //        sf::Sprite cardSprite(cardTexture);
-            //        cardSprite.setPosition(50 + cardOffset, 200 + i * 150);  // Vị trí của bài, có thể thay đổi
-            //
-            //        // Vẽ lên cửa sổ
-            //        window.draw(cardSprite);
-            //        cardOffset += 60;  // Dịch chuyển bài tiếp theo
-
-            //    }
-            //}
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                currentState = MAIN_MENU;
+            
         }
         else if (currentState == LEADERBOARD) {
             leaderboard().displaySFML(window, font);
