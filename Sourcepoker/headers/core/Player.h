@@ -42,9 +42,6 @@ public:
     /// @brief Returns the player's win rate as a percentage.
     double getWinRate() const;
 
-    /// @brief Returns the number of games played by the player.
-    int getGamesPlayed() const;
-
     /// @brief Returns the player's favorite hand based on the most frequently played hand.
     std::string getFavoriteHand() const;
 
@@ -84,7 +81,8 @@ private:
     int balance = 1000;             ///< The player's initial money balance.
     double gamesWon = 0;            ///< Total number of games won by the player.
     double winRate = 0;             ///< Player's win rate as a percentage.
-    int rank = 0;                   ///< Player's ranking.
+    int rank = 0;
+    int gamePlayed = 0; ///< Player's ranking.
     std::array<int, 10> handHistory{}; ///< Frequency of different hands played by the player.
 };
 
@@ -96,6 +94,7 @@ inline void to_json(nlohmann::json& j, const Player& p) {
         {"winRate", p.winRate},
         {"balance", p.balance},
         {"rank", p.rank},
+        {"gamePlayed", p.gamePlayed},
         {"handHistory", p.handHistory}
     };
 }
@@ -107,5 +106,6 @@ inline void from_json(const nlohmann::json& j, Player& p) {
     j.at("winRate").get_to(p.winRate);
     j.at("balance").get_to(p.balance);
     j.at("rank").get_to(p.rank);
+    j.at("gamePlayed").get_to(p.gamePlayed);
     j.at("handHistory").get_to(p.handHistory);
 }

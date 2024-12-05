@@ -47,11 +47,6 @@ double Player::getWinRate() const {
     return winRate;
 }
 
-// Returns the total number of games played by the player
-int Player::getGamesPlayed() const {
-    return std::accumulate(handHistory.begin(), handHistory.end(), 0);
-}
-
 // Returns the player's favorite hand based on most frequently played hand
 std::string Player::getFavoriteHand() const {
     auto maxPlayedHand = std::max_element(handHistory.begin(), handHistory.end());
@@ -74,7 +69,8 @@ void Player::updateGameHistory(bool won, int earning) {
     }
     else if (!folded) balance -= bet;
     bet = 0;
-    winRate = (gamesWon * 100) / getGamesPlayed(); // Calculate win rate as a percentage
+    gamePlayed++;
+    winRate = (gamesWon * 100) / gamePlayed; // Calculate win rate as a percentage
 
     saveProfile(); // Save the updated player profile
 }

@@ -163,6 +163,20 @@ void Table::processPlayerAction(int& highestBet, int currentPlayerIndex, int& ra
     }
 }
 
+void Table::bettingRound(int& highestBet) {
+    // A circular loop that only stop when all players have either call or folded
+    int index = 0, raiseIndex = 0;
+    do {
+        while (players[index].folded)
+            index = (index + 1) % players.size();
+
+        processPlayerAction(highestBet, index, raiseIndex);
+
+        index = (index + 1) % players.size();
+
+    } while (index != raiseIndex);
+}
+
 
 // Runs the game loop, dealing cards, displaying hands, and determining the winner
 void Table::startGame() {
@@ -171,8 +185,6 @@ void Table::startGame() {
         clearTable();           // Clear previous hands
         dealCardsToPlayers(); // Deal new hands
         
-
-        int index = 0, raiseAt = 0;
         int highestBet = 10;
 
         // Update players bet to current blind
@@ -180,17 +192,7 @@ void Table::startGame() {
             player.bet = highestBet;
         }
 
-        // A circular loop that only stop when all players have either call or folded
-        do {
-            while (players[index].folded)
-                index = (index + 1) % players.size();
-
-            processPlayerAction(highestBet, index, raiseAt);
-
-            index = (index + 1) % players.size();
-
-        } while (index != raiseAt);
-
+        bettingRound(highestBet);
 
         // Display each player's hand
         std::cout << "Players' hands:" << std::endl;

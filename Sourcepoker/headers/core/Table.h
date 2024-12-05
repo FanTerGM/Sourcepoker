@@ -70,6 +70,8 @@ public:
 
     void processPlayerAction(int& highestBet, int currentPlayerIndex, int& raiseIndex);
 
+    void bettingRound(int& highestBet);
+
     /**
      * @brief Gets the name of the current game mode.
      * @return A string representing the mode name.
