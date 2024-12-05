@@ -7,8 +7,6 @@
 
 using json = nlohmann::json;
 
-/* --- Definitions for the Player class, representing a user's profile and gameplay statistics --- */
-
 // Default constructor for an empty player object
 Player::Player() {}
 

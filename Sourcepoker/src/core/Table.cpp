@@ -3,9 +3,6 @@
 #include <algorithm> // For std::sort and std::greater
 #include <numeric>   // For std::accumulate
 
-/* --- Table Class Definitions ---
-   Manages the poker table, players, and game operations. */
-
    // Default constructor initializes table with one player and one NPC
 Table::Table() : numberOfPlayers(0), numberOfNPCs(1) {
     populateTable();
