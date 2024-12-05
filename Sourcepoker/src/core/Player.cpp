@@ -7,8 +7,6 @@
 
 using json = nlohmann::json;
 
-/* --- Definitions for the Player class, representing a user's profile and gameplay statistics --- */
-
 // Default constructor for an empty player object
 Player::Player() {}
 
@@ -39,18 +37,14 @@ int Player::getRank() const {
     return rank;
 }
 
+// Returns the player's balance
 int Player::getBalance() const {
-    return balance; 
+    return balance;
 }
 
 // Returns the player's win rate
 double Player::getWinRate() const {
     return winRate;
-}
-
-// Returns the total number of games played by the player
-int Player::getGamesPlayed() const {
-    return std::accumulate(handHistory.begin(), handHistory.end(), 0);
 }
 
 // Returns the player's favorite hand based on most frequently played hand
@@ -75,7 +69,8 @@ void Player::updateGameHistory(bool won, int earning) {
     }
     else if (!folded) balance -= bet;
     bet = 0;
-    winRate = (gamesWon * 100) / getGamesPlayed(); // Calculate win rate as a percentage
+    gamePlayed++;
+    winRate = (gamesWon * 100) / gamePlayed; // Calculate win rate as a percentage
 
     saveProfile(); // Save the updated player profile
 }
@@ -103,7 +98,7 @@ Player Player::loadProfile(const std::string& username, const std::string& direc
     if (std::filesystem::exists(filename)) {
         std::ifstream file(filename);
         if (file.is_open()) {
-            json playerData;
+            json playerData; //get Json data
             file >> playerData;
             file.close();
 

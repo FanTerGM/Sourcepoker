@@ -145,19 +145,6 @@
     <ClCompile Include="src\modes\texasTable.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="headers\core\Card.h" />
-    <ClInclude Include="headers\core\Deck.h" />
-    <ClInclude Include="headers\game\leaderboard.h" />
-    <ClInclude Include="headers\game\SeparateFunction.h" />
-    <ClInclude Include="headers\Logic\Evaluator.h" />
-    <ClInclude Include="headers\modes\drawTable.h" />
-    <ClInclude Include="headers\core\Hand.h" />
-    <ClInclude Include="headers\game\House.h" />
-    <ClInclude Include="headers\core\Player.h" />
-    <ClInclude Include="headers\modes\studTable.h" />
-    <ClInclude Include="headers\modes\superTable.h" />
-    <ClInclude Include="headers\core\Table.h" />
-    <ClInclude Include="headers\modes\texasTable.h" />
     <ClInclude Include="include\gameModes.h" />
     <ClInclude Include="include\gameObject.h" />
     <ClInclude Include="include\nlohmann\adl_serializer.hpp" />

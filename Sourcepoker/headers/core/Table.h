@@ -1,8 +1,5 @@
-#pragma once
+﻿#pragma once
 #include <gameObject.h>
-#include <vector>
-#include <string>
-#include <iostream>
 
 /**
  * @class Table
@@ -44,7 +41,7 @@ public:
     /**
      * @brief Deals cards to all players at the table.
      */
-    virtual void dealCardsToPlayers();
+    virtual void dealCardsToPlayers();//sf::RenderWindow& window) = 0;
 
     /**
      * @brief Displays the hands of all players at the table.
@@ -61,15 +58,6 @@ public:
      */
     void clearTable();
 
-
-    /**
-    * @brief Process the action of checking/calling, folding and raising
-    * @param highestBet Take the current highest betting value
-    * @param currentPlayerIndex The player who in play
-    * @param raiseIndex Note the most recent raise
-    */
-    void processPlayerAction(int& highestBet, int currentPlayerIndex, int& raiseIndex);
-
     /**
      * @brief Handles the game start, manages rounds, and controls game flow.
      */
@@ -79,6 +67,10 @@ public:
      * @brief Determines and displays the winner of the current round.
      */
     virtual void determineWinner();
+
+    void processPlayerAction(int& highestBet, int currentPlayerIndex, int& raiseIndex);
+
+    void bettingRound(int& highestBet);
 
     /**
      * @brief Gets the name of the current game mode.
@@ -90,5 +82,7 @@ public:
      * @brief Virtual destructor for safe inheritance.
      */
     virtual ~Table() {}
+
+    void addPlayer(const std::string& playerName);
 };
 

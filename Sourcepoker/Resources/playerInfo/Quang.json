@@ -1,5 +1,6 @@
 {
-    "balance": 1000,
+    "balance": -10,
+    "gamePlayed": 1,
     "gamesWon": 0.0,
     "handHistory": [
         0,
@@ -14,6 +15,6 @@
         0
     ],
     "rank": 0,
-    "username": "",
+    "username": "Quang",
     "winRate": 0.0
 }
