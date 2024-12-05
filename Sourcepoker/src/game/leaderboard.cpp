@@ -5,7 +5,7 @@
 namespace fs = std::filesystem;
 using json = nlohmann::json;
 
-leaderboard::leaderboard() { /*do vinh ky*/
+leaderboard::leaderboard() { 
 		for (const auto& info : fs::directory_iterator("Resources/playerInfo")) {
 			if (std::filesystem::exists(info.path())) {
 				std::ifstream file(info.path());
