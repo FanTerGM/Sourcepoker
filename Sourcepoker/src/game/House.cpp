@@ -18,7 +18,7 @@ void House::StartGame() { currentTable->startGame(); }
 void House::determineWinner() { currentTable->determineWinner(); }
 void House::dealCardtoPlayers() { currentTable->dealCardsToPlayers(); }
 
-std::string House::getModeName() { currentTable->getModeName();}
+std::string House::getModeName() { return currentTable->getModeName();}
 
 House::~House() {
 	delete currentTable; 
