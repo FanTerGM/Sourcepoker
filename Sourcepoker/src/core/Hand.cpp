@@ -18,10 +18,14 @@ void Hand::replaceCard(Deck& deck){
 	std::vector<int> cardToReplace;
 	int i = 0;
 	do {
-		int a; std::cin >> a; 
-		if (a == 0) break;
+		int a; std::cin >> a;
+		// terminate loop when 0 or out of bound index is entered
+		if (a == 0 || a > cards.size()) break;
+		// Contain all the card to replace in an array
 		cardToReplace.push_back(a-1);
-	} while (++i && i <= 5);
+	} while (++i && i <= cards.size());
+
+	// Perform adding new card via overwrite
 	for (const int& i : cardToReplace) {
 		const Card& dealtCard = deck.deal();
 		cards[i] = dealtCard;

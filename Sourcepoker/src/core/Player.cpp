@@ -39,6 +39,7 @@ int Player::getRank() const {
     return rank;
 }
 
+// Returns the player's balance
 int Player::getBalance() const {
     return balance;
 }
@@ -103,7 +104,7 @@ Player Player::loadProfile(const std::string& username, const std::string& direc
     if (std::filesystem::exists(filename)) {
         std::ifstream file(filename);
         if (file.is_open()) {
-            json playerData;
+            json playerData; //get Json data
             file >> playerData;
             file.close();
 
