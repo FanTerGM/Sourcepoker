@@ -59,18 +59,29 @@ bool Evaluator::isAceLowStraight() const {
 
 // Evaluate the rank of a 5-card hand
 int Evaluator::evaluateHandRank() const {
-    if (std::any_of(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 4; })) return FOUR_OF_A_KIND;
-    if (std::any_of(suitMap.begin(), suitMap.end(), [](const auto& pair) { return pair.second == 3; }) &&
-        std::any_of(suitMap.begin(), suitMap.end(), [](const auto& pair) { return pair.second == 2; }))
-        return FULL_HOUSE;
+
+    // Find instance of 5 cards of the same suit and at the same time where the rank of the card is continuous
     if (std::any_of(suitMap.begin(), suitMap.end(), [](const auto& pair) { return pair.second == 5; })) {
+        // If the weakest card is a Ten then the hand is a royal flush else it only a straight flush
         if (isStraight()) return hand[0].getRankEnum() == Card::Rank::TEN ? ROYAL_FLUSH : STRAIGHT_FLUSH;
-        return FLUSH;
     }
+    // Find instance of 4 cards of the same rank 
+    if (std::any_of(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 4; })) return FOUR_OF_A_KIND;
+    // Find instance of 3 and 2 cards of the same rank 
+    if (std::any_of(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 3; }) &&
+        std::any_of(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 2; }))
+        return FULL_HOUSE;
+    // Find instance of 5 cards of the same suit
+    if (std::any_of(suitMap.begin(), suitMap.end(), [](const auto& pair) { return pair.second == 5; })) return FLUSH;
+    //the rank of the card is continuous
     if (isStraight()) return STRAIGHT;
+    // Find instance of 3 cards of the same rank 
     if (std::any_of(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 3; })) return THREE_OF_A_KIND;
+    // Find 2 instance of 2 cards of the same rank 
     if (std::count_if(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 2; }) == 2) return TWO_PAIR;
+    // Find instance of 2 cards of the same rank 
     if (std::any_of(rankMap.begin(), rankMap.end(), [](const auto& pair) { return pair.second == 2; })) return ONE_PAIR;
+    // If any of the previous instance is not found, only "HIGH" hand is possible
     return HIGH;
 }
 
@@ -97,6 +108,7 @@ std::string Evaluator::evaluateHandStrength() const {
     }
 }
 
+//Check for hand Strength via string 
 std::string Evaluator::formatMult() const {
     std::string multiples, others;
     for (const auto& [rank, count] : rankMap) {
@@ -106,6 +118,7 @@ std::string Evaluator::formatMult() const {
     return multiples + "-" + others;
 }
 
+//Check for hand Strength via string 
 std::string Evaluator::formatHigh() const {
     std::string result;
     for (const Card& card : hand) {
@@ -114,6 +127,7 @@ std::string Evaluator::formatHigh() const {
     return result;
 }
 
+//Check for hand Strength via string 
 std::string Evaluator::formatFullHouse() const {
     std::string threeRank, pairRank;
     for (const auto& [rank, count] : rankMap) {

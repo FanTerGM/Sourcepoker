@@ -9,12 +9,14 @@ using json = nlohmann::json;
 
 void SeparateFunction::showListofPlayers(std::vector<std::string> files) const {
 	std::cout << "Player list:\n";
+	// Display all players that is in database with numbering for easy choosing
 	for (size_t i = 0; i < files.size(); ++i) {
 		std::cout << i + 1 << ". " << files[i] << std::endl;
 	}
 }
 
 void SeparateFunction::browsePlayers() const {
+	// Get all player's info and store them in a array.
 	std::vector<std::string> files;
 	for (const auto& entry : fs::directory_iterator("Resources/playerInfo")) {
 		if (entry.is_regular_file()) {
@@ -23,10 +25,12 @@ void SeparateFunction::browsePlayers() const {
 	}
 
 	while (true) {
+
 		showListofPlayers(files);
 
 		int choice = 0;
 		std::cout << "\nEnter the player you want to view: "; std::cin  >> choice;
+		// Prevent invalid choice
 		while (choice  < 1 || choice > files.size()) {
 			std::cout << "Invalid choice, please try again";
 			std::cout << "\nEnter the player you want to view: "; std::cin  >> choice;
