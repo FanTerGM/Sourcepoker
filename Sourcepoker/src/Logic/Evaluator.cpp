@@ -100,7 +100,7 @@ std::string Evaluator::evaluateHandStrength() const {
         return formatFullHouse();
     case STRAIGHT: [[fallthrough]];  // Intentional fallthrough
     case STRAIGHT_FLUSH:
-        return hand[0].getRankEnum() == 1 && hand[4].getRankEnum() ? "f" : std::string(1, 'a' + hand[0].getRankEnum());
+        return hand[0].getRankEnum() == 2 && hand[4].getRankEnum() == 14 ? "f" : std::string(1, 'a' + hand[0].getRankEnum());
     case ROYAL_FLUSH:
         return "a";
     default:

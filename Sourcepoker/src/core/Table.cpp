@@ -231,6 +231,20 @@ void Table::processPlayerAction(int& highestBet, int currentPlayerIndex, int& ra
     }
 }
 
+void Table::bettingRound(int& highestBet) {
+    // A circular loop that only stop when all players have either call or folded
+    int index = 0, raiseIndex = 0;
+    do {
+        while (players[index].folded)
+            index = (index + 1) % players.size();
+
+        processPlayerAction(highestBet, index, raiseIndex);
+
+        index = (index + 1) % players.size();
+
+    } while (index != raiseIndex);
+}
+
 
 // Runs the game loop, dealing cards, displaying hands, and determining the winner
 void Table::startGame() {
@@ -239,9 +253,7 @@ void Table::startGame() {
         createDeck();           // Prepare a new deck
         clearTable();           // Clear previous hands
         dealCardsToPlayers(); // Deal new hands
-
-
-        int index = 0, raiseAt = 0;
+        
         int highestBet = 10;
 
         // Update players bet to current blind
@@ -249,25 +261,7 @@ void Table::startGame() {
             player.bet = highestBet;
         }
 
-        // A circular loop that only stop when all players have either call or folded
-        do {
-            while (players[index].folded)
-                index = (index + 1) % players.size();
-
-            processPlayerAction(highestBet, index, raiseAt);
-
-            index = (index + 1) % players.size();
-
-        } while (index != raiseAt);
-
-        //draw the table
-        sf::Texture tableTexture;
-        if (!tableTexture.loadFromFile("Resources/images/table.jpg")) {
-            std::cerr << "Error loading table image" << std::endl;
-            return;
-        }
-        sf::Sprite tableSprite(tableTexture);
-        tableSprite.setPosition(0, 0); //position of table
+        bettingRound(highestBet);
 
         window.draw(tableSprite);
         // Draw each player's hand
