@@ -118,8 +118,8 @@ void PlayerInfoInput::handleMouseClick(const sf::Vector2i& mousePosition) {
     if (continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
         std::cout << "button pressed" << players.size() << std::endl;
         // Kiểm tra xem tất cả người chơi đã nhập tên chưa
-        /*if (players.size() == numPlayers) {
-            std::cout << "yes num" << std::endl;*/
+        if (players.size() == numPlayers) {
+            std::cout << "yes num" << std::endl;
             if (std::all_of(playerInputs.begin(), playerInputs.end(), [](const std::string& name) { return !name.empty(); })) {
                 std::cout << "Game started!" << std::endl;
 
@@ -134,7 +134,7 @@ void PlayerInfoInput::handleMouseClick(const sf::Vector2i& mousePosition) {
                 errorText.setPosition(100, 200 + numPlayers * 60);  // Hiển thị thông báo lỗi
             }
         }
-    //}
+    }
 }
 
 void PlayerInfoInput::handleTextInput(sf::Event& event) {
@@ -169,7 +169,7 @@ void PlayerInfoInput::handleTextInput(sf::Event& event) {
             else {
                 std::cout << "add " + playerName << std::endl;
                 players.push_back(player);  // Lưu người chơi vào danh sách
-                activePlayerIndex++;  // Chuyển đến người chơi tiếp theo
+//                activePlayerIndex++;  // Chuyển đến người chơi tiếp theo
             }
         }
     }
