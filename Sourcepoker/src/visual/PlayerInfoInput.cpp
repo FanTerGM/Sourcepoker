@@ -165,8 +165,7 @@ void PlayerInfoInput::handleTextInput(sf::Event& event) {
             player.displayInfo();
             // Nếu profile người chơi đã tồn tại, sẽ không tạo thêm player mới
             if (player.getUsername() == playerName) {
-                errorText.setString("Name already exists! Try another.");
-                errorText.setPosition(100, 200 + activePlayerIndex * 60);
+                std::cout << "Active Player Index Rightnow = " << activePlayerIndex << std::endl;
             }
             else {
                 std::cout << "add " + playerName << std::endl;
