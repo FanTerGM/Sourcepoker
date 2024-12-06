@@ -1,7 +1,7 @@
 #include <gameObject.h>
 #include <gameModes.h>
 
-studTable::studTable(int numberOfPlayers, int numberOfNPCs) : Table(numberOfPlayers, numberOfNPCs) {}
+studTable::studTable(sf::RenderWindow& window, int numberOfPlayers, int numberOfNPCs) : Table(window, numberOfPlayers, numberOfNPCs) {}
 
 void studTable::dealFlop() {
 	for (Player& player : players) {
@@ -25,12 +25,13 @@ void studTable::startGame(){
 		clearTable();
 		dealFlop(); 
 		dealCardsToPlayers();
+		//draw table
+		DefaultMode defaultMode(numberOfPlayers, numberOfNPCs);
+		defaultMode.renderGame(window);
 		// Display the player's hand and the community card.
 		showPlayersHands();
 		determineWinner();
-		std::cout << "Another round? (Press 1 to continue)" << std::endl;
-		std::cin.clear();
-		std::cin.ignore(1000, '\n');
+		dialogBox();
 
-	} while (std::cin.get() == '1');
+	} while (continuePlaying);
 }

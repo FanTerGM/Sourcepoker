@@ -16,6 +16,7 @@
     <ClCompile Include="src\visual\PlayerSelection.cpp" />
     <ClCompile Include="src\visual\PlayerInfoInput.cpp" />
     <ClCompile Include="src\visual\DefaultMode.cpp" />
+    <ClCompile Include="src\modes\studTable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\core\Card.h" />

@@ -158,9 +158,11 @@ void PlayerInfoInput::handleTextInput(sf::Event& event) {
             std::cout << "pressed Enter~" << std::endl;
             // Kiểm tra xem tên đã tồn tại chưa
             std::string playerName = playerInputs[activePlayerIndex];
+            std::cout << playerName << std::endl;
             Player player = Player::loadProfile(playerName, "Resources/playerInfo");
 
             std::cout << playerName << " - " << player.getUsername() << std::endl;
+            player.displayInfo();
             // Nếu profile người chơi đã tồn tại, sẽ không tạo thêm player mới
             if (player.getUsername() == playerName) {
                 errorText.setString("Name already exists! Try another.");
@@ -169,7 +171,7 @@ void PlayerInfoInput::handleTextInput(sf::Event& event) {
             else {
                 std::cout << "add " + playerName << std::endl;
                 players.push_back(player);  // Lưu người chơi vào danh sách
-//                activePlayerIndex++;  // Chuyển đến người chơi tiếp theo
+                activePlayerIndex++;  // Chuyển đến người chơi tiếp theo
             }
         }
     }

@@ -110,7 +110,9 @@ int main() {
                         house.StartGame(); // == table.Startgame()
                     }
                     else if (currentState == GAME_STUD) {
-                        //Table* table = new studTable(numPlayers, numNPCs);
+                        House house = new Table(window, font);
+                        house.setTable(new studTable(window, numPlayers, numNPCs));
+                        house.StartGame();
                     }
                 }
             }
@@ -152,9 +154,11 @@ int main() {
 
             DefaultMode defaultMode(numPlayers, numNPCs);
             defaultMode.renderGame(window);
-            //thông báo kết quả (giữa màn hình) dạng hộp thoại nền đen viền trắng thông báo tên người thắng, kiểu bài, 2 nút: 1 nút chơi tiếp , 1 nút thoát
-            
-            
+            //thông báo kết quả (giữa màn hình) dạng hộp thoại nền đen viền trắng thông báo tên người thắng, kiểu bài, 2 nút: 1 nút chơi tiếp , 1 nút thoát            
+        }
+        else if (currentState == GAME_STUD) {
+            DefaultMode defaultMode(numPlayers, numNPCs);
+            defaultMode.renderGame(window);
         }
         else if (currentState == LEADERBOARD) {
             leaderboard().displaySFML(window, font);

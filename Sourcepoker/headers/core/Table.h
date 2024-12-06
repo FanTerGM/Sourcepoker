@@ -16,7 +16,8 @@ protected:
     std::vector<Player> players; ///< Collection of players in the game (both human and AI).
     sf::RenderWindow& window;
     sf::Font* font;
-    bool continuePlaying;
+    bool continuePlaying = true;
+    std::string winnerHandRank;
 public:
     /**
      * @brief Default constructor initializes the table with one human and one AI player.
@@ -86,5 +87,8 @@ public:
     virtual ~Table() {}
 
     void addPlayer(const std::string& playerName);
+
+    void goToMainMenu();
+    void dialogBox();
 };
 

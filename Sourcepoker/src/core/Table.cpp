@@ -104,78 +104,15 @@ void Table::determineWinner() {
     for (const int& i : winnersIndexes) {
         std::cout << players[i].getUsername() << std::endl;
         winnerNames += players[i].getUsername() + "\n";
-        // Create the dialog box to show the winner
-        sf::RectangleShape dialogBox(sf::Vector2f(400, 200));  // Hộp thoại có kích thước 400x200
-        dialogBox.setFillColor(sf::Color(0, 0, 0, 200));  // Nền đen với độ trong suốt
-        dialogBox.setOutlineColor(sf::Color::White);  // Viền trắng
-        dialogBox.setOutlineThickness(5);  // Độ dày viền
-        dialogBox.setPosition(150, 100);  // Vị trí hộp thoại
 
-        // Tạo đối tượng sf::Text để hiển thị tên người chiến thắng
-        sf::Text winnerText;
-        winnerText.setFont(*font);
-        winnerText.setString("Winner: \n" + winnerNames);  // Dùng tên người chiến thắng
-        winnerText.setCharacterSize(24);
-        winnerText.setFillColor(sf::Color::White);
-        winnerText.setPosition(160, 120);  // Vị trí của văn bản trong hộp thoại
-
-        // create "another round " and "exit to main menu"
-        sf::Text anotherRoundText;
-        anotherRoundText.setFont(*font);
-        anotherRoundText.setString("Another Round");
-        anotherRoundText.setCharacterSize(20);
-        anotherRoundText.setFillColor(sf::Color::White);
-        anotherRoundText.setPosition(160, 180);  // Vị trí của "Another Round" trong hộp thoại
-
-        sf::Text exitText;
-        exitText.setFont(*font);
-        exitText.setString("Exit (Back to Main Menu)");
-        exitText.setCharacterSize(20);
-        exitText.setFillColor(sf::Color::White);
-        exitText.setPosition(160, 220);  // Vị trí của "Exit" trong hộp thoại
-
-        // Vẽ hộp thoại lên cửa sổ
-        window.draw(dialogBox);
-        window.draw(winnerText);
-        window.draw(anotherRoundText);
-        window.draw(exitText);
-
-        // Cập nhật lại màn hình
-        window.display();
-
-        while (!continuePlaying) {
-            sf::Event event;
-            while (window.pollEvent(event)) {
-                if (event.type == sf::Event::Closed) {
-                    window.close();
-                    return;
-                }
-
-                if (event.type == sf::Event::MouseButtonPressed) {
-                    // Xử lý click chuột
-                    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-
-                    // Kiểm tra xem người chơi click vào "Another Round"
-                    if (anotherRoundText.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                        continuePlaying = true;  // Người chơi chọn "Another Round"
-                    }
-                    // Kiểm tra xem người chơi click vào "Exit"
-                    if (exitText.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                        continuePlaying = false;  // Người chơi chọn "Exit"
-                    }
-                }
-            }
-        }
         players[i].updateGameHistory(true, pot / winnersIndexes.size());
-        if (!continuePlaying) {
-            //goToMainMenu();// viết hàm chuyển tới mainmenu
-        }
     }
 
     // Announce the winner
     int handRank = Evaluator(players[winnersIndexes[0]].getHand()).evaluateHandRank();
     std::cout << "Winning hand rank: "
         << Evaluator().rankToString(handRank) << std::endl;
+    winnerHandRank = Evaluator().rankToString(handRank);
 }
 
 void Table::clearTable() {
@@ -254,6 +191,9 @@ void Table::startGame() {
         clearTable();           // Clear previous hands
         dealCardsToPlayers(); // Deal new hands
         
+        DefaultMode defaultMode(numberOfPlayers, numberOfNPCs);
+        defaultMode.renderGame(window);
+
         int highestBet = 10;
 
         // Update players bet to current blind
@@ -269,10 +209,92 @@ void Table::startGame() {
 
         // Determine and display the winner
         determineWinner();
+        dialogBox();
         
     } while (continuePlaying);
 }
 
 void Table::addPlayer(const std::string& playerName) {
     players.push_back(Player(playerName));  // Giả sử Player có constructor nhận tên người chơi
+}
+
+void Table::goToMainMenu() {
+    currentState = MAIN_MENU;
+}
+void Table::dialogBox() {
+    // Create the dialog box to show the winner
+    sf::RectangleShape dialogBox(sf::Vector2f(400, 200));  // Hộp thoại có kích thước 400x200
+    dialogBox.setFillColor(sf::Color(0, 0, 0, 200));  // Nền đen với độ trong suốt
+    dialogBox.setOutlineColor(sf::Color::White);  // Viền trắng
+    dialogBox.setOutlineThickness(5);  // Độ dày viền
+    dialogBox.setPosition(150, 100);  // Vị trí hộp thoại
+
+    // Tạo đối tượng sf::Text để hiển thị tên người chiến thắng
+    sf::Text winnerText;
+    winnerText.setFont(*font);
+    winnerText.setString("Winner: " + players[0].getUsername());  // Dùng tên người chiến thắng
+    winnerText.setCharacterSize(24);
+    winnerText.setFillColor(sf::Color::White);
+    winnerText.setPosition(160, 120);  // Vị trí của văn bản trong hộp thoại
+
+
+    sf::Text handRankText;
+    handRankText.setFont(*font);
+    handRankText.setString("Winning hand rank: " + winnerHandRank);
+    handRankText.setCharacterSize(24);
+    handRankText.setFillColor(sf::Color::White);
+    winnerText.setPosition(160, 150);
+
+    // create "another round " and "exit to main menu"
+    sf::Text anotherRoundText;
+    anotherRoundText.setFont(*font);
+    anotherRoundText.setString("Another Round");
+    anotherRoundText.setCharacterSize(20);
+    anotherRoundText.setFillColor(sf::Color::White);
+    anotherRoundText.setPosition(160, 180);  // Vị trí của "Another Round" trong hộp thoại
+
+    sf::Text exitText;
+    exitText.setFont(*font);
+    exitText.setString("Exit (Back to Main Menu)");
+    exitText.setCharacterSize(20);
+    exitText.setFillColor(sf::Color::White);
+    exitText.setPosition(160, 220);  // Vị trí của "Exit" trong hộp thoại
+
+    // Vẽ hộp thoại lên cửa sổ
+    window.draw(dialogBox);
+    window.draw(winnerText);
+    window.draw(anotherRoundText);
+    window.draw(exitText);
+
+    // Cập nhật lại màn hình
+    window.display();
+
+    while (continuePlaying) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+                return;
+            }
+
+            if (event.type == sf::Event::MouseButtonPressed) {
+                // Xử lý click chuột
+                sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+
+                // Kiểm tra xem người chơi click vào "Another Round"
+                if (anotherRoundText.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                    continuePlaying = true;  // Người chơi chọn "Another Round"
+                }
+                // Kiểm tra xem người chơi click vào "Exit"
+                if (exitText.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                    continuePlaying = false;  // Người chơi chọn "Exit"
+                }
+            }
+        }
+    }
+
+
+    if (!continuePlaying) {
+        goToMainMenu();// viết hàm chuyển tới mainmenu
+    }
 }

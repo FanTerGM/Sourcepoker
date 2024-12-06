@@ -135,6 +135,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\modes\studTable.cpp" />
     <ClCompile Include="src\visual\DefaultMode.cpp" />
     <ClCompile Include="src\visual\PlayerInfoInput.cpp" />
     <ClCompile Include="src\visual\PlayerSelection.cpp" />
