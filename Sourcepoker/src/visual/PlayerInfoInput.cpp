@@ -159,7 +159,8 @@ void PlayerInfoInput::handleTextInput(sf::Event& event) {
             // Kiểm tra xem tên đã tồn tại chưa
             std::string playerName = playerInputs[activePlayerIndex];
             std::cout << playerName << std::endl;
-            Player player = Player::loadProfile(playerName, "Resources/playerInfo");
+            removeTrailingSpaces(playerName);
+            Player player = Player::loadProfile(playerName, "Resources/playerInfo/");
 
             std::cout << playerName << " - " << player.getUsername() << std::endl;
             player.displayInfo();

@@ -7,7 +7,7 @@
 namespace fs = std::filesystem;
 using json = nlohmann::json;
 
-void SeparateFunction::showListofPlayers(std::vector<std::string> files) const {
+void showListofPlayers(std::vector<std::string> files) {
 	std::cout << "Player list:\n";
 	// Display all players that is in database with numbering for easy choosing
 	for (size_t i = 0; i < files.size(); ++i) {
@@ -15,7 +15,7 @@ void SeparateFunction::showListofPlayers(std::vector<std::string> files) const {
 	}
 }
 
-void SeparateFunction::browsePlayers() const {
+void browsePlayers() {
 	// Get all player's info and store them in a array.
 	std::vector<std::string> files;
 	for (const auto& entry : fs::directory_iterator("Resources/playerInfo")) {
@@ -59,5 +59,19 @@ void SeparateFunction::browsePlayers() const {
 
 		std::cout << "Press 1 to return to player list\nPress anything else to exit player list\n"; 
 		if (std::cin.get() != '1') break; 
+	}
+}
+
+void removeTrailingSpaces(std::string& str) {
+	// Find the position of the last non-whitespace character
+	size_t end = str.find_last_not_of(" \t\n\r\f\v");
+
+	if (end != std::string::npos) {
+		// If found, erase everything after the last non-whitespace character
+		str.erase(end + 1);
+	}
+	else {
+		// If no non-whitespace characters are found, clear the string
+		str.clear();
 	}
 }

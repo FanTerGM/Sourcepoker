@@ -19,6 +19,7 @@
 #include "../headers/core/Hand.h"
 #include "../headers/game/leaderboard.h"
 #include "../headers/game/GameState.h"
+#include "../headers/game/SeparateFunction.h"
 #include "../headers/visual/Menu.h"
 #include "../headers/visual/PlayerSelection.h"
 #include "../headers/visual/PlayerInfoInput.h"
