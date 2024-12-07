@@ -1,6 +1,13 @@
 ﻿#pragma once
 #include <gameObject.h>
 
+
+enum DialogState {
+    NO_DIALOG,        // Không có hộp thoại
+    MAIN_DIALOG,      // Hộp thoại chính với lựa chọn "Check/Call", "Fold", "Raise"
+    RAISE_DIALOG      // Hộp thoại nhập số tiền raise
+};
+
 /**
  * @class Table
  * @brief Manages a poker table, including players, deck, and game operations.

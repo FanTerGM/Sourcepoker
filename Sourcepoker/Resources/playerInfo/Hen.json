@@ -1,9 +1,9 @@
 {
-    "balance": 1000,
-    "gamePlayed": 0,
-    "gamesWon": 0.0,
+    "balance": 1030,
+    "gamePlayed": 1,
+    "gamesWon": 1.0,
     "handHistory": [
-        0,
+        1,
         0,
         0,
         0,
@@ -16,5 +16,5 @@
     ],
     "rank": 0,
     "username": "Hen",
-    "winRate": 0.0
+    "winRate": 100.0
 }

@@ -210,19 +210,5 @@ int main() {
         window.display(); //tell app that window is done drawing
     }
 
-    //end of application
-
-    /*while (true){
-        std::cout << "Welcome to poker!" << std::endl;
-        std::cout << "Please choose what to do" << std::endl;
-        std::cout << "1. Play poker" << std::endl;
-        std::cout << "2. view Leaderboard" << std::endl;
-        std::cout << "3. Exit program" << std::endl;
-        int choice; std::cout << "Enter a number to choose what to do: ";  std::cin >> choice;
-
-        if (choice == 1) Games();
-        if (choice == 2) leaderboard().display();
-        if (choice == 3) return 0;
-    }  */ 
     return 0;
 }

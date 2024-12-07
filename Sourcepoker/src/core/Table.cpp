@@ -3,6 +3,9 @@
 #include <algorithm> // For std::sort and std::greater
 #include <numeric>   // For std::accumulate
 
+DialogState currentDialogState = NO_DIALOG;
+
+
 // Constructor
 Table::Table(sf::RenderWindow& window, sf::Font& font, std::vector<Player> players) : window(window), font(font), players(players){
     startGame();
@@ -127,57 +130,202 @@ void Table::processPlayerAction(int& highestBet, int currentPlayerIndex, int& ra
     int yOffset = 100;
     int xOffset = 100;
     players[currentPlayerIndex].showCards(window, xOffset, yOffset);
+    const int SCREEN_WIDTH = 1080;
+    const int SCREEN_HEIGHT = 720;
 
-    int choice;
-    std::cout << "Player " << players[currentPlayerIndex].getUsername() << ", choose your action (1=Check/Call, 2=Fold, 3=Raise): ";
-    std::cin >> choice;
+    // Xử lý nhập liệu
+    std::string raiseAmountStr = "";  // String để chứa số tiền raise
+    bool validInput = false;
+    while (!validInput) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                window.close();
+            if (currentDialogState == MAIN_DIALOG) {
+                // Tạo một thông điệp trong hộp thoại
+                sf::RectangleShape dialogBox(sf::Vector2f(400.f, 200.f));
+                dialogBox.setFillColor(sf::Color(0, 0, 0, 180)); // Màu nền hộp thoại bán trong suốt
+                dialogBox.setPosition(SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT / 2 - 100);
+                window.draw(dialogBox);
 
-    std::cout << "Current blind: " << highestBet << std::endl;
-    std::cout << "Your current bet: " << players[currentPlayerIndex].bet << std::endl;
+                // Chữ hiển thị tên người chơi và các lựa chọn
+                sf::Text playerTurnText;
+                playerTurnText.setFont(font);
+                playerTurnText.setString(players[currentPlayerIndex].getUsername() + "'s turn");
+                playerTurnText.setCharacterSize(24);
+                playerTurnText.setFillColor(sf::Color::White);
+                playerTurnText.setPosition(SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 - 80);
+                window.draw(playerTurnText);
 
-    switch (choice) {
-    case 1: // Check/Call
-        // Matches the player's bet to the current highestBet (Blind)
-        if (players[currentPlayerIndex].bet < highestBet) {
-            players[currentPlayerIndex].bet = highestBet;  // Player calls
+                // Các thông tin về tiền cược
+                sf::Text currentBetText;
+                currentBetText.setFont(font);
+                currentBetText.setString("Current Blind: " + std::to_string(highestBet));
+                currentBetText.setCharacterSize(18);
+                currentBetText.setFillColor(sf::Color::White);
+                currentBetText.setPosition(SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 - 50);
+                window.draw(currentBetText);
+
+                sf::Text playerBetText;
+                playerBetText.setFont(font);
+                playerBetText.setString("Your Bet: " + std::to_string(players[currentPlayerIndex].bet));
+                playerBetText.setCharacterSize(18);
+                playerBetText.setFillColor(sf::Color::White);
+                playerBetText.setPosition(SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 - 20);
+                window.draw(playerBetText);
+
+                // Các lựa chọn hành động
+                sf::Text actionsText;
+                actionsText.setFont(font);
+                actionsText.setString("Press 1 to Check/Call\nPress 2 to Fold\nPress 3 to Raise");
+                actionsText.setCharacterSize(18);
+                actionsText.setFillColor(sf::Color::White);
+                actionsText.setPosition(SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 + 20);
+                window.draw(actionsText);
+
+                // Hiển thị cửa sổ
+                window.display();
+                while (window.pollEvent(event)) {
+                    if (event.type == sf::Event::KeyPressed) {
+                        if (event.key.code == sf::Keyboard::Num1) {
+                            // Check/Call: Đặt cược để match với highestBet
+                            if (players[currentPlayerIndex].bet < highestBet) {
+                                players[currentPlayerIndex].bet = highestBet;  // Player calls
+                            }
+                            validInput = true;
+                        }
+                        else if (event.key.code == sf::Keyboard::Num2) {
+                            // Fold: Người chơi bỏ cuộc
+                            players[currentPlayerIndex].folded = true;
+                            validInput = true;
+                        }
+                        else if (event.key.code == sf::Keyboard::Num3) {
+                            currentDialogState = RAISE_DIALOG;
+                        }
+                    }
+                }
+            }
+            else if (currentDialogState == RAISE_DIALOG) {
+
+                //hiển thị hộp thoại raise bet
+                sf::RectangleShape raiseDialogBox(sf::Vector2f(400.f, 150.f));
+                raiseDialogBox.setFillColor(sf::Color(0, 0, 0, 180));
+                raiseDialogBox.setPosition(SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT / 2 + 150);
+                window.draw(raiseDialogBox);
+
+                // Hiển thị hộp thoại yêu cầu nhập tiền cược
+                sf::Text raisePrompt;
+                raisePrompt.setFont(font);
+                raisePrompt.setString("Enter raise amount: ");
+                raisePrompt.setCharacterSize(18);
+                raisePrompt.setFillColor(sf::Color::White);
+                raisePrompt.setPosition(SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 + 80);
+                window.draw(raisePrompt);
+
+                sf::Text inputText;
+                inputText.setFont(font);
+                inputText.setString(raiseAmountStr);  // Hiển thị số tiền raise nhập vào
+                inputText.setCharacterSize(18);
+                inputText.setFillColor(sf::Color::White);
+                inputText.setPosition(SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 + 110);
+                window.draw(inputText);
+
+                window.display();
+
+                bool validRaise = false;
+                while (!validRaise) {
+                    while (window.pollEvent(event)) {
+                        if (event.type == sf::Event::Closed) {
+                            window.close();
+                        }
+
+                        if (event.type == sf::Event::TextEntered) {
+                            if (event.text.unicode == 13) { // == pressed enter
+                                if (!raiseAmountStr.empty()) {
+                                    int raiseAmount = std::stoi(raiseAmountStr);
+                                    if (raiseAmount > highestBet) {
+                                        players[currentPlayerIndex].bet += raiseAmount;  // Player raises
+                                        highestBet = players[currentPlayerIndex].bet;// Update the highest bet
+                                        raiseIndex = currentPlayerIndex;// Also note where the most recent raise to know when to stop the round
+                                        validRaise = true;
+                                        validInput = true;
+                                    }
+                                }
+                                else {
+                                    std::cout << "Raise amount must be higher than the current bet.\n";
+                                }
+                            }
+                            else if (event.text.unicode == 8) { // ==pressed backspace
+                                if (!raiseAmountStr.empty()) {
+                                    raiseAmountStr.pop_back(); // delete the last digit
+                                }
+                            }
+                            else if (event.text.unicode >= 48 && event.text.unicode <= 57) { // enter 0 -> 9
+                                raiseAmountStr += static_cast<char>(event.text.unicode);
+                            }
+                        }
+                    }
+                }
+                //window.clear();
+                window.draw(raiseDialogBox);
+                window.draw(raisePrompt);
+                window.draw(inputText);
+                window.display();
+            }
+
         }
-        break;
 
-    case 2: // Fold
-        // Exclude players from future action round
-        players[currentPlayerIndex].folded = true; // Player folds
-        break;
-
-    case 3: // Raise
-        // Increase player's bet to higherBet and change highest bet accordingly
-        
-        int raiseAmount;
-        std::cout << "Enter raise amount: " << std::endl;
-        std::cin >> raiseAmount;
-        if (raiseAmount > highestBet) {
-            players[currentPlayerIndex].bet += raiseAmount;  // Player raises
-            highestBet = players[currentPlayerIndex].bet;// Update the highest bet
-            raiseIndex = currentPlayerIndex;// Also note where the most recent raise to know when to stop the round
-        }
-        else {
-            std::cout << "Raise amount must be higher than the current bet.\n";
-        }
-        break;
-
-    default:
-        // Handle invalid input
-        std::cout << "Invalid choice. Try again.\n";
-        processPlayerAction(highestBet, currentPlayerIndex, raiseIndex);  // Retry on invalid input
-        break;
     }
 }
+    //int choice;
+    //std::cout << "Player " << players[currentPlayerIndex].getUsername() << ", choose your action (1=Check/Call, 2=Fold, 3=Raise): ";
+    //std::cin >> choice;
+
+    //std::cout << "Current blind: " << highestBet << std::endl;
+    //std::cout << "Your current bet: " << players[currentPlayerIndex].bet << std::endl;
+
+    //switch (choice) {
+    //case 1: // Check/Call
+    //    // Matches the player's bet to the current highestBet (Blind)
+    //    if (players[currentPlayerIndex].bet < highestBet) {
+    //        players[currentPlayerIndex].bet = highestBet;  // Player calls
+    //    }
+    //    break;
+
+    //case 2: // Fold
+    //    // Exclude players from future action round
+    //    players[currentPlayerIndex].folded = true; // Player folds
+    //    break;
+
+    //case 3: // Raise
+    //    // Increase player's bet to higherBet and change highest bet accordingly
+    //    
+    //    int raiseAmount;
+    //    std::cout << "Enter raise amount: " << std::endl;
+    //    std::cin >> raiseAmount;
+    //    if (raiseAmount > highestBet) {
+    //        players[currentPlayerIndex].bet += raiseAmount;  // Player raises
+    //        highestBet = players[currentPlayerIndex].bet;// Update the highest bet
+    //        raiseIndex = currentPlayerIndex;// Also note where the most recent raise to know when to stop the round
+    //    }
+    //    else {
+    //        std::cout << "Raise amount must be higher than the current bet.\n";
+    //    }
+    //    break;
+
+    //default:
+    //    // Handle invalid input
+    //    std::cout << "Invalid choice. Try again.\n";
+    //    processPlayerAction(highestBet, currentPlayerIndex, raiseIndex);  // Retry on invalid input
+    //    break;
+    //}
 
 void Table::bettingRound(int& highestBet) {
     // A circular loop that only stop when all players have either call or folded
     int index = 0, raiseIndex = 0;
     do {
         while (players[index].folded) {
-            std::cout << "Chekc" << std::endl;
+            std::cout << "Check" << std::endl;
             index = (index + 1) % (players.size());
         }
         
@@ -185,7 +333,7 @@ void Table::bettingRound(int& highestBet) {
         processPlayerAction(highestBet, index, raiseIndex);
 
         index = (index + 1) % players.size();
-        std::cout << "Chekc" << std::endl;
+        std::cout << "Check" << std::endl;
 
 
     } while (index != raiseIndex);
