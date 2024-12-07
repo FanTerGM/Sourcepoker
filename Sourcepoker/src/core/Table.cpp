@@ -4,7 +4,7 @@
 #include <numeric>   // For std::accumulate
 
 // Constructor
-Table::Table(sf::RenderWindow& window, sf::Font& font, std::vector<Player>& players) : window(window), font(font), players(players){}
+Table::Table(sf::RenderWindow& window, sf::Font& font, std::vector<Player> players) : window(window), font(font), players(players){}
 
 // Deals five cards to each player
 void Table::dealCardsToPlayers() {
@@ -192,7 +192,6 @@ void Table::startGame() {
         clearTable();           // Clear previous hands
         dealCardsToPlayers();  // Deal new hands
         drawTable(window);
-        drawCard(window);
        
         int highestBet = 10;
 
@@ -202,11 +201,11 @@ void Table::startGame() {
         std::cout << "Players' hands:" << std::endl;
         showPlayersHands();
 
-        // Determine and display the winner
-        determineWinner();
-        dialogBox();
+    // Determine and display the winner
+    determineWinner();
+    dialogBox();
         
-        window.display();
+    window.display();
 }
 
 void Table::addPlayer(const std::string& playerName) {
@@ -223,7 +222,7 @@ void Table::dialogBox() {
         std::cerr << "Error loading font!" << std::endl;
         return;  // Dừng chương trình nếu không load được font
     }
-    sf::RectangleShape dialogBox(sf::Vector2f(400, 200));  // Hộp thoại có kích thước 400x200
+    sf::RectangleShape dialogBox(sf::Vector2f(300, 100));  // Hộp thoại có kích thước 400x200
     dialogBox.setFillColor(sf::Color(0, 0, 0, 200));  // Nền đen với độ trong suốt
     dialogBox.setOutlineColor(sf::Color::White);  // Viền trắng
     dialogBox.setOutlineThickness(5);  // Độ dày viền
@@ -244,30 +243,23 @@ void Table::dialogBox() {
     handRankText.setString("Winning hand rank: " + winnerHandRank);
     handRankText.setCharacterSize(20);
     handRankText.setFillColor(sf::Color::White);
-    handRankText.setPosition(160, 40);
+    handRankText.setPosition(160, 45);
 
     std::cout << "wining hand rank: " + winnerHandRank << std::endl;
     // create "another round " and "exit to main menu"
     sf::Text anotherRoundText;
     anotherRoundText.setFont(font);
-    anotherRoundText.setString("Another Round? (Press Enter)");
+    anotherRoundText.setString("Press Any Key to back to Play Menu...");
     anotherRoundText.setCharacterSize(20);
     anotherRoundText.setFillColor(sf::Color::Yellow);
-    anotherRoundText.setPosition(160, 100);  // Vị trí của "Another Round" trong hộp thoại
+    anotherRoundText.setPosition(160, 80);  // Vị trí của "Another Round" trong hộp thoại
 
-    sf::Text exitText;
-    exitText.setFont(font);
-    exitText.setString("Exit! (Press ESC)");
-    exitText.setCharacterSize(20);
-    exitText.setFillColor(sf::Color::Yellow);
-    exitText.setPosition(160, 150);  // Vị trí của "Exit" trong hộp thoại
 
     // Vẽ hộp thoại lên cửa sổ
     window.draw(dialogBox);
     window.draw(winnerText);
     window.draw(handRankText);
     window.draw(anotherRoundText);
-    window.draw(exitText);
 
     window.display();
 }
@@ -293,38 +285,4 @@ void Table::drawTable(sf::RenderWindow& window) {
     // Đặt ảnh vào chính giữa cửa sổ
     tableSprite.setPosition((windowWidth - textureWidth) / 2.0f, (windowHeight - textureHeight) / 2.0f);
     window.draw(tableSprite);
-}
-
-//draw player's cards
-void Table::drawCard(sf::RenderWindow& window) {
-
-    if (players.empty()) {
-        std::cerr << "Error: Player list is empty!" << std::endl;
-        return; // Hoặc xử lý lỗi
-    }
-
-    std::cout << "Player list size: " << players.size() << std::endl;
-
-    for (int i = 0; i < players.size(); ++i) {
-        const Player& player = players[i];
-
-        std::cout << "Player " << players[i].getUsername() << "'s hand size: " << players[i].getHand().size() << std::endl;
-
-        int cardOffset = 0; //to move card on the window
-
-        for (int j = 0; j < players[i].getHand().size(); ++j) {
-            std::string cardName = players[i].getHand()[j].toString();
-            sf::Texture cardTexture;
-            if (!cardTexture.loadFromFile("Resources/cards/" + cardName + ".png")) {
-                std::cerr << "Error loading card image: " << cardName << std::endl;
-                continue;
-            }
-
-            sf::Sprite cardSprite(cardTexture);
-            cardSprite.setPosition(50 + cardOffset, 200 + i * 150); // position of card;
-
-            window.draw(cardSprite);
-            cardOffset += 60;
-        }
-    }
 }

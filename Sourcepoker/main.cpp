@@ -53,14 +53,14 @@ int main() {
     logoSprite.setTexture(logoTexture);
     logoSprite.setPosition(SCREEN_WIDTH - logoTexture.getSize().x - 20, 50);
 
-    ////background music
-    //sf::Music music;
-    //if (!music.openFromFile("Resources/sound/music.ogg")) {
-    //    std::cerr << "Error opening background music file\n";
-    //    return -1;
-    //}
-    //music.setLoop(true);
-    //music.play();
+    //background music
+    sf::Music music;
+    if (!music.openFromFile("Resources/sound/music.ogg")) {
+        std::cerr << "Error opening background music file\n";
+        return -1;
+    }
+    music.play();
+    music.setLoop(true);
 
     //click buffer
     sf::SoundBuffer clickBuffer;
@@ -166,59 +166,22 @@ int main() {
             window.clear(sf::Color::Black); // clear old frames
 
         if (currentState == GAME_DEFAULT){
- 
-            House house(new Table(window, font));
-
+            House house = new Table(window, font, playerInfo.getPlayers());
+            house.StartGame();
             currentState = WAITING_FOR_INPUT;
         }
         else if (currentState == GAME_STUD_5) {
 
-            House house = Table(window, font);
-            house.setTable(new studTable(window, font, numPlayers, numNPCs));
-
-            table.createDeck();
-            table.clearTable();
-            table.dealCardsToPlayers();
+            House house = new studTable(window, font, playerInfo.getPlayers());
+            house.StartGame();;
+            currentState = WAITING_FOR_INPUT;
         }
         else if (currentState == GAME_DRAW) {
-            House house = new Table(window, font);
-            house.setTable(new drawTable(window, font, numPlayers, numNPCs));
-
-            house.StartGame()
-
-            // Display the player's hand and the community card.
-            std::cout << "Player hand:\n";
-            for (Player& player : players) {
-                std::cout << player.getUsername() << std::endl;
-                //setup Vẽ tên người chơi
-                sf::Text playerNameText;
-                playerNameText.setFont(font);
-                playerNameText.setString(player.getUsername());// nó chỉ in PLAYER_1;PLAYER_2 chứ kh lấy tên mà nhập vào đc á ông
-                playerNameText.setCharacterSize(24);
-                playerNameText.setFillColor(sf::Color::Black);
-                playerNameText.setPosition(xOffset, yOffset - 30);  // Vị trí tên người chơi
-
-                // Vẽ tên người chơi
-                window.draw(playerNameText);
-
-                // Cập nhật xOffset để vẽ bộ bài cho người chơi tiếp theo
-                yOffset += 130; // Khoảng cách giữa các người chơi, có thể điều chỉnh nếu cần
-
-                player.showCards(window, xOffset, yOffset);
-                if (player.getUsername().find("AI_") != std::string::npos)
-                        continue;
-                std::cout << "Choose cards to replace: " << std::endl;
-                player.replaceCard(deck);
-                std::cout << "After replacement: " << std::endl;
-                player.showCards(window, xOffset, yOffset);
-            }
-            table.determineWinner();
-            table.dialogBox();
-            currentState = WAITING_FOR_INPUT; //để khi xong game thì đợi nhấn chuột/any keyboard key để về playmenu tui nghĩ thay vì lặp 1 chế độ thì đưa về playmenu vừa continue hoặc chọn cdo khác
-            // ĐƯợc đó :V
+            House house = new drawTable(window, font, playerInfo.getPlayers());
+            house.StartGame();
+            currentState = WAITING_FOR_INPUT;
         }
     
-
         if (currentState == MAIN_MENU) {
             mainMenu.draw(window);
         }
@@ -233,22 +196,6 @@ int main() {
         else if (currentState == INPUT_PLAYER_INFO) {
             playerInfo.setPlayerNPCs(numPlayers, numNPCs);
             playerInfo.render(window);
-        }
-        else if (currentState == GAME_DEFAULT) {
-             
-            //vẽ bàn chơi
-            //sắp người chơi vào vị trí đều nhau
-            //vẽ bài của từng người chơi + tên để phân biệt
-           
-            /* std::cout << "Starting Game Default Mode" << std::endl;
-            DefaultMode defaultMode(numPlayers, numNPCs);
-            defaultMode.renderGame(window);*/
-
-            //thông báo kết quả (giữa màn hình) dạng hộp thoại nền đen viền trắng thông báo tên người thắng, kiểu bài, 2 nút: 1 nút chơi tiếp , 1 nút thoát            
-        }
-        else if (currentState == GAME_STUD_5) {
-            DefaultMode defaultMode(numPlayers, numNPCs);
-            defaultMode.renderGame(window);
         }
         else if (currentState == LEADERBOARD) {
             leaderboard().displaySFML(window, font);

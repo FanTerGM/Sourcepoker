@@ -18,7 +18,7 @@ public:
     /**
      * @brief Constructor allowing custom number of players and AI participants.
      */
-    Table(sf::RenderWindow& window, sf::Font& font, std::vector<Player>& players);
+    Table(sf::RenderWindow& window, sf::Font& font, std::vector<Player> players);
 
     /**
      * @brief Creates a new deck for the game.
@@ -83,7 +83,5 @@ public:
     void dialogBox();
 
     void drawTable(sf::RenderWindow& window);
-
-    void drawCard(sf::RenderWindow& window);
 };
 

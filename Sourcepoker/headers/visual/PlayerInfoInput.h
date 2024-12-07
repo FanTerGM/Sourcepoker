@@ -18,9 +18,9 @@ public:
     void savePlayerNameToFile(const std::string& playerName, const std::string& directory);
     void initializePlayerList();
     void setNumberOfPlayers(int count) { numberOfPlayers = count; }
-    const std::vector<std::string>& getPlayerNames() const { return playerInputs; }
-    const std::vector<Player>& getPlayers() const { return players; }
-    const sf::Font& getFont() const { return font; }
+    std::vector<std::string> getPlayerNames() const { return playerInputs; }
+    std::vector<Player> getPlayers() { return players; }
+    sf::Font getFont() const { return font; }
 
     bool areAllPlayersNamesEntered();
 private:

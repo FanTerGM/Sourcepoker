@@ -4,7 +4,7 @@
 class studTable : public Table {
 public:
 	
-	studTable(sf::RenderWindow& window, sf::Font& font, std::vector<Player>& players);
+	studTable(sf::RenderWindow& window, sf::Font& font, std::vector<Player> players);
 
 	void dealFlop() override;
 	void dealCardsToPlayers() override;
