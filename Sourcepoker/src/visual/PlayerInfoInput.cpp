@@ -152,7 +152,7 @@ void PlayerInfoInput::handleTextInput(sf::Event& event) {
                 }
             }
             // Chỉ chấp nhận ký tự chữ 
-            else if (event.text.unicode < 128) {
+            else {
                 char inputChar = static_cast<char>(event.text.unicode);
                 if (isPlayerNameTextBoxSelected) {
                     playerInputs[activePlayerIndex] += inputChar;  // Thêm ký tự vào tên của người chơi đã chọn
@@ -161,7 +161,7 @@ void PlayerInfoInput::handleTextInput(sf::Event& event) {
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
             std::cout << "pressed Enter~" << std::endl;
-            // Kiểm tra xem tên đã tồn tại chưa
+            // Kiểm tra xem tên đã tồn tại chưa khi bấm enter
             std::string playerName = playerInputs[activePlayerIndex];
             std::cout << playerName << std::endl;
             removeTrailingSpaces(playerName);
