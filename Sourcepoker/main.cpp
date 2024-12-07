@@ -165,25 +165,15 @@ int main() {
         else
             window.clear(sf::Color::Black); // clear old frames
 
-        if (currentState == GAME_DEFAULT) {
-            Table table(window, font, numPlayers, numNPCs);
-            DefaultMode defaultMode(numPlayers, numNPCs);
-            defaultMode.renderGame(window);
+        if (currentState == GAME_DEFAULT){
+ 
+            House house(new Table(window, font));
 
-            House house = new Table(window, font);
-            house.setTable(new Table(window, font, numPlayers, numNPCs));
-            table.createDeck();
-            table.clearTable();
-            table.dealCardsToPlayers();
-            table.showPlayersHands();
-            table.determineWinner();
-            table.dialogBox();
             currentState = WAITING_FOR_INPUT;
         }
         else if (currentState == GAME_STUD_5) {
-            Table table(window, font, numPlayers, numNPCs);
 
-            House house = new Table(window, font);
+            House house = Table(window, font);
             house.setTable(new studTable(window, font, numPlayers, numNPCs));
 
             table.createDeck();
@@ -191,16 +181,10 @@ int main() {
             table.dealCardsToPlayers();
         }
         else if (currentState == GAME_DRAW) {
-            Table table(window, font, numPlayers, numNPCs);
             House house = new Table(window, font);
             house.setTable(new drawTable(window, font, numPlayers, numNPCs));
 
-            table.createDeck();
-            table.clearTable();
-            table.dealCardsToPlayers();
-
-            int xOffset = 200;
-            int yOffset = 200;
+            house.StartGame()
 
             // Display the player's hand and the community card.
             std::cout << "Player hand:\n";
@@ -209,7 +193,7 @@ int main() {
                 //setup Vẽ tên người chơi
                 sf::Text playerNameText;
                 playerNameText.setFont(font);
-                playerNameText.setString(player.getUsername());
+                playerNameText.setString(player.getUsername());// nó chỉ in PLAYER_1;PLAYER_2 chứ kh lấy tên mà nhập vào đc á ông
                 playerNameText.setCharacterSize(24);
                 playerNameText.setFillColor(sf::Color::Black);
                 playerNameText.setPosition(xOffset, yOffset - 30);  // Vị trí tên người chơi
@@ -230,6 +214,8 @@ int main() {
             }
             table.determineWinner();
             table.dialogBox();
+            currentState = WAITING_FOR_INPUT; //để khi xong game thì đợi nhấn chuột/any keyboard key để về playmenu tui nghĩ thay vì lặp 1 chế độ thì đưa về playmenu vừa continue hoặc chọn cdo khác
+            // ĐƯợc đó :V
         }
     
 

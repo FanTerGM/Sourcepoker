@@ -9,35 +9,7 @@ DefaultMode::DefaultMode(int numPlayers, int numNPCs)
     //}
 }
 
-//render all 
-void DefaultMode::renderGame(sf::RenderWindow& window) {
-	drawTable(window);	//draw table
-	//drawPlayer(window);	//draw player
-	//drawCard(window);	//draw player's cards
-}
 
-//draw table
-void DefaultMode::drawTable(sf::RenderWindow& window) {
-	sf::Texture tableTexture;
-	if (!tableTexture.loadFromFile("Resources/images/table.jpg")) {
-		std::cerr << "Error loading table image" << std::endl;
-		return;
-	}
-	sf::Sprite tableSprite(tableTexture);
-    tableSprite.setScale(2.0f, 2.0f);
-
-    // Tính toán vị trí để ảnh ở chính giữa cửa sổ
-    float windowWidth = static_cast<float>(window.getSize().x);
-    float windowHeight = static_cast<float>(window.getSize().y);
-
-    // Lấy kích thước ảnh sau khi phóng to
-    float textureWidth = tableTexture.getSize().x * 2.0f;
-    float textureHeight = tableTexture.getSize().y * 2.0f;
-
-    // Đặt ảnh vào chính giữa cửa sổ
-    tableSprite.setPosition((windowWidth - textureWidth) / 2.0f, (windowHeight - textureHeight) / 2.0f);
-	window.draw(tableSprite);
-}
 
 //draw player ( location + name)
 void DefaultMode::drawPlayer(sf::RenderWindow& window) {
@@ -76,42 +48,9 @@ void DefaultMode::drawPlayer(sf::RenderWindow& window) {
     }
 }
 
-//draw player's cards
-void DefaultMode::drawCard(sf::RenderWindow& window) {
-    const auto& players = playerInfo.getPlayers();
-    if (players.empty()) {
-        std::cerr << "Error: Player list is empty!" << std::endl;
-        return; // Hoặc xử lý lỗi
-    }
-
-    std::cout << "Player list size: " << players.size() << std::endl;
-
-    for (int i = 0; i < numPlayers + numNPCs; ++i) {
-        const Player& player = players[i];
-
-        std::cout << "Player " << players[i].getUsername() << "'s hand size: " << players[i].getHand().size() << std::endl;
-
-        int cardOffset = 0; //to move card on the window
-        
-        for (int j = 0; j < players[i].getHand().size(); ++j) {
-            std::string cardName = players[i].getHand()[j].toString();
-            sf::Texture cardTexture;
-            if (!cardTexture.loadFromFile("Resources/cards/" + cardName + ".png")) {
-                std::cerr << "Error loading card image: " << cardName << std::endl;
-                continue;
-            }
-
-            sf::Sprite cardSprite(cardTexture);
-            cardSprite.setPosition(50 + cardOffset, 200 + i * 150); // position of card;
-
-            window.draw(cardSprite);
-            cardOffset += 60;
-        }
-    }
-}
 
 //render result dialog
-void DefaultMode::renderResultDialog(sf::RenderWindow& window, const std::string& winner) {
+void Table::renderResultDialog(sf::RenderWindow& window, const std::string& winner) {
     // Tạo hộp thoại có viền trắng và nền đen
     sf::RectangleShape box(sf::Vector2f(400, 200));
     box.setFillColor(sf::Color::Black);

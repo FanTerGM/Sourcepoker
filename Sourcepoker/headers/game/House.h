@@ -14,11 +14,6 @@ public:
     void setTable(Table* table);
 
     /**
-    * @brief Populates the table with human players and AI players.
-    */
-    void populateTable();
-
-    /**
      * @brief Displays the hands of all players at the table.
      */
     void showPlayersHand();

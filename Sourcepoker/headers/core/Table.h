@@ -8,32 +8,17 @@
  * Inherits from Hand and provides virtual functions to customize game modes.
  */
 class Table : public Hand {
-
 protected:
-    int numberOfPlayers;      ///< Number of human players at the table.
-    int numberOfNPCs;         ///< Number of AI (NPC) players at the table.
     Deck deck;                ///< Deck of cards used in the game.
-    std::vector<Player> players; ///< Collection of players in the game (both human and AI).
+    std::vector<Player>& players; ///< Collection of players in the game (both human and AI).
     sf::RenderWindow& window;
-    sf::Font* font;
+    sf::Font& font;
     std::string winnerHandRank;
 public:
     /**
-     * @brief Default constructor initializes the table with one human and one AI player.
-     */
-    Table(sf::RenderWindow& window, sf::Font& font);
-
-    /**
      * @brief Constructor allowing custom number of players and AI participants.
-     * @param playerCount Number of human players.
-     * @param npcCount Number of AI players.
      */
-    Table(sf::RenderWindow& window, sf::Font& font, int playerCount, int npcCount) ;
-
-    /**
-     * @brief Populates the table with human players and AI players.
-     */
-    void populateTable();
+    Table(sf::RenderWindow& window, sf::Font& font, std::vector<Player>& players);
 
     /**
      * @brief Creates a new deck for the game.
@@ -96,5 +81,9 @@ public:
     void goToMainMenu();
 
     void dialogBox();
+
+    void drawTable(sf::RenderWindow& window);
+
+    void drawCard(sf::RenderWindow& window);
 };
 

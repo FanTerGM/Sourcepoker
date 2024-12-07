@@ -138,7 +138,6 @@
     <ClCompile Include="src\game\GameState.cpp" />
     <ClCompile Include="src\modes\drawTable.cpp" />
     <ClCompile Include="src\modes\studTable.cpp" />
-    <ClCompile Include="src\visual\DefaultMode.cpp" />
     <ClCompile Include="src\visual\PlayerInfoInput.cpp" />
     <ClCompile Include="src\visual\PlayerSelection.cpp" />
     <ClCompile Include="src\visual\ImgCard.cpp" />
@@ -156,7 +155,6 @@
   <ItemGroup>
     <ClInclude Include="headers\core\Card.h" />
     <ClInclude Include="headers\core\Deck.h" />
-    <ClInclude Include="headers\visual\DefaultMode.h" />
     <ClInclude Include="headers\visual\DialogBox.h" />
     <ClInclude Include="headers\visual\PlayerInfoInput.h" />
     <ClInclude Include="headers\visual\PlayerSelection.h" />

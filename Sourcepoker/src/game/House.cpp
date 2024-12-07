@@ -8,7 +8,6 @@ void House::setTable(Table* table) {
 	currentTable = table;
 }
 
-void House::populateTable() { currentTable->populateTable(); }
 void House::showPlayersHand() { currentTable->showPlayersHands(); }
 void House::showCards(sf::RenderWindow& window, int xOffset, int yOffset) { currentTable -> showCards(window, xOffset, yOffset); }
 //void House::createDeck() { currentTable->createDeck(); }

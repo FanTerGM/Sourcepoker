@@ -3,32 +3,8 @@
 #include <algorithm> // For std::sort and std::greater
 #include <numeric>   // For std::accumulate
 
-   // Default constructor initializes table with one player and one NPC
-Table::Table(sf::RenderWindow& window, sf::Font& font) : numberOfPlayers(0), numberOfNPCs(1), window(window){
-    populateTable();
-
-}
-
-// Constructor allowing specification of player and NPC counts
-Table::Table(sf::RenderWindow& window,sf::Font& font, int playerCount, int npcCount) : numberOfPlayers(playerCount), numberOfNPCs(npcCount), window(window){
-    populateTable();
-}
-
-// Adds players and NPCs to the table
-void Table::populateTable() {
-    if (numberOfPlayers + numberOfNPCs > 0) {
-        for (int i = 0; i < numberOfPlayers; ++i) {
-            players.emplace_back("Player_" + std::to_string(i + 1));  // Thêm người chơi
-        }
-        for (int i = 0; i < numberOfNPCs; ++i) {
-            players.emplace_back("NPC_" + std::to_string(i + 1));  // Thêm NPC
-        }
-    }
-    else {
-        std::cerr << "Error: No players or NPCs initialized!" << std::endl;
-    }
-
-}
+// Constructor
+Table::Table(sf::RenderWindow& window, sf::Font& font, std::vector<Player>& players) : window(window), font(font), players(players){}
 
 // Deals five cards to each player
 void Table::dealCardsToPlayers() {
@@ -214,11 +190,10 @@ void Table::startGame() {
     //window.clear(sf::Color::Green);
         createDeck();           // Prepare a new deck
         clearTable();           // Clear previous hands
-        dealCardsToPlayers(); // Deal new hands
-        
-        DefaultMode defaultMode(numberOfPlayers, numberOfNPCs);
-        defaultMode.renderGame(window);
-
+        dealCardsToPlayers();  // Deal new hands
+        drawTable(window);
+        drawCard(window);
+       
         int highestBet = 10;
 
         bettingRound(highestBet);
@@ -295,4 +270,61 @@ void Table::dialogBox() {
     window.draw(exitText);
 
     window.display();
+}
+
+//draw table
+void Table::drawTable(sf::RenderWindow& window) {
+    sf::Texture tableTexture;
+    if (!tableTexture.loadFromFile("Resources/images/table.jpg")) {
+        std::cerr << "Error loading table image" << std::endl;
+        return;
+    }
+    sf::Sprite tableSprite(tableTexture);
+    tableSprite.setScale(2.0f, 2.0f);
+
+    // Tính toán vị trí để ảnh ở chính giữa cửa sổ
+    float windowWidth = static_cast<float>(window.getSize().x);
+    float windowHeight = static_cast<float>(window.getSize().y);
+
+    // Lấy kích thước ảnh sau khi phóng to
+    float textureWidth = tableTexture.getSize().x * 2.0f;
+    float textureHeight = tableTexture.getSize().y * 2.0f;
+
+    // Đặt ảnh vào chính giữa cửa sổ
+    tableSprite.setPosition((windowWidth - textureWidth) / 2.0f, (windowHeight - textureHeight) / 2.0f);
+    window.draw(tableSprite);
+}
+
+//draw player's cards
+void Table::drawCard(sf::RenderWindow& window) {
+
+    if (players.empty()) {
+        std::cerr << "Error: Player list is empty!" << std::endl;
+        return; // Hoặc xử lý lỗi
+    }
+
+    std::cout << "Player list size: " << players.size() << std::endl;
+
+    for (int i = 0; i < players.size(); ++i) {
+        const Player& player = players[i];
+
+        std::cout << "Player " << players[i].getUsername() << "'s hand size: " << players[i].getHand().size() << std::endl;
+
+        int cardOffset = 0; //to move card on the window
+
+        for (int j = 0; j < players[i].getHand().size(); ++j) {
+            std::string cardName = players[i].getHand()[j].toString();
+            sf::Texture cardTexture;
+            if (!cardTexture.loadFromFile("Resources/cards/" + cardName + ".png")) {
+                std::cerr << "Error loading card image: " << cardName << std::endl;
+                continue;
+            }
+
+            sf::Sprite cardSprite(cardTexture);
+            cardSprite.setPosition(50 + cardOffset, 200 + i * 150); // position of card;
+
+            window.draw(cardSprite);
+            cardOffset += 60;
+        }
+    }
 }
