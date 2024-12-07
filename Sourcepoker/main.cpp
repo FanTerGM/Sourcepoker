@@ -53,14 +53,14 @@ int main() {
     logoSprite.setTexture(logoTexture);
     logoSprite.setPosition(SCREEN_WIDTH - logoTexture.getSize().x - 20, 50);
 
-    ////background music
-    //sf::Music music;
-    //if (!music.openFromFile("Resources/sound/music.ogg")) {
-    //    std::cerr << "Error opening background music file\n";
-    //    return -1;
-    //}
-    //music.setLoop(true);
-    //music.play();
+    //background music
+    sf::Music music;
+    if (!music.openFromFile("Resources/sound/music.ogg")) {
+        std::cerr << "Error opening background music file\n";
+        return -1;
+    }
+    music.play();
+    music.setLoop(true);
 
     //click buffer
     sf::SoundBuffer clickBuffer;
