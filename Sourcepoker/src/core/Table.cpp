@@ -196,11 +196,6 @@ void Table::startGame() {
 
         int highestBet = 10;
 
-        // Update players bet to current blind
-        for (Player& player : players) {
-            player.bet = highestBet;
-        }
-
         bettingRound(highestBet);
 
         // Draw each player's hand
