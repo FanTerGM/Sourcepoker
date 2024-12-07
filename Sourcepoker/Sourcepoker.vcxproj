@@ -135,6 +135,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\game\GameState.cpp" />
+    <ClCompile Include="src\modes\drawTable.cpp" />
     <ClCompile Include="src\modes\studTable.cpp" />
     <ClCompile Include="src\visual\DefaultMode.cpp" />
     <ClCompile Include="src\visual\PlayerInfoInput.cpp" />
@@ -221,7 +223,10 @@
     <ClInclude Include="include\nlohmann\thirdparty\hedley\hedley_undef.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="backgroundMusic.ogg" />
     <None Include="cpp.hint" />
+    <None Include="Resources\sound\backgroundMusic.ogg" />
+    <None Include="Resources\sound\music.ogg" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Pangolin-Regular.ttf" />
@@ -285,6 +290,10 @@
     <Image Include="Resources\images\icon.png" />
     <Image Include="Resources\images\logo.png" />
     <Image Include="Resources\images\table.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="click.mp3" />
+    <Media Include="Resources\sound\click.mp3" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

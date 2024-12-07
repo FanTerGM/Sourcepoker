@@ -9,7 +9,7 @@ private:
 	int numPlayers;
 	int numNPCs;
 	sf::Font font;
-
+	std::vector<Player> players;
 public:
 	DefaultMode(int numPlayers, int numNPCs);
 	void renderGame(sf::RenderWindow& window); 

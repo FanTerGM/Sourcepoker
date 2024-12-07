@@ -1,11 +1,12 @@
 ﻿#include "../headers/visual/DefaultMode.h"
 
+PlayerInfoInput playerInfo;
 //constructor
 DefaultMode::DefaultMode(int numPlayers, int numNPCs)
 : numPlayers(numPlayers), numNPCs(numNPCs){
-    if (!font.loadFromFile("Pangolin-Regular.ttf.ttf")) {
-        std::cerr << "Error loading font for DefaultMode" << std::endl;
-    }
+    //if (!font.loadFromFile("Pangolin-Regular.ttf")) {
+    //    std::cerr << "Error loading font for DefaultMode" << std::endl;
+    //}
 }
 
 //render all 
@@ -23,63 +24,91 @@ void DefaultMode::drawTable(sf::RenderWindow& window) {
 		return;
 	}
 	sf::Sprite tableSprite(tableTexture);
-	tableSprite.setPosition(0, 0); //position of table
+    tableSprite.setScale(2.0f, 2.0f);
 
+    // Tính toán vị trí để ảnh ở chính giữa cửa sổ
+    float windowWidth = static_cast<float>(window.getSize().x);
+    float windowHeight = static_cast<float>(window.getSize().y);
+
+    // Lấy kích thước ảnh sau khi phóng to
+    float textureWidth = tableTexture.getSize().x * 2.0f;
+    float textureHeight = tableTexture.getSize().y * 2.0f;
+
+    // Đặt ảnh vào chính giữa cửa sổ
+    tableSprite.setPosition((windowWidth - textureWidth) / 2.0f, (windowHeight - textureHeight) / 2.0f);
 	window.draw(tableSprite);
 }
 
-////draw player ( location + name)
-//void DefaultMode::drawPlayer(sf::RenderWindow& window) {
-//
-//    int numTotalPlayers = numPlayers + numNPCs;
-//
-//    // Vẽ người chơi xung quanh bàn theo các vị trí cố định (ví dụ: 4 góc và các vị trí giữa)
-//    float angleStep = 360.f / numTotalPlayers;
-//
-//    for (int i = 0; i < numTotalPlayers; ++i) {
-//        // Tính toán vị trí của mỗi người chơi
-//        float angle = i * angleStep;
-//        float x = 500 + 250 * cos(angle * 3.14159f / 180.f);  // Xác định tọa độ X theo góc
-//        float y = 350 + 250 * sin(angle * 3.14159f / 180.f);  // Xác định tọa độ Y theo góc
-//
-//        // Tạo sprite và vẽ người chơi
-//        sf::CircleShape playerShape(30);  // Hình tròn đại diện cho người chơi
-//        playerShape.setFillColor(sf::Color::Red);  // Màu của người chơi
-//        playerShape.setPosition(x - playerShape.getRadius(), y - playerShape.getRadius());  // Điều chỉnh vị trí
-//
-//        window.draw(playerShape);  // Vẽ người chơi lên màn hình
-//
-//        // Vẽ tên người chơi (sử dụng tên từ PlayerInfoInput)
-//        sf::Text playerNameText(playerInfo.getPlayerNames()[i], playerInfo.getFont(), 20);
-//        playerNameText.setFillColor(sf::Color::White);
-//        playerNameText.setPosition(x - playerNameText.getLocalBounds().width / 2, y + 35);  // Vị trí của tên
-//
-//        window.draw(playerNameText);  // Vẽ tên người chơi lên màn hình
-//    }
-//}
+//draw player ( location + name)
+void DefaultMode::drawPlayer(sf::RenderWindow& window) {
+    int numTotalPlayers = numPlayers + numNPCs;
 
-////draw player's cards
-//void DefaultMode::drawCard(sf::RenderWindow& window) {
-//    for (int i = 0; i < numPlayers + numNPCs; ++i) {
-//        const Player& player = playerInfo.getPlayers()[i];
-//        int cardOffset = 0; //to move card on the window
-//        
-//        for (int j = 0; j < player.getHand().size(); ++j) {
-//            std::string cardName = player.getHand()[i].toString();
-//            sf::Texture cardTexture;
-//            if (!cardTexture.loadFromFile("Resources/cards/" + cardName + ".png")) {
-//                std::cerr << "Error loading card image: " << cardName << std::endl;
-//                continue;
-//            }
-//
-//            sf::Sprite cardSprite(cardTexture);
-//            cardSprite.setPosition(50 + cardOffset, 200 + i * 150); // position of card;
-//
-//            window.draw(cardSprite);
-//            cardOffset += 60;
-//        }
-//    }
-//}
+    // Kiểm tra số lượng người chơi và NPC
+    std::cout << "drawplayer - Total number of players + NPCs: " << numTotalPlayers << std::endl;
+    std::cout << "draw player - Player names size: " << playerInfo.getPlayerNames().size() << std::endl;
+
+    // Vẽ người chơi xung quanh bàn theo các vị trí cố định (ví dụ: 4 góc và các vị trí giữa)
+    float angleStep = 360.f / numTotalPlayers;
+
+    for (int i = 0; i < numTotalPlayers; ++i) {
+        // Tính toán vị trí của mỗi người chơi
+        float angle = i * angleStep;
+        float x = 500 + 250 * cos(angle * 3.14159f / 180.f);  // Xác định tọa độ X theo góc
+        float y = 350 + 250 * sin(angle * 3.14159f / 180.f);  // Xác định tọa độ Y theo góc
+
+        // Tạo sprite và vẽ người chơi
+        sf::CircleShape playerShape(30);  // Hình tròn đại diện cho người chơi
+        playerShape.setFillColor(sf::Color::Red);  // Màu của người chơi
+        playerShape.setPosition(x - playerShape.getRadius(), y - playerShape.getRadius());  // Điều chỉnh vị trí
+
+        window.draw(playerShape);  // Vẽ người chơi lên màn hình
+
+        // Vẽ tên người chơi (sử dụng tên từ PlayerInfoInput)
+        if (i < players[i].getUsername().size()) {
+            sf::Text playerNameText(players[i].getUsername(), font, 20);
+            playerNameText.setFillColor(sf::Color::White);
+            playerNameText.setPosition(x - playerNameText.getLocalBounds().width / 2, y + 35);  // Vị trí của tên
+            window.draw(playerNameText);  // Vẽ tên người chơi lên màn hình
+        }
+        else {
+            std::cerr << "Error: Index " << i << " out of range for player names!" << std::endl;
+        }
+    }
+}
+
+//draw player's cards
+void DefaultMode::drawCard(sf::RenderWindow& window) {
+    const auto& players = playerInfo.getPlayers();
+    if (players.empty()) {
+        std::cerr << "Error: Player list is empty!" << std::endl;
+        return; // Hoặc xử lý lỗi
+    }
+
+    std::cout << "Player list size: " << players.size() << std::endl;
+
+    for (int i = 0; i < numPlayers + numNPCs; ++i) {
+        const Player& player = players[i];
+
+        std::cout << "Player " << players[i].getUsername() << "'s hand size: " << players[i].getHand().size() << std::endl;
+
+        int cardOffset = 0; //to move card on the window
+        
+        for (int j = 0; j < players[i].getHand().size(); ++j) {
+            std::string cardName = players[i].getHand()[j].toString();
+            sf::Texture cardTexture;
+            if (!cardTexture.loadFromFile("Resources/cards/" + cardName + ".png")) {
+                std::cerr << "Error loading card image: " << cardName << std::endl;
+                continue;
+            }
+
+            sf::Sprite cardSprite(cardTexture);
+            cardSprite.setPosition(50 + cardOffset, 200 + i * 150); // position of card;
+
+            window.draw(cardSprite);
+            cardOffset += 60;
+        }
+    }
+}
 
 //render result dialog
 void DefaultMode::renderResultDialog(sf::RenderWindow& window, const std::string& winner) {

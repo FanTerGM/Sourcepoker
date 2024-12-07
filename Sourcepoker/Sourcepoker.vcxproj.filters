@@ -16,7 +16,9 @@
     <ClCompile Include="src\visual\PlayerSelection.cpp" />
     <ClCompile Include="src\visual\PlayerInfoInput.cpp" />
     <ClCompile Include="src\visual\DefaultMode.cpp" />
+    <ClCompile Include="src\game\GameState.cpp" />
     <ClCompile Include="src\modes\studTable.cpp" />
+    <ClCompile Include="src\modes\drawTable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\core\Card.h" />
@@ -94,6 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="backgroundMusic.ogg" />
+    <None Include="Resources\sound\backgroundMusic.ogg" />
+    <None Include="Resources\sound\music.ogg" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\images\icon.png" />
@@ -152,5 +157,9 @@
     <Image Include="Resources\cards\QH.png" />
     <Image Include="Resources\cards\QS.png" />
     <Image Include="Resources\images\table.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="click.mp3" />
+    <Media Include="Resources\sound\click.mp3" />
   </ItemGroup>
 </Project>

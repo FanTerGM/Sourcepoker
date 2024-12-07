@@ -53,13 +53,33 @@ int main() {
     logoSprite.setTexture(logoTexture);
     logoSprite.setPosition(SCREEN_WIDTH - logoTexture.getSize().x - 20, 50);
 
+    ////background music
+    //sf::Music music;
+    //if (!music.openFromFile("Resources/sound/music.ogg")) {
+    //    std::cerr << "Error opening background music file\n";
+    //    return -1;
+    //}
+    //music.setLoop(true);
+    //music.play();
+
+    //click buffer
+    sf::SoundBuffer clickBuffer;
+    sf::Sound clickSound;
+    
+    if (!clickBuffer.loadFromFile("Resources/sound/click.mp3"))
+    {
+        std::cerr << "Error load from file click buffer!\n";
+        return -1;
+    }
+    clickSound.setBuffer(clickBuffer);
+
     GameState currentState = MAIN_MENU;
 
     //main menu
-    Menu mainMenu(SCREEN_WIDTH, SCREEN_HEIGHT, { "Play", "Leaderboard", "Credit", "Exit" });
+    Menu mainMenu(SCREEN_WIDTH, SCREEN_HEIGHT, { "Play", "Leaderboard", "Exit" });
 
     //Play menu
-    Menu playMenu(SCREEN_WIDTH, SCREEN_HEIGHT, { "Default", "Stud table" });
+    Menu playMenu(SCREEN_WIDTH, SCREEN_HEIGHT, { "Default 5 Cards", "Stud 5", "Stud 7", "Draw 5 Poker"});
 
     PlayerSelection playerSelection(SCREEN_WIDTH, SCREEN_HEIGHT); 
 
@@ -86,12 +106,13 @@ int main() {
 
             else if (event.type == sf::Event::MouseButtonPressed) {
                 if (event.mouseButton.button == sf::Mouse::Left) {
+                    clickSound.play();
                     sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
                     if (currentState == MAIN_MENU) {
-                        mainMenu.handleMouseClick(mousePosition, currentState);
+                        mainMenu.handleMouseClickMain(mousePosition, currentState);
                     }
                     else if (currentState == PLAY_MENU) {
-                        playMenu.handleMouseClick(mousePosition, currentState);
+                        playMenu.handleMouseClickPlay(mousePosition, currentState);
                     }
                     else if (currentState == PLAYER_SELECTION) {
                         playerSelection.handleMouseClick(mousePosition, currentState);
@@ -102,17 +123,15 @@ int main() {
                         }
                     }
                     else if (currentState == INPUT_PLAYER_INFO) {
-                        playerInfo.handleMouseClick(mousePosition);                      
+                        playerInfo.handleMouseClick(mousePosition, currentState);    
                     }
                     else if (currentState == GAME_DEFAULT) {
-                        House house = new Table(window, font);
-                        house.setTable(new Table(window, numPlayers, numNPCs));
-                        house.StartGame(); // == table.Startgame()
+
                     }
-                    else if (currentState == GAME_STUD) {
-                        House house = new Table(window, font);
-                        house.setTable(new studTable(window, numPlayers, numNPCs));
-                        house.StartGame();
+                    else if (currentState == GAME_STUD_5) {
+                        //House house = new Table(window, font);
+                        //house.setTable(new studTable(window, numPlayers, numNPCs));
+                        //house.StartGame();
                     }
                 }
             }
@@ -124,12 +143,95 @@ int main() {
                     playerInfo.handleTextInput(event);
                 }
             }
-            
+      
         }
         //update
-
+        while (currentState == WAITING_FOR_INPUT) {
+            sf::Event event;
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed) {
+                    window.close();
+                    break;
+                }
+                if (event.type == sf::Event::MouseButtonPressed || event.type == sf::Event::KeyPressed) {
+                    // Khi người chơi nhấn chuột hoặc phím bất kỳ
+                    currentState = PLAY_MENU;  // Quay lại Play Menu
+                }
+            }
+        }
         //render
-        window.clear(sf::Color::Black); // clear old frames
+        if (currentState == GAME_DEFAULT || currentState == GAME_STUD_5 || currentState == GAME_STUD_7 || currentState == GAME_DRAW)
+            window.clear(sf::Color::Green);
+        else
+            window.clear(sf::Color::Black); // clear old frames
+
+        if (currentState == GAME_DEFAULT) {
+            Table table(window, font, numPlayers, numNPCs);
+            DefaultMode defaultMode(numPlayers, numNPCs);
+            defaultMode.renderGame(window);
+
+            House house = new Table(window, font);
+            house.setTable(new Table(window, font, numPlayers, numNPCs));
+            table.createDeck();
+            table.clearTable();
+            table.dealCardsToPlayers();
+            table.showPlayersHands();
+            table.determineWinner();
+            table.dialogBox();
+            currentState = WAITING_FOR_INPUT;
+        }
+        else if (currentState == GAME_STUD_5) {
+            Table table(window, font, numPlayers, numNPCs);
+
+            House house = new Table(window, font);
+            house.setTable(new studTable(window, font, numPlayers, numNPCs));
+
+            table.createDeck();
+            table.clearTable();
+            table.dealCardsToPlayers();
+        }
+        else if (currentState == GAME_DRAW) {
+            Table table(window, font, numPlayers, numNPCs);
+            House house = new Table(window, font);
+            house.setTable(new drawTable(window, font, numPlayers, numNPCs));
+
+            table.createDeck();
+            table.clearTable();
+            table.dealCardsToPlayers();
+
+            int xOffset = 200;
+            int yOffset = 200;
+
+            // Display the player's hand and the community card.
+            std::cout << "Player hand:\n";
+            for (Player& player : players) {
+                std::cout << player.getUsername() << std::endl;
+                //setup Vẽ tên người chơi
+                sf::Text playerNameText;
+                playerNameText.setFont(font);
+                playerNameText.setString(player.getUsername());
+                playerNameText.setCharacterSize(24);
+                playerNameText.setFillColor(sf::Color::Black);
+                playerNameText.setPosition(xOffset, yOffset - 30);  // Vị trí tên người chơi
+
+                // Vẽ tên người chơi
+                window.draw(playerNameText);
+
+                // Cập nhật xOffset để vẽ bộ bài cho người chơi tiếp theo
+                yOffset += 130; // Khoảng cách giữa các người chơi, có thể điều chỉnh nếu cần
+
+                player.showCards(window, xOffset, yOffset);
+                if (player.getUsername().find("AI_") != std::string::npos)
+                        continue;
+                std::cout << "Choose cards to replace: " << std::endl;
+                player.replaceCard(deck);
+                std::cout << "After replacement: " << std::endl;
+                player.showCards(window, xOffset, yOffset);
+            }
+            table.determineWinner();
+            table.dialogBox();
+        }
+    
 
         if (currentState == MAIN_MENU) {
             mainMenu.draw(window);
@@ -151,12 +253,14 @@ int main() {
             //vẽ bàn chơi
             //sắp người chơi vào vị trí đều nhau
             //vẽ bài của từng người chơi + tên để phân biệt
-
+           
+            /* std::cout << "Starting Game Default Mode" << std::endl;
             DefaultMode defaultMode(numPlayers, numNPCs);
-            defaultMode.renderGame(window);
+            defaultMode.renderGame(window);*/
+
             //thông báo kết quả (giữa màn hình) dạng hộp thoại nền đen viền trắng thông báo tên người thắng, kiểu bài, 2 nút: 1 nút chơi tiếp , 1 nút thoát            
         }
-        else if (currentState == GAME_STUD) {
+        else if (currentState == GAME_STUD_5) {
             DefaultMode defaultMode(numPlayers, numNPCs);
             defaultMode.renderGame(window);
         }
@@ -165,15 +269,13 @@ int main() {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 currentState = MAIN_MENU;
         }
-        //else if (currentState == CREDIT) {
-        //    showCredit(window);
-        //    currentState = MAIN_MENU;  // Quay lại menu chính
-        //}
         else if (currentState == EXIT) {
             window.close();
         }
+
         if (currentState == MAIN_MENU || currentState == PLAY_MENU)
             window.draw(logoSprite); // draw the logo only at main and play menu
+
         window.display(); //tell app that window is done drawing
     }
 

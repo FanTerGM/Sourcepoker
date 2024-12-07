@@ -11,7 +11,7 @@ public:
     void setPlayerNPCs(int _numPlayers, int _numNPCs);
 
     void render(sf::RenderWindow& window);  // Function to render the UI
-    void handleMouseClick(const sf::Vector2i& mousePosition);
+    void handleMouseClick(const sf::Vector2i& mousePosition, GameState &currentState);
     void handleTextInput(sf::Event& event);
 
     void loadPlayerListFromFile(const std::string& directory);
@@ -22,6 +22,7 @@ public:
     const std::vector<Player>& getPlayers() const { return players; }
     const sf::Font& getFont() const { return font; }
 
+    bool areAllPlayersNamesEntered();
 private:
 
     int numberOfPlayers;

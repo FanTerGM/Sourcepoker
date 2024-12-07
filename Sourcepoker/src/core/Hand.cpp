@@ -36,7 +36,8 @@ void Hand::clearHand() {
 	cards.clear();
 }
 
-void Hand::showCards(sf::RenderWindow& window) const {
+void Hand::showCards(sf::RenderWindow& window, int xOffset, int yOffset) const {
+
 	int i = 0;
 	int cardOffset = 0;
 	for (const Card& card : cards) {
@@ -50,10 +51,10 @@ void Hand::showCards(sf::RenderWindow& window) const {
 			}
 
 			sf::Sprite cardSprite(cardTexture);
-			cardSprite.setPosition(50 + cardOffset, 200 + i * 150); // position of card;
-
+			cardSprite.setPosition(xOffset + cardOffset, yOffset); // position of card;
+			cardSprite.setScale(0.1f, 0.1f);
+			cardOffset += cardTexture.getSize().x * 0.2f;
 			window.draw(cardSprite);
-			cardOffset += 60;
 		}
 		else std::cout << "Hidden" << std::endl;
 	}

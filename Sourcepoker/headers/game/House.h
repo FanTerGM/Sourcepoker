@@ -26,7 +26,7 @@ public:
     /**
     * @brief Displays community cards.
     */
-    void showCards(sf::RenderWindow& window);
+    void showCards(sf::RenderWindow& window, int xOffset, int yOffset);
 
     /**
      * @brief Clears all players' hands to prepare for a new round.

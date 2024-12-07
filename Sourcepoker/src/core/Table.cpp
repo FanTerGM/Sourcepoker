@@ -10,26 +10,24 @@ Table::Table(sf::RenderWindow& window, sf::Font& font) : numberOfPlayers(0), num
 }
 
 // Constructor allowing specification of player and NPC counts
-Table::Table(sf::RenderWindow& window, int playerCount, int npcCount) : numberOfPlayers(playerCount), numberOfNPCs(npcCount), window(window) {
+Table::Table(sf::RenderWindow& window,sf::Font& font, int playerCount, int npcCount) : numberOfPlayers(playerCount), numberOfNPCs(npcCount), window(window){
     populateTable();
 }
 
 // Adds players and NPCs to the table
 void Table::populateTable() {
-    // Populate human players
-    for (int i = 0; i < numberOfPlayers; i++) {
-        std::string playerName;
-        std::cout << "Enter Player " << (i + 1) << "'s name: ";
-        std::cin >> playerName;
-        Player player = player.loadProfile(playerName);  // Load or create player profile
-        players.push_back(player);
+    if (numberOfPlayers + numberOfNPCs > 0) {
+        for (int i = 0; i < numberOfPlayers; ++i) {
+            players.emplace_back("Player_" + std::to_string(i + 1));  // Thêm người chơi
+        }
+        for (int i = 0; i < numberOfNPCs; ++i) {
+            players.emplace_back("NPC_" + std::to_string(i + 1));  // Thêm NPC
+        }
+    }
+    else {
+        std::cerr << "Error: No players or NPCs initialized!" << std::endl;
     }
 
-    // Populate AI players
-    for (int i = 0; i < numberOfNPCs; i++) {
-        std::string aiName = "AI_" + std::to_string(i + 1);
-        players.emplace_back(aiName);  // Automatically creates an AI player
-    }
 }
 
 // Deals five cards to each player
@@ -41,7 +39,7 @@ void Table::dealCardsToPlayers() {
 
 // Gets the current game mode name
 std::string Table::getModeName() const {
-    return "Default5";
+    return "Default 5";
 }
 
 // Deals the "flop" (first three community cards)
@@ -51,9 +49,35 @@ void Table::dealFlop() {
 
 // Displays each player's hand
 void Table::showPlayersHands() const {
-    for (const Player& player : players) {
-        std::cout << player.getUsername() << "'s hand:" << std::endl;
-        player.showCards(window);
+    int numPlayers = players.size();
+    int xOffset = 200;
+    std::cout << "showing card..." << numPlayers << std::endl;
+    int yOffset = 200;
+
+    sf::Font font;
+    if (!font.loadFromFile("Pangolin-Regular.ttf")) {
+        std::cerr << "Error loading font!" << std::endl;
+        return;  // Dừng chương trình nếu không load được font
+    }
+
+    // Vẽ bộ bài cho mỗi người chơi
+    for (int i = 0; i < numPlayers; ++i) {
+        // Vẽ bộ bài của người chơi
+        players[i].showCards(window, xOffset, yOffset);
+
+        // Vẽ tên người chơi
+        sf::Text playerNameText;
+        playerNameText.setFont(font);
+        playerNameText.setString(players[i].getUsername());
+        playerNameText.setCharacterSize(24);
+        playerNameText.setFillColor(sf::Color::Black);
+        playerNameText.setPosition(xOffset, yOffset - 30);  // Vị trí tên người chơi
+
+        // Vẽ tên người chơi
+        window.draw(playerNameText);
+
+        // Cập nhật xOffset để vẽ bộ bài cho người chơi tiếp theo
+        yOffset += 130; // Khoảng cách giữa các người chơi, có thể điều chỉnh nếu cần
     }
 }
 
@@ -122,7 +146,9 @@ void Table::clearTable() {
 }
 
 void Table::processPlayerAction(int& highestBet, int currentPlayerIndex, int& raiseIndex) {
-    players[currentPlayerIndex].showCards(window);
+    int yOffset = 100;
+    int xOffset = 100;
+    players[currentPlayerIndex].showCards(window, xOffset, yOffset);
 
     int choice;
     std::cout << "Player " << players[currentPlayerIndex].getUsername() << ", choose your action (1=Check/Call, 2=Fold, 3=Raise): ";
@@ -185,8 +211,7 @@ void Table::bettingRound(int& highestBet) {
 
 // Runs the game loop, dealing cards, displaying hands, and determining the winner
 void Table::startGame() {
-    continuePlaying = false;
-    do {
+    //window.clear(sf::Color::Green);
         createDeck();           // Prepare a new deck
         clearTable();           // Clear previous hands
         dealCardsToPlayers(); // Deal new hands
@@ -211,7 +236,7 @@ void Table::startGame() {
         determineWinner();
         dialogBox();
         
-    } while (continuePlaying);
+        window.display();
 }
 
 void Table::addPlayer(const std::string& playerName) {
@@ -223,78 +248,56 @@ void Table::goToMainMenu() {
 }
 void Table::dialogBox() {
     // Create the dialog box to show the winner
+    sf::Font font;
+    if (!font.loadFromFile("Pangolin-Regular.ttf")) {
+        std::cerr << "Error loading font!" << std::endl;
+        return;  // Dừng chương trình nếu không load được font
+    }
     sf::RectangleShape dialogBox(sf::Vector2f(400, 200));  // Hộp thoại có kích thước 400x200
     dialogBox.setFillColor(sf::Color(0, 0, 0, 200));  // Nền đen với độ trong suốt
     dialogBox.setOutlineColor(sf::Color::White);  // Viền trắng
     dialogBox.setOutlineThickness(5);  // Độ dày viền
-    dialogBox.setPosition(150, 100);  // Vị trí hộp thoại
+    dialogBox.setPosition(150, 10);  // Vị trí hộp thoại
 
     // Tạo đối tượng sf::Text để hiển thị tên người chiến thắng
     sf::Text winnerText;
-    winnerText.setFont(*font);
+    winnerText.setFont(font);
     winnerText.setString("Winner: " + players[0].getUsername());  // Dùng tên người chiến thắng
-    winnerText.setCharacterSize(24);
+    winnerText.setCharacterSize(20);
     winnerText.setFillColor(sf::Color::White);
-    winnerText.setPosition(160, 120);  // Vị trí của văn bản trong hộp thoại
+    winnerText.setPosition(160, 20);  // Vị trí của văn bản trong hộp thoại
 
+    std::cout << "winner: " + players[0].getUsername() << std::endl;
 
     sf::Text handRankText;
-    handRankText.setFont(*font);
+    handRankText.setFont(font);
     handRankText.setString("Winning hand rank: " + winnerHandRank);
-    handRankText.setCharacterSize(24);
+    handRankText.setCharacterSize(20);
     handRankText.setFillColor(sf::Color::White);
-    winnerText.setPosition(160, 150);
+    handRankText.setPosition(160, 40);
 
+    std::cout << "wining hand rank: " + winnerHandRank << std::endl;
     // create "another round " and "exit to main menu"
     sf::Text anotherRoundText;
-    anotherRoundText.setFont(*font);
-    anotherRoundText.setString("Another Round");
+    anotherRoundText.setFont(font);
+    anotherRoundText.setString("Another Round? (Press Enter)");
     anotherRoundText.setCharacterSize(20);
-    anotherRoundText.setFillColor(sf::Color::White);
-    anotherRoundText.setPosition(160, 180);  // Vị trí của "Another Round" trong hộp thoại
+    anotherRoundText.setFillColor(sf::Color::Yellow);
+    anotherRoundText.setPosition(160, 100);  // Vị trí của "Another Round" trong hộp thoại
 
     sf::Text exitText;
-    exitText.setFont(*font);
-    exitText.setString("Exit (Back to Main Menu)");
+    exitText.setFont(font);
+    exitText.setString("Exit! (Press ESC)");
     exitText.setCharacterSize(20);
-    exitText.setFillColor(sf::Color::White);
-    exitText.setPosition(160, 220);  // Vị trí của "Exit" trong hộp thoại
+    exitText.setFillColor(sf::Color::Yellow);
+    exitText.setPosition(160, 150);  // Vị trí của "Exit" trong hộp thoại
 
     // Vẽ hộp thoại lên cửa sổ
     window.draw(dialogBox);
     window.draw(winnerText);
+    window.draw(handRankText);
     window.draw(anotherRoundText);
     window.draw(exitText);
 
-    // Cập nhật lại màn hình
     window.display();
-
-    while (continuePlaying) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
-                return;
-            }
-
-            if (event.type == sf::Event::MouseButtonPressed) {
-                // Xử lý click chuột
-                sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-
-                // Kiểm tra xem người chơi click vào "Another Round"
-                if (anotherRoundText.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                    continuePlaying = true;  // Người chơi chọn "Another Round"
-                }
-                // Kiểm tra xem người chơi click vào "Exit"
-                if (exitText.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                    continuePlaying = false;  // Người chơi chọn "Exit"
-                }
-            }
-        }
-    }
-
-
-    if (!continuePlaying) {
-        goToMainMenu();// viết hàm chuyển tới mainmenu
-    }
 }

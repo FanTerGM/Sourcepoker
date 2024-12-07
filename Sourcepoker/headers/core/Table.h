@@ -16,7 +16,6 @@ protected:
     std::vector<Player> players; ///< Collection of players in the game (both human and AI).
     sf::RenderWindow& window;
     sf::Font* font;
-    bool continuePlaying = true;
     std::string winnerHandRank;
 public:
     /**
@@ -29,7 +28,7 @@ public:
      * @param playerCount Number of human players.
      * @param npcCount Number of AI players.
      */
-    Table(sf::RenderWindow& window, int playerCount, int npcCount) ;
+    Table(sf::RenderWindow& window, sf::Font& font, int playerCount, int npcCount) ;
 
     /**
      * @brief Populates the table with human players and AI players.

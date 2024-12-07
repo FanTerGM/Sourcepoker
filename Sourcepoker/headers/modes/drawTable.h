@@ -3,9 +3,9 @@
 
 class drawTable : public Table {
 public:
-	drawTable(sf::RenderWindow& window, int numberOfPlayers, int numberOfNPCs);
+	drawTable(sf::RenderWindow& window,sf::Font& font, int numberOfPlayers, int numberOfNPCs);
 	drawTable(sf::RenderWindow& window, sf::Font& font);
-	void dealCardsToPlayers(/*sf::RenderWindow& window*/) override;
+	void dealCardsToPlayers() override;
 	std::string getModeName() const override;
 	void startGame() override; 
 private:

@@ -108,7 +108,7 @@ void PlayerInfoInput::render(sf::RenderWindow& window) {
 }
 
 
-void PlayerInfoInput::handleMouseClick(const sf::Vector2i& mousePosition) {
+void PlayerInfoInput::handleMouseClick(const sf::Vector2i& mousePosition, GameState &currentState) {
     for (int i = 0; i < playerNameBoxes.size(); ++i) {
         if (playerNameBoxes[i].getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
             isPlayerNameTextBoxSelected = true;  // Đánh dấu là chọn ô nhập liệu
@@ -116,27 +116,32 @@ void PlayerInfoInput::handleMouseClick(const sf::Vector2i& mousePosition) {
         }
     }
     if (continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
-        std::cout << "button pressed" << players.size() << std::endl;
         // Kiểm tra xem tất cả người chơi đã nhập tên chưa
-        if (players.size() == numPlayers) {
-            std::cout << "yes num" << std::endl;
-            if (std::all_of(playerInputs.begin(), playerInputs.end(), [](const std::string& name) { return !name.empty(); })) {
+        if (areAllPlayersNamesEntered()) {
                 std::cout << "Game started!" << std::endl;
-
-                //truyền danh sách dữ liệu vào table
-               /* Table table;
-                populateTable(table);*/
-
+                for (const auto& player : players) {
+                    // Ví dụ: Lưu player vào một tệp tin hoặc cập nhật thông tin người chơi.
+                    player.saveProfile("player_data/"); // Nếu muốn lưu vào thư mục player_data
+                }
                 currentState = PLAY_MENU;  // Chuyển đến menu chọn chế độ chơi
+                std::cout << "in handleclick : " << currentState << std::endl;
             }
-            else {
-                errorText.setString("Please enter names for all players.");
-                errorText.setPosition(100, 200 + numPlayers * 60);  // Hiển thị thông báo lỗi
-            }
+        else {
+            errorText.setString("Please enter names for all players.");
+            errorText.setPosition(100, 200 + numPlayers * 60);  // Hiển thị thông báo lỗi
         }
     }
 }
 
+bool PlayerInfoInput::areAllPlayersNamesEntered() {
+    for (int i = 0; i < numPlayers; ++i) {
+        std::cout << "player " << i << ": " << playerInputs[i] << std::endl;
+        if (playerInputs[i].empty()) {
+            return false;
+        }
+    }
+    return true;
+}
 void PlayerInfoInput::handleTextInput(sf::Event& event) {
     if (event.type == sf::Event::TextEntered) {
         if (event.text.unicode < 128) {  // Kiểm tra xem ký tự có hợp lệ không
@@ -162,14 +167,13 @@ void PlayerInfoInput::handleTextInput(sf::Event& event) {
             removeTrailingSpaces(playerName);
             Player player = Player::loadProfile(playerName, "Resources/playerInfo/");
 
-            std::cout << playerName << " - " << player.getUsername() << std::endl;
-            player.displayInfo();
             // Nếu profile người chơi đã tồn tại, sẽ không tạo thêm player mới
             if (player.getUsername() == playerName) {
                 std::cout << "Active Player Index Rightnow = " << activePlayerIndex << std::endl;
             }
             else {
                 std::cout << "add " + playerName << std::endl;
+                player = Player(playerName);
                 players.push_back(player);  // Lưu người chơi vào danh sách
                 activePlayerIndex++;  // Chuyển đến người chơi tiếp theo
             }

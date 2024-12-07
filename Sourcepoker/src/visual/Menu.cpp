@@ -42,7 +42,7 @@ void Menu::handleMouseHover(sf::Vector2i mousePosition) {
 }
 
 //xử lý sự kiện nhấn chuột
-void Menu::handleMouseClick(sf::Vector2i mousePosition, GameState& currentState) {
+void Menu::handleMouseClickMain(sf::Vector2i mousePosition, GameState& currentState) {
     // duyệt qua các thư mục trong menu
     for (int i = 0; i < menuOptions.size(); ++i) {
         sf::FloatRect bounds = menuOptions[i].getGlobalBounds();
@@ -56,9 +56,6 @@ void Menu::handleMouseClick(sf::Vector2i mousePosition, GameState& currentState)
                 currentState = LEADERBOARD;  // Hiển thị Leaderboard
                 break;
             case 2:
-                currentState = CREDIT;  // Hiển thị thông tin credit
-                break;
-            case 3:
                 currentState = EXIT;  // Thoát game
                 break;
             }
@@ -66,16 +63,26 @@ void Menu::handleMouseClick(sf::Vector2i mousePosition, GameState& currentState)
     }
 }
 
-//bool Menu::isOptionClicked(const std::string& option) {
-//    for (int i = 0; i < menuOptions.size(); ++i) {
-//        if (menuOptions[i].getString() == option && menuOptions[i].getGlobalBounds().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition()))) {
-//            return true;
-//        }
-//    }
-//    return false;
-//}
-
-//// Lấy mục được chọn
-//int Menu::getSelectedItemIndex() {
-//    return selectedItemIndex;
-//}
+void Menu::handleMouseClickPlay(sf::Vector2i mousePosition, GameState& currentState) {
+    // duyệt qua các thư mục trong menu
+    for (int i = 0; i < menuOptions.size(); ++i) {
+        sf::FloatRect bounds = menuOptions[i].getGlobalBounds();
+        if (bounds.contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y))) {
+            selectedItemIndex = i;
+            switch (i) {
+            case 0:
+                currentState = GAME_DEFAULT;  // nhập số lượng ng chơi và npc
+                break;
+            case 1:
+                currentState = GAME_STUD_5;  // Hiển thị Leaderboard
+                break;
+            case 2:
+                currentState = GAME_STUD_7;  // Hiển thị thông tin credit
+                break;
+            case 3:
+                currentState = GAME_DRAW;  // Thoát game
+                break;
+            }
+        }
+    }
+}
