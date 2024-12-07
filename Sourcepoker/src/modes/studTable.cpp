@@ -19,19 +19,14 @@ std::string studTable::getModeName() const{
 	return "stud";
 }
 
-//void studTable::startGame(){
-//	do {
-//		createDeck();
-//		clearTable();
-//		dealFlop(); 
-//		dealCardsToPlayers();
-//		//draw table
-//		DefaultMode defaultMode(numberOfPlayers, numberOfNPCs);
-//		defaultMode.renderGame(window);
-//		// Display the player's hand and the community card.
-//		showPlayersHands();
-//		determineWinner();
-//		dialogBox();
-//
-//	} while (continuePlaying);
-//}
+void studTable::startGame() {
+	createDeck();
+	clearTable();
+	dealFlop();
+	dealCardsToPlayers();
+	drawTable(window);
+	// Display the player's hand and the community card.
+	showPlayersHands();
+	determineWinner();
+	dialogBox();
+}

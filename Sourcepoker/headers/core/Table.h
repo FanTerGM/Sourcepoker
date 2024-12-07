@@ -96,5 +96,6 @@ public:
     void goToMainMenu();
 
     void dialogBox();
+    void drawTable(sf::RenderWindow& window);
 };
 

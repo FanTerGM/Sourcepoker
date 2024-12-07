@@ -212,26 +212,23 @@ void Table::bettingRound(int& highestBet) {
 // Runs the game loop, dealing cards, displaying hands, and determining the winner
 void Table::startGame() {
     //window.clear(sf::Color::Green);
-        createDeck();           // Prepare a new deck
-        clearTable();           // Clear previous hands
-        dealCardsToPlayers(); // Deal new hands
+    createDeck();           // Prepare a new deck
+    clearTable();           // Clear previous hands
+    dealCardsToPlayers(); // Deal new hands
+    drawTable(window);
+    
+    //int highestBet = 10;
+    //bettingRound(highestBet);
+
+    // Draw each player's hand
+    std::cout << "Players' hands:" << std::endl;
+    showPlayersHands();
+
+    // Determine and display the winner
+    determineWinner();
+    dialogBox();
         
-        DefaultMode defaultMode(numberOfPlayers, numberOfNPCs);
-        defaultMode.renderGame(window);
-
-        int highestBet = 10;
-
-        bettingRound(highestBet);
-
-        // Draw each player's hand
-        std::cout << "Players' hands:" << std::endl;
-        showPlayersHands();
-
-        // Determine and display the winner
-        determineWinner();
-        dialogBox();
-        
-        window.display();
+    window.display();
 }
 
 void Table::addPlayer(const std::string& playerName) {
@@ -248,7 +245,7 @@ void Table::dialogBox() {
         std::cerr << "Error loading font!" << std::endl;
         return;  // Dừng chương trình nếu không load được font
     }
-    sf::RectangleShape dialogBox(sf::Vector2f(400, 200));  // Hộp thoại có kích thước 400x200
+    sf::RectangleShape dialogBox(sf::Vector2f(300, 100));  // Hộp thoại có kích thước 400x200
     dialogBox.setFillColor(sf::Color(0, 0, 0, 200));  // Nền đen với độ trong suốt
     dialogBox.setOutlineColor(sf::Color::White);  // Viền trắng
     dialogBox.setOutlineThickness(5);  // Độ dày viền
@@ -269,30 +266,44 @@ void Table::dialogBox() {
     handRankText.setString("Winning hand rank: " + winnerHandRank);
     handRankText.setCharacterSize(20);
     handRankText.setFillColor(sf::Color::White);
-    handRankText.setPosition(160, 40);
+    handRankText.setPosition(160, 45);
 
     std::cout << "wining hand rank: " + winnerHandRank << std::endl;
     // create "another round " and "exit to main menu"
     sf::Text anotherRoundText;
     anotherRoundText.setFont(font);
-    anotherRoundText.setString("Another Round? (Press Enter)");
+    anotherRoundText.setString("Press Any Key to back to Play Menu...");
     anotherRoundText.setCharacterSize(20);
     anotherRoundText.setFillColor(sf::Color::Yellow);
-    anotherRoundText.setPosition(160, 100);  // Vị trí của "Another Round" trong hộp thoại
+    anotherRoundText.setPosition(160, 80);  // Vị trí của "Another Round" trong hộp thoại
 
-    sf::Text exitText;
-    exitText.setFont(font);
-    exitText.setString("Exit! (Press ESC)");
-    exitText.setCharacterSize(20);
-    exitText.setFillColor(sf::Color::Yellow);
-    exitText.setPosition(160, 150);  // Vị trí của "Exit" trong hộp thoại
 
     // Vẽ hộp thoại lên cửa sổ
     window.draw(dialogBox);
     window.draw(winnerText);
     window.draw(handRankText);
     window.draw(anotherRoundText);
-    window.draw(exitText);
 
     window.display();
+}
+void Table::drawTable(sf::RenderWindow& window) {
+    sf::Texture tableTexture;
+    if (!tableTexture.loadFromFile("Resources/images/table.jpg")) {
+        std::cerr << "Error loading table image" << std::endl;
+        return;
+    }
+    sf::Sprite tableSprite(tableTexture);
+    tableSprite.setScale(2.0f, 2.0f);
+
+    // Tính toán vị trí để ảnh ở chính giữa cửa sổ
+    float windowWidth = static_cast<float>(window.getSize().x);
+    float windowHeight = static_cast<float>(window.getSize().y);
+
+    // Lấy kích thước ảnh sau khi phóng to
+    float textureWidth = tableTexture.getSize().x * 2.0f;
+    float textureHeight = tableTexture.getSize().y * 2.0f;
+
+    // Đặt ảnh vào chính giữa cửa sổ
+    tableSprite.setPosition((windowWidth - textureWidth) / 2.0f, (windowHeight - textureHeight) / 2.0f);
+    window.draw(tableSprite);
 }

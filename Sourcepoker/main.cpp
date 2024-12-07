@@ -167,17 +167,17 @@ int main() {
 
         if (currentState == GAME_DEFAULT) {
             Table table(window, font, numPlayers, numNPCs);
-            DefaultMode defaultMode(numPlayers, numNPCs);
-            defaultMode.renderGame(window);
-
             House house = new Table(window, font);
             house.setTable(new Table(window, font, numPlayers, numNPCs));
+
+            house.StartGame();
+            /*table.drawTable(window);
             table.createDeck();
             table.clearTable();
             table.dealCardsToPlayers();
             table.showPlayersHands();
             table.determineWinner();
-            table.dialogBox();
+            table.dialogBox();*/
             currentState = WAITING_FOR_INPUT;
         }
         else if (currentState == GAME_STUD_5) {
@@ -185,51 +185,15 @@ int main() {
 
             House house = new Table(window, font);
             house.setTable(new studTable(window, font, numPlayers, numNPCs));
-
-            table.createDeck();
-            table.clearTable();
-            table.dealCardsToPlayers();
+            house.StartGame();
+            currentState = WAITING_FOR_INPUT;
         }
         else if (currentState == GAME_DRAW) {
             Table table(window, font, numPlayers, numNPCs);
             House house = new Table(window, font);
             house.setTable(new drawTable(window, font, numPlayers, numNPCs));
-
-            table.createDeck();
-            table.clearTable();
-            table.dealCardsToPlayers();
-
-            int xOffset = 200;
-            int yOffset = 200;
-
-            // Display the player's hand and the community card.
-            std::cout << "Player hand:\n";
-            for (Player& player : players) {
-                std::cout << player.getUsername() << std::endl;
-                //setup Vẽ tên người chơi
-                sf::Text playerNameText;
-                playerNameText.setFont(font);
-                playerNameText.setString(player.getUsername());
-                playerNameText.setCharacterSize(24);
-                playerNameText.setFillColor(sf::Color::Black);
-                playerNameText.setPosition(xOffset, yOffset - 30);  // Vị trí tên người chơi
-
-                // Vẽ tên người chơi
-                window.draw(playerNameText);
-
-                // Cập nhật xOffset để vẽ bộ bài cho người chơi tiếp theo
-                yOffset += 130; // Khoảng cách giữa các người chơi, có thể điều chỉnh nếu cần
-
-                player.showCards(window, xOffset, yOffset);
-                if (player.getUsername().find("AI_") != std::string::npos)
-                        continue;
-                std::cout << "Choose cards to replace: " << std::endl;
-                player.replaceCard(deck);
-                std::cout << "After replacement: " << std::endl;
-                player.showCards(window, xOffset, yOffset);
-            }
-            table.determineWinner();
-            table.dialogBox();
+            house.StartGame();
+            currentState = WAITING_FOR_INPUT;
         }
     
 
