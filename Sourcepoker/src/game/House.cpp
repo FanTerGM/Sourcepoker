@@ -1,7 +1,10 @@
 #include <gameObject.h>
 #include "../../headers/game/House.h"
 
-House::House(Table* table) : currentTable(table) {}
+House::House(Table* table) {
+	delete currentTable;
+	currentTable = table;
+}
 
 void House::setTable(Table* table) {
 	delete currentTable;

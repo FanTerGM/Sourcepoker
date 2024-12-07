@@ -58,6 +58,7 @@ void Hand::showCards(sf::RenderWindow& window, int xOffset, int yOffset) const {
 		}
 		else std::cout << "Hidden" << std::endl;
 	}
+	window.display();
 }
 
 std::vector<Card> Hand::getHand () const{

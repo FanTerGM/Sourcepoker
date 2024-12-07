@@ -167,11 +167,9 @@ int main() {
 
         if (currentState == GAME_DEFAULT){
             House house = new Table(window, font, playerInfo.getPlayers());
-            house.StartGame();
             currentState = WAITING_FOR_INPUT;
         }
         else if (currentState == GAME_STUD_5) {
-
             House house = new studTable(window, font, playerInfo.getPlayers());
             house.StartGame();;
             currentState = WAITING_FOR_INPUT;
