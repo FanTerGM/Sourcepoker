@@ -3,13 +3,11 @@
 #include <algorithm> // For std::sort and std::greater
 #include <numeric>   // For std::accumulate
 
-DialogState currentDialogState = NO_DIALOG;
+DialogState currentDialogState = MAIN_DIALOG;
 
 
 // Constructor
-Table::Table(sf::RenderWindow& window, sf::Font& font, std::vector<Player> players) : window(window), font(font), players(players){
-    startGame();
-}
+Table::Table(sf::RenderWindow& window, sf::Font& font, std::vector<Player> players) : window(window), font(font), players(players){}
 
 // Deals five cards to each player
 void Table::dealCardsToPlayers() {
@@ -129,7 +127,6 @@ void Table::clearTable() {
 void Table::processPlayerAction(int& highestBet, int currentPlayerIndex, int& raiseIndex) {
     int yOffset = 100;
     int xOffset = 100;
-    players[currentPlayerIndex].showCards(window, xOffset, yOffset);
     const int SCREEN_WIDTH = 1080;
     const int SCREEN_HEIGHT = 720;
 
@@ -137,145 +134,155 @@ void Table::processPlayerAction(int& highestBet, int currentPlayerIndex, int& ra
     std::string raiseAmountStr = "";  // String để chứa số tiền raise
     bool validInput = false;
     while (!validInput) {
+        window.clear();
         sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
-            if (currentDialogState == MAIN_DIALOG) {
-                // Tạo một thông điệp trong hộp thoại
-                sf::RectangleShape dialogBox(sf::Vector2f(400.f, 200.f));
-                dialogBox.setFillColor(sf::Color(0, 0, 0, 180)); // Màu nền hộp thoại bán trong suốt
-                dialogBox.setPosition(SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT / 2 - 100);
-                window.draw(dialogBox);
+        players[currentPlayerIndex].showCards(window, xOffset, yOffset);
+        if (currentDialogState == MAIN_DIALOG) {
+            // Tạo một thông điệp trong hộp thoại
+            sf::RectangleShape dialogBox(sf::Vector2f(400.f, 200.f));
+            dialogBox.setFillColor(sf::Color(0, 0, 0, 180)); // Màu nền hộp thoại bán trong suốt
+            dialogBox.setPosition(SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT / 2 - 100);
+            window.draw(dialogBox);
 
-                // Chữ hiển thị tên người chơi và các lựa chọn
-                sf::Text playerTurnText;
-                playerTurnText.setFont(font);
-                playerTurnText.setString(players[currentPlayerIndex].getUsername() + "'s turn");
-                playerTurnText.setCharacterSize(24);
-                playerTurnText.setFillColor(sf::Color::White);
-                playerTurnText.setPosition(SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 - 80);
-                window.draw(playerTurnText);
+            // Chữ hiển thị tên người chơi và các lựa chọn
+            sf::Text playerTurnText;
+            playerTurnText.setFont(font);
+            playerTurnText.setString(players[currentPlayerIndex].getUsername() + "'s turn");
+            playerTurnText.setCharacterSize(24);
+            playerTurnText.setFillColor(sf::Color::White);
+            playerTurnText.setPosition(SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 - 80);
+            window.draw(playerTurnText);
 
-                // Các thông tin về tiền cược
-                sf::Text currentBetText;
-                currentBetText.setFont(font);
-                currentBetText.setString("Current Blind: " + std::to_string(highestBet));
-                currentBetText.setCharacterSize(18);
-                currentBetText.setFillColor(sf::Color::White);
-                currentBetText.setPosition(SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 - 50);
-                window.draw(currentBetText);
+            // Các thông tin về tiền cược
+            sf::Text currentBetText;
+            currentBetText.setFont(font);
+            currentBetText.setString("Current Blind: " + std::to_string(highestBet));
+            currentBetText.setCharacterSize(18);
+            currentBetText.setFillColor(sf::Color::White);
+            currentBetText.setPosition(SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 - 50);
+            window.draw(currentBetText);
 
-                sf::Text playerBetText;
-                playerBetText.setFont(font);
-                playerBetText.setString("Your Bet: " + std::to_string(players[currentPlayerIndex].bet));
-                playerBetText.setCharacterSize(18);
-                playerBetText.setFillColor(sf::Color::White);
-                playerBetText.setPosition(SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 - 20);
-                window.draw(playerBetText);
+            sf::Text playerBetText;
+            playerBetText.setFont(font);
+            playerBetText.setString("Your Bet: " + std::to_string(players[currentPlayerIndex].bet));
+            playerBetText.setCharacterSize(18);
+            playerBetText.setFillColor(sf::Color::White);
+            playerBetText.setPosition(SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 - 20);
+            window.draw(playerBetText);
 
-                // Các lựa chọn hành động
-                sf::Text actionsText;
-                actionsText.setFont(font);
-                actionsText.setString("Press 1 to Check/Call\nPress 2 to Fold\nPress 3 to Raise");
-                actionsText.setCharacterSize(18);
-                actionsText.setFillColor(sf::Color::White);
-                actionsText.setPosition(SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 + 20);
-                window.draw(actionsText);
+            // Các lựa chọn hành động
+            sf::Text actionsText;
+            actionsText.setFont(font);
+            actionsText.setString("Press 1 to Check/Call\nPress 2 to Fold\nPress 3 to Raise");
+            actionsText.setCharacterSize(18);
+            actionsText.setFillColor(sf::Color::White);
+            actionsText.setPosition(SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 + 20);
+            window.draw(actionsText);
 
-                // Hiển thị cửa sổ
-                window.display();
-                while (window.pollEvent(event)) {
-                    if (event.type == sf::Event::KeyPressed) {
-                        if (event.key.code == sf::Keyboard::Num1) {
-                            // Check/Call: Đặt cược để match với highestBet
-                            if (players[currentPlayerIndex].bet < highestBet) {
-                                players[currentPlayerIndex].bet = highestBet;  // Player calls
-                            }
-                            validInput = true;
+            // Hiển thị cửa sổ
+            window.display();
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed)
+                    window.close();
+                if (event.type == sf::Event::KeyPressed) {
+                    if (event.key.code == sf::Keyboard::Num1) {
+                        // Check/Call: Đặt cược để match với highestBet
+                        if (players[currentPlayerIndex].bet < highestBet) {
+                            players[currentPlayerIndex].bet = highestBet;  // Player calls
                         }
-                        else if (event.key.code == sf::Keyboard::Num2) {
-                            // Fold: Người chơi bỏ cuộc
-                            players[currentPlayerIndex].folded = true;
-                            validInput = true;
-                        }
-                        else if (event.key.code == sf::Keyboard::Num3) {
-                            currentDialogState = RAISE_DIALOG;
-                        }
+                        std::cout << "Check" << std::endl;
+                        validInput = true;
+                        break;
+                    }
+                    else if (event.key.code == sf::Keyboard::Num2) {
+                        // Fold: Người chơi bỏ cuộc
+                        players[currentPlayerIndex].folded = true;
+                        validInput = true;
+                        std::cout << "dddddd" << std::endl;
+                        break;
+                    }
+                    else if (event.key.code == sf::Keyboard::Num3) {
+                        currentDialogState = RAISE_DIALOG;
+                        std::cout << "efafa" << std::endl;
+                        break;
                     }
                 }
             }
-            else if (currentDialogState == RAISE_DIALOG) {
-
-                //hiển thị hộp thoại raise bet
-                sf::RectangleShape raiseDialogBox(sf::Vector2f(400.f, 150.f));
-                raiseDialogBox.setFillColor(sf::Color(0, 0, 0, 180));
-                raiseDialogBox.setPosition(SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT / 2 + 150);
-                window.draw(raiseDialogBox);
-
-                // Hiển thị hộp thoại yêu cầu nhập tiền cược
-                sf::Text raisePrompt;
-                raisePrompt.setFont(font);
-                raisePrompt.setString("Enter raise amount: ");
-                raisePrompt.setCharacterSize(18);
-                raisePrompt.setFillColor(sf::Color::White);
-                raisePrompt.setPosition(SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 + 80);
-                window.draw(raisePrompt);
-
-                sf::Text inputText;
-                inputText.setFont(font);
-                inputText.setString(raiseAmountStr);  // Hiển thị số tiền raise nhập vào
-                inputText.setCharacterSize(18);
-                inputText.setFillColor(sf::Color::White);
-                inputText.setPosition(SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 + 110);
-                window.draw(inputText);
-
-                window.display();
-
-                bool validRaise = false;
-                while (!validRaise) {
-                    while (window.pollEvent(event)) {
-                        if (event.type == sf::Event::Closed) {
-                            window.close();
-                        }
-
-                        if (event.type == sf::Event::TextEntered) {
-                            if (event.text.unicode == 13) { // == pressed enter
-                                if (!raiseAmountStr.empty()) {
-                                    int raiseAmount = std::stoi(raiseAmountStr);
-                                    if (raiseAmount > highestBet) {
-                                        players[currentPlayerIndex].bet += raiseAmount;  // Player raises
-                                        highestBet = players[currentPlayerIndex].bet;// Update the highest bet
-                                        raiseIndex = currentPlayerIndex;// Also note where the most recent raise to know when to stop the round
-                                        validRaise = true;
-                                        validInput = true;
-                                    }
-                                }
-                                else {
-                                    std::cout << "Raise amount must be higher than the current bet.\n";
-                                }
-                            }
-                            else if (event.text.unicode == 8) { // ==pressed backspace
-                                if (!raiseAmountStr.empty()) {
-                                    raiseAmountStr.pop_back(); // delete the last digit
-                                }
-                            }
-                            else if (event.text.unicode >= 48 && event.text.unicode <= 57) { // enter 0 -> 9
-                                raiseAmountStr += static_cast<char>(event.text.unicode);
-                            }
-                        }
-                    }
-                }
-                //window.clear();
-                window.draw(raiseDialogBox);
-                window.draw(raisePrompt);
-                window.draw(inputText);
-                window.display();
-            }
-
+            window.clear();
         }
+        else if (currentDialogState == RAISE_DIALOG) {
 
+            //hiển thị hộp thoại raise bet
+            sf::RectangleShape raiseDialogBox(sf::Vector2f(400.f, 150.f));
+            raiseDialogBox.setFillColor(sf::Color(0, 0, 0, 180));
+            raiseDialogBox.setPosition(SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT / 2 + 150);
+            window.draw(raiseDialogBox);
+
+            // Hiển thị hộp thoại yêu cầu nhập tiền cược
+            sf::Text raisePrompt;
+            raisePrompt.setFont(font);
+            raisePrompt.setString("Enter raise amount: ");
+            raisePrompt.setCharacterSize(18);
+            raisePrompt.setFillColor(sf::Color::White);
+            raisePrompt.setPosition(SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 + 80);
+            window.draw(raisePrompt);
+
+            sf::Text inputText;
+            inputText.setFont(font);
+            inputText.setString(raiseAmountStr);  // Hiển thị số tiền raise nhập vào
+            inputText.setCharacterSize(18);
+            inputText.setFillColor(sf::Color::White);
+            inputText.setPosition(SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 + 110);
+            window.draw(inputText);
+
+            players[currentPlayerIndex].showCards(window, xOffset, yOffset);
+            window.display();
+
+            bool validRaise = false;
+            while (!validRaise) {
+                while (window.pollEvent(event)) {
+                    if (event.type == sf::Event::Closed) {
+                        window.close();
+                    }
+                    if (event.type == sf::Event::TextEntered) {
+                        if (event.text.unicode == 13) { // == pressed enter
+                            if (!raiseAmountStr.empty()) {
+                                int raiseAmount = std::stoi(raiseAmountStr);
+                                if (raiseAmount > highestBet) {
+                                    players[currentPlayerIndex].bet += raiseAmount;  // Player raises
+                                    highestBet = players[currentPlayerIndex].bet;// Update the highest bet
+                                    raiseIndex = currentPlayerIndex;// Also note where the most recent raise to know when to stop the round
+                                    validRaise = true;
+                                    validInput = true;
+                                    break;
+                                }
+                            }
+                            else {
+                                std::cout << "Raise amount must be higher than the current bet.\n";
+                            }
+                        }
+                        else if (event.text.unicode == 8) { // ==pressed backspace
+                            if (!raiseAmountStr.empty()) {
+                                raiseAmountStr.pop_back(); // delete the last digit
+                            }
+                        }
+                        else if (event.text.unicode >= 48 && event.text.unicode <= 57) { // enter 0 -> 9
+                            raiseAmountStr += static_cast<char>(event.text.unicode);
+                        }
+                    }
+                }
+                inputText.setString(raiseAmountStr);
+                window.clear();
+                window.draw(raiseDialogBox);
+                window.draw(raisePrompt);
+                window.draw(inputText);
+                players[currentPlayerIndex].showCards(window, xOffset, yOffset);
+                window.display();
+            }
+            currentDialogState = MAIN_DIALOG;
+        }
     }
+    window.clear();
 }
     //int choice;
     //std::cout << "Player " << players[currentPlayerIndex].getUsername() << ", choose your action (1=Check/Call, 2=Fold, 3=Raise): ";
@@ -325,16 +332,12 @@ void Table::bettingRound(int& highestBet) {
     int index = 0, raiseIndex = 0;
     do {
         while (players[index].folded) {
-            std::cout << "Check" << std::endl;
             index = (index + 1) % (players.size());
         }
         
-
         processPlayerAction(highestBet, index, raiseIndex);
 
         index = (index + 1) % players.size();
-        std::cout << "Check" << std::endl;
-
 
     } while (index != raiseIndex);
 }
@@ -345,8 +348,8 @@ void Table::startGame() {
     //window.clear(sf::Color::Green)
     createDeck();// Prepare a new deck
     clearTable();// Clear previous hands
-    dealCardsToPlayers();// Deal new hands
-    window.display();
+    dealCardsToPlayers();// Deal new hand
+
     int highestBet = 10;
 
     bettingRound(highestBet);
@@ -358,7 +361,7 @@ void Table::startGame() {
     // Determine and display the winner
     determineWinner();
     dialogBox();
-        
+    window.display();
 }
 
 void Table::addPlayer(const std::string& playerName) {
@@ -370,12 +373,13 @@ void Table::goToMainMenu() {
 }
 void Table::dialogBox() {
     // Create the dialog box to show the winner
+    window.clear();
     sf::Font font;
     if (!font.loadFromFile("Pangolin-Regular.ttf")) {
         std::cerr << "Error loading font!" << std::endl;
         return;  // Dừng chương trình nếu không load được font
     }
-    sf::RectangleShape dialogBox(sf::Vector2f(300, 100));  // Hộp thoại có kích thước 400x200
+    sf::RectangleShape dialogBox(sf::Vector2f(400, 100));  // Hộp thoại có kích thước 400x200
     dialogBox.setFillColor(sf::Color(0, 0, 0, 200));  // Nền đen với độ trong suốt
     dialogBox.setOutlineColor(sf::Color::White);  // Viền trắng
     dialogBox.setOutlineThickness(5);  // Độ dày viền
@@ -413,7 +417,6 @@ void Table::dialogBox() {
     window.draw(winnerText);
     window.draw(handRankText);
     window.draw(anotherRoundText);
-
     window.display();
 }
 

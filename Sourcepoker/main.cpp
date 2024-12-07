@@ -166,17 +166,23 @@ int main() {
             window.clear(sf::Color::Black); // clear old frames
 
         if (currentState == GAME_DEFAULT){
-            House house = new Table(window, font, playerInfo.getPlayers());
+            Table table(window, font, playerInfo.getPlayers());
+            table.startGame();
             currentState = WAITING_FOR_INPUT;
         }
         else if (currentState == GAME_STUD_5) {
-            House house = new studTable(window, font, playerInfo.getPlayers());
-            house.StartGame();;
+            studTable studTable(window, font, playerInfo.getPlayers());
+            studTable.startGame();
             currentState = WAITING_FOR_INPUT;
         }
         else if (currentState == GAME_DRAW) {
-            House house = new drawTable(window, font, playerInfo.getPlayers());
-            house.StartGame();
+            drawTable drawTable(window, font, playerInfo.getPlayers());
+            drawTable.startGame();
+            currentState = WAITING_FOR_INPUT;
+        }
+        else if (currentState == GAME_STUD_7) {
+            stud7Table stud7Table(window, font, playerInfo.getPlayers());
+            stud7Table.startGame();
             currentState = WAITING_FOR_INPUT;
         }
     

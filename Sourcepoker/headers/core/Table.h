@@ -17,7 +17,7 @@ enum DialogState {
 class Table : public Hand {
 protected:
     Deck deck;                ///< Deck of cards used in the game.
-    std::vector<Player>& players; ///< Collection of players in the game (both human and AI).
+    std::vector<Player> players; ///< Collection of players in the game (both human and AI).
     sf::RenderWindow& window;
     sf::Font& font;
     std::string winnerHandRank;

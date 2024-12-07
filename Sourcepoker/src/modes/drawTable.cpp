@@ -2,9 +2,7 @@
 #include <gameModes.h>
 
 
-drawTable::drawTable(sf::RenderWindow& window, sf::Font& font, std::vector<Player> players): Table(window, font, players) {
-	this->startGame();
-}
+drawTable::drawTable(sf::RenderWindow& window, sf::Font& font, std::vector<Player> players): Table(window, font, players) {}
 
 void drawTable::dealCardsToPlayers() {
 	for (Player& player : players) {

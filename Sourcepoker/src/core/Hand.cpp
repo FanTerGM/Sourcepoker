@@ -56,9 +56,20 @@ void Hand::showCards(sf::RenderWindow& window, int xOffset, int yOffset) const {
 			cardOffset += cardTexture.getSize().x * 0.2f;
 			window.draw(cardSprite);
 		}
-		else std::cout << "Hidden" << std::endl;
+		else {
+			sf::Texture cardTexture;
+			if (!cardTexture.loadFromFile("Resources/cards/back.png")) {
+				std::cerr << "Error loading card image" << std::endl;
+				continue;
+			}
+
+			sf::Sprite cardSprite(cardTexture);
+			cardSprite.setPosition(xOffset + cardOffset, yOffset); // position of card;
+			cardSprite.setScale(0.1f, 0.1f);
+			cardOffset += cardTexture.getSize().x * 0.2f;
+			window.draw(cardSprite);
+		}
 	}
-	window.display();
 }
 
 std::vector<Card> Hand::getHand () const{

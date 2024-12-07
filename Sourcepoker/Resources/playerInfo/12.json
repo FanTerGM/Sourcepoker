@@ -1,13 +1,13 @@
 {
-    "balance": 1040,
-    "gamePlayed": 2,
-    "gamesWon": 1.0,
+    "balance": 1000,
+    "gamePlayed": 1,
+    "gamesWon": 0.0,
     "handHistory": [
         0,
         0,
         0,
         0,
-        1,
+        0,
         0,
         0,
         0,
@@ -15,6 +15,6 @@
         0
     ],
     "rank": 0,
-    "username": "da",
-    "winRate": 50.0
+    "username": "12",
+    "winRate": 0.0
 }

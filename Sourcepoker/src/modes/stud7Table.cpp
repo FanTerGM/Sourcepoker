@@ -1,25 +1,25 @@
 #include <gameObject.h>
 #include <gameModes.h>
 
-studTable::studTable(sf::RenderWindow& window, sf::Font& font, std::vector<Player> players) : Table(window, font, players) {}
+stud7Table::stud7Table(sf::RenderWindow& window, sf::Font& font, std::vector<Player> players) : Table(window, font, players) {}
 
-void studTable::dealFlop() {
+void stud7Table::dealFlop() {
 	for (Player& player : players) {
 		player.cardToHand(deck, 2, false);
 	}
 }
 
-void studTable::dealCardsToPlayers() {
+void stud7Table::dealCardsToPlayers() {
 	for (Player& player : players) {
-		player.cardToHand(deck, 3, true);
+		player.cardToHand(deck, 5, true);
 	}
 }
 
-std::string studTable::getModeName() const{
+std::string stud7Table::getModeName() const {
 	return "stud";
 }
 
-void studTable::startGame() {
+void stud7Table::startGame() {
 	//window.clear(sf::Color::Green)
 	createDeck();// Prepare a new deck
 	clearTable();// Clear previous hands

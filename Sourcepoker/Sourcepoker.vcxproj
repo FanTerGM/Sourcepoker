@@ -137,6 +137,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\game\GameState.cpp" />
     <ClCompile Include="src\modes\drawTable.cpp" />
+    <ClCompile Include="src\modes\stud7Table.cpp" />
     <ClCompile Include="src\modes\studTable.cpp" />
     <ClCompile Include="src\visual\PlayerInfoInput.cpp" />
     <ClCompile Include="src\visual\PlayerSelection.cpp" />
@@ -170,7 +171,7 @@
     <ClInclude Include="headers\modes\studTable.h" />
     <ClInclude Include="headers\modes\superTable.h" />
     <ClInclude Include="headers\core\Table.h" />
-    <ClInclude Include="headers\modes\texasTable.h" />
+    <ClInclude Include="headers\modes\stud7Table.h" />
     <ClInclude Include="headers\visual\ImgCard.h" />
     <ClInclude Include="include\gameModes.h" />
     <ClInclude Include="include\gameObject.h" />
@@ -272,7 +273,6 @@
     <Image Include="Resources\cards\AD.png" />
     <Image Include="Resources\cards\AH.png" />
     <Image Include="Resources\cards\AS.png" />
-    <Image Include="Resources\cards\back.png" />
     <Image Include="Resources\cards\JC.png" />
     <Image Include="Resources\cards\JD.png" />
     <Image Include="Resources\cards\JH.png" />
