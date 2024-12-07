@@ -68,10 +68,16 @@ public:
     /**
      * @brief Determines and displays the winner of the current round.
      */
-    virtual void determineWinner();
+    void determineWinner();
 
+    /**
+    * @brief Provide and process action of the player according to the game
+    */
     void processPlayerAction(int& highestBet, int currentPlayerIndex, int& raiseIndex);
 
+    /**
+    * @brief Initiate a betting round, making changes to the current round highest be and player's bet.
+    */
     void bettingRound(int& highestBet);
 
     /**
@@ -88,6 +94,7 @@ public:
     void addPlayer(const std::string& playerName);
 
     void goToMainMenu();
+
     void dialogBox();
 };
 
