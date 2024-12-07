@@ -9,7 +9,7 @@ public:
     void organize();
 
     //Add card to Hand / Replace all current card. 
-    void cardToHand(Deck& deck, int count, bool Shown);
+    void cardToHand(Deck& deck, int count, bool Shown = true);
 
     // Replace card, currently only use for draw mode
     void replaceCard(Deck& deck);
