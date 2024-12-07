@@ -1,7 +1,9 @@
 #include <gameObject.h>
 #include <gameModes.h>
 
-studTable::studTable(sf::RenderWindow& window, sf::Font& font, std::vector<Player> players) : Table(window, font, players) {}
+studTable::studTable(sf::RenderWindow& window, sf::Font& font, std::vector<Player> players) : Table(window, font, players) {
+	this->startGame();
+}
 
 void studTable::dealFlop() {
 	for (Player& player : players) {

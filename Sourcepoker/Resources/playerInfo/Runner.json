@@ -1,11 +1,11 @@
 {
-    "balance": 990,
+    "balance": 1020,
     "gamePlayed": 2,
-    "gamesWon": 0.0,
+    "gamesWon": 1.0,
     "handHistory": [
         0,
         0,
-        0,
+        1,
         0,
         0,
         0,
@@ -16,5 +16,5 @@
     ],
     "rank": 0,
     "username": "Runner",
-    "winRate": 0.0
+    "winRate": 50.0
 }
