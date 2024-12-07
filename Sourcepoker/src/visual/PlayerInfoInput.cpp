@@ -118,14 +118,21 @@ void PlayerInfoInput::handleMouseClick(const sf::Vector2i& mousePosition, GameSt
     if (continueButton.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
         // Kiểm tra xem tất cả người chơi đã nhập tên chưa
         if (areAllPlayersNamesEntered()) {
-                std::cout << "Game started!" << std::endl;
-                for (const auto& player : players) {
-                    // Ví dụ: Lưu player vào một tệp tin hoặc cập nhật thông tin người chơi.
-                    player.saveProfile("player_data/"); // Nếu muốn lưu vào thư mục player_data
-                }
-                currentState = PLAY_MENU;  // Chuyển đến menu chọn chế độ chơi
-                std::cout << "in handleclick : " << currentState << std::endl;
+            std::cout << "Game started!" << std::endl;
+            for (int i = 0; i <= activePlayerIndex; i++) {
+                std::string playerName = playerInputs[i];
+                std::cout << playerName << std::endl;
+                removeTrailingSpaces(playerName);
+                Player player = Player::loadProfile(playerName, "Resources/playerInfo/");
+                std::cout << "add " + player.getUsername() << std::endl;
+                players.push_back(player);
             }
+            for (int i = 0; i < numNPCs; i++) {
+                players.push_back(Player("AI_" + std::to_string(i)));
+            }
+            currentState = PLAY_MENU;  // Chuyển đến menu chọn chế độ chơi
+            std::cout << "in handleclick : " << currentState << std::endl;
+        }
         else {
             errorText.setString("Please enter names for all players.");
             errorText.setPosition(100, 200 + numPlayers * 60);  // Hiển thị thông báo lỗi

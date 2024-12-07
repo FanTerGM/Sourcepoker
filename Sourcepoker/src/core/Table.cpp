@@ -4,7 +4,9 @@
 #include <numeric>   // For std::accumulate
 
 // Constructor
-Table::Table(sf::RenderWindow& window, sf::Font& font, std::vector<Player> players) : window(window), font(font), players(players){}
+Table::Table(sf::RenderWindow& window, sf::Font& font, std::vector<Player> players) : window(window), font(font), players(players){
+    startGame();
+}
 
 // Deals five cards to each player
 void Table::dealCardsToPlayers() {
@@ -174,12 +176,17 @@ void Table::bettingRound(int& highestBet) {
     // A circular loop that only stop when all players have either call or folded
     int index = 0, raiseIndex = 0;
     do {
-        while (players[index].folded)
-            index = (index + 1) % players.size();
+        while (players[index].folded) {
+            std::cout << "Chekc" << std::endl;
+            index = (index + 1) % (players.size());
+        }
+        
 
         processPlayerAction(highestBet, index, raiseIndex);
 
         index = (index + 1) % players.size();
+        std::cout << "Chekc" << std::endl;
+
 
     } while (index != raiseIndex);
 }
@@ -187,25 +194,23 @@ void Table::bettingRound(int& highestBet) {
 
 // Runs the game loop, dealing cards, displaying hands, and determining the winner
 void Table::startGame() {
-    //window.clear(sf::Color::Green);
-        createDeck();           // Prepare a new deck
-        clearTable();           // Clear previous hands
-        dealCardsToPlayers();  // Deal new hands
-        drawTable(window);
-       
-        int highestBet = 10;
+    //window.clear(sf::Color::Green)
+    createDeck();// Prepare a new deck
+    clearTable();// Clear previous hands
+    dealCardsToPlayers();// Deal new hands
+    window.display();
+    int highestBet = 10;
 
-        bettingRound(highestBet);
+    bettingRound(highestBet);
 
-        // Draw each player's hand
-        std::cout << "Players' hands:" << std::endl;
-        showPlayersHands();
+    // Draw each player's hand
+    std::cout << "Players' hands:" << std::endl;
+    showPlayersHands();
 
     // Determine and display the winner
     determineWinner();
     dialogBox();
         
-    window.display();
 }
 
 void Table::addPlayer(const std::string& playerName) {
